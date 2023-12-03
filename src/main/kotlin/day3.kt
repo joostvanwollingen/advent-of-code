@@ -1,31 +1,36 @@
 import java.io.File
 
-private const val maxWidth = 10
-
 fun main() {
     val lines = File("day3.input").readLines().withIndex()
     var grid: Map<Int, Map<Int, Pixel>> = getGrid(lines)
-    val symbols = grid.map { it.key to it.value.filter { pixel -> pixel.value.isSymbol } }
-    val searchCoordinates = extractSearchCoordinates(symbols)
-    val numberHits = searchCoordinates.filter { coord ->
-        grid[coord.first]!![coord.second]!!.isNumber
-    }
-    var results: List<Int> = mutableListOf()
-    var usedCoords: Map<Int, Pair<Int, Pair<Int, Int>>> = mutableMapOf()
-    for (line in 1..maxWidth) {
-        var lineHits = numberHits.filter { it.first == line }.sortedBy { it.second }
-        lineHits.forEach { hit ->
-            if (!isUsed(usedCoords, line, hit)) {
-                var low = findConnected(grid,line,  hit.first to hit.second - 1, -1, hit.second, usedCoords)
-                var high = findConnected(grid,line, hit.first to hit.second + 1, 1, hit.second, usedCoords)
-                results += getNumberFromLine(grid!![line]!!, low, high)
-                for (i in low..high) {
-                    usedCoords += mapOf(line to (line to (line to i)))
-                }
+    val symbols = getSymbolLocations(grid)
+    val searchCoordinates = symbols.map { symbol -> symbol to extractSearchCoordinates(symbol) }.sortedBy { it.first.first }
+    var result:List<Pair<Pair<Int,Int>, Int>> = emptyList()
+    val usedCoords:List<Pair<Int, Pair<Int, Int>>> = emptyList()
+    searchCoordinates.forEach { symbol ->
+        symbol.second.forEach { searchCoordinate ->
+            val pixel = grid.getPixel(searchCoordinate)
+            if(pixel.isNumber){
+                val left = findConnected(grid, searchCoordinate, -1, searchCoordinate.second, usedCoords)
+                val right = findConnected(grid, searchCoordinate, 1, searchCoordinate.second, usedCoords)
+                result += symbol.first to getNumberFromLine(grid[searchCoordinate.first]!!, left, right)
             }
         }
     }
-    println(results.sum())
+    println(result)
+    println(result.toSet().sumOf { it.second })
+
+
+}
+
+fun Map<Int, Map<Int, Pixel>>.getPixel(coordinates: Pair<Int, Int>): Pixel =
+    this[coordinates.first]!![coordinates.second]!!
+
+
+private fun getSymbolLocations(grid: Map<Int, Map<Int, Pixel>>): List<Pair<Int, Int>> {
+    val symbolsByLine =
+        grid.map { it.key to it.value.filter { pixel -> pixel.value.isSymbol } }.filter { it.second.isNotEmpty() }
+    return symbolsByLine.map { it.second.entries.map { sm -> it.first to sm.key } }.flatten()
 }
 
 fun getNumberFromLine(map: Map<Int, Pixel>, low: Int, high: Int): Int {
@@ -38,58 +43,51 @@ fun getNumberFromLine(map: Map<Int, Pixel>, low: Int, high: Int): Int {
 
 fun findConnected(
     grid: Map<Int, Map<Int, Pixel>>,
-    line: Int,
     start: Pair<Int, Int>,
     increment: Int,
     low: Int,
-    usedCoords: Map<Int, Pair<Int, Pair<Int, Int>>>
+    usedCoords: List<Pair<Int, Pair<Int, Int>>>
 ): Int {
     var lowest = low
-    if (start.second in 1..maxWidth && !isUsed(usedCoords, line, start)) {
+    if (start.second in 1..140 && !isUsed(usedCoords, start)) {
         var pixel = grid[start.first]!![start.second]!!
         if (pixel.isNumber) {
             lowest = start.second
-            return findConnected(grid, line, start.first to start.second + increment, increment, lowest, usedCoords)
+            return findConnected(grid, start.first to start.second + increment, increment, lowest, usedCoords)
         }
     }
     return lowest
 }
 
-fun isUsed(usedCoords: Map<Int, Pair<Int, Pair<Int, Int>>>, line: Int, start: Pair<Int, Int>): Boolean =
-    usedCoords.filter { it.key == line }.values
-        .filter { it.first == start.first }
-        .any { coord -> coord.second.first == start.first && coord.second.second == start.second }
+fun isUsed(usedCoords: List<Pair<Int, Pair<Int, Int>>>, start: Pair<Int, Int>): Boolean =
+    usedCoords.filter { it.first == start.first }
+        .filter { coord -> coord.second.first == start.first && coord.second.second == start.second }.isNotEmpty()
 
 
-fun extractSearchCoordinates(symbols: List<Pair<Int, Map<Int, Pixel>>>): List<Pair<Int, Int>> {
-    var searchCoordinates: List<Pair<Int, Int>> = mutableListOf()
-    symbols.forEach { line ->
-        var surroundingCoordinates: MutableList<Pair<Int, Int>> = mutableListOf()
+fun extractSearchCoordinates(symbol: Pair<Int, Int>): List<Pair<Int, Int>> {
 
-        line.second.map {
-            var lineNumber = line.first
-            var symbolColumn = it.key
-            //left
-            if (symbolColumn != 1) surroundingCoordinates += lineNumber to symbolColumn - 1
-            //right
-            if (symbolColumn != maxWidth) surroundingCoordinates += lineNumber to symbolColumn + 1
-            //up
-            if (lineNumber != 1) surroundingCoordinates += lineNumber - 1 to symbolColumn
-            //down
-            if (lineNumber != maxWidth) surroundingCoordinates += lineNumber + 1 to symbolColumn
-            //left-up
-            if (symbolColumn != 1 && lineNumber != 1) surroundingCoordinates += lineNumber - 1 to symbolColumn - 1
-            //left-down
-            if (symbolColumn != maxWidth && lineNumber != 1) surroundingCoordinates += lineNumber + 1 to symbolColumn - 1
-            //right-up
-            if (symbolColumn != maxWidth && lineNumber != 1) surroundingCoordinates += lineNumber - 1 to symbolColumn + 1
-            //right-down
-            if (symbolColumn != maxWidth && lineNumber != maxWidth) surroundingCoordinates += lineNumber + 1 to symbolColumn + 1
+    val surroundingCoordinates: MutableList<Pair<Int, Int>> = mutableListOf()
+    val lineNumber = symbol.first
+    val symbolColumn = symbol.second
 
-        }
-        searchCoordinates += surroundingCoordinates
-    }
-    return searchCoordinates.toList()
+    //left
+    if (symbolColumn != 1) surroundingCoordinates += lineNumber to symbolColumn - 1
+    //right
+    if (symbolColumn != 140) surroundingCoordinates += lineNumber to symbolColumn + 1
+    //up
+    if (lineNumber != 1) surroundingCoordinates += lineNumber - 1 to symbolColumn
+    //down
+    if (lineNumber != 140) surroundingCoordinates += lineNumber + 1 to symbolColumn
+    //left-up
+    if (symbolColumn != 1 && lineNumber != 1) surroundingCoordinates += lineNumber - 1 to symbolColumn - 1
+    //left-down
+    if (symbolColumn != 140 && lineNumber != 1) surroundingCoordinates += lineNumber + 1 to symbolColumn - 1
+    //right-up
+    if (symbolColumn != 140 && lineNumber != 1) surroundingCoordinates += lineNumber - 1 to symbolColumn + 1
+    //right-down
+    if (symbolColumn != 140 && lineNumber != 140) surroundingCoordinates += lineNumber + 1 to symbolColumn + 1
+
+    return surroundingCoordinates.sortedWith(compareBy({it.first}, {it.second}))
 }
 
 private fun getGrid(lines: Iterable<IndexedValue<String>>): Map<Int, Map<Int, Pixel>> {
