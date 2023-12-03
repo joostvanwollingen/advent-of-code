@@ -1,31 +1,83 @@
 import java.io.File
 
 fun main() {
-    val lines = File("day3.input").readLines().withIndex()
-    var grid: Map<Int, Map<Int, Pixel>> = getGrid(lines)
+    val lines = File("day3.input").readLines()
+    var grid: Map<Int, Map<Int, Pixel>> = getGrid(lines.withIndex())
+
+    //Part 1
     val symbols = getSymbolLocations(grid)
-    val searchCoordinates = symbols.map { symbol -> symbol to extractSearchCoordinates(symbol) }.sortedBy { it.first.first }
-    var result:List<Pair<Pair<Int,Int>, Int>> = emptyList()
-    val usedCoords:List<Pair<Int, Pair<Int, Int>>> = emptyList()
-    searchCoordinates.forEach { symbol ->
+    val searchCoordinates =
+        symbols.map { symbol -> symbol to extractSearchCoordinates(symbol) }.sortedBy { it.first.first }
+    var result: List<Pair<Pair<Int, Int>, Int>> = emptyList()
+
+    searchCoordinates.reversed().forEach { symbol ->
         symbol.second.forEach { searchCoordinate ->
             val pixel = grid.getPixel(searchCoordinate)
-            if(pixel.isNumber){
-                val left = findConnected(grid, searchCoordinate, -1, searchCoordinate.second, usedCoords)
-                val right = findConnected(grid, searchCoordinate, 1, searchCoordinate.second, usedCoords)
+            if (pixel.isNumber) {
+                val left = findConnected(grid, searchCoordinate, -1, searchCoordinate.second)
+                val right = findConnected(grid, searchCoordinate, 1, searchCoordinate.second)
                 result += symbol.first to getNumberFromLine(grid[searchCoordinate.first]!!, left, right)
             }
         }
     }
-    println(result)
     println(result.toSet().sumOf { it.second })
+    grid.print(symbols, searchCoordinates.map { it.second }.flatten())
 
+    //Part 2
+    val gears = getSymbolLocations(grid, "*")
+    val gearSearchCoordinates =
+        gears.map { symbol -> symbol to extractSearchCoordinates(symbol) }.sortedBy { it.first.first }
+    var gearResult: List<Pair<Pair<Int, Int>, Int>> = emptyList()
+    gearSearchCoordinates.reversed().forEach { symbol ->
+        symbol.second.forEach { searchCoordinate ->
+            val pixel = grid.getPixel(searchCoordinate)
+            if (pixel.isNumber) {
+                val left = findConnected(grid, searchCoordinate, -1, searchCoordinate.second)
+                val right = findConnected(grid, searchCoordinate, 1, searchCoordinate.second)
+                gearResult += symbol.first to getNumberFromLine(grid[searchCoordinate.first]!!, left, right)
+            }
+        }
+    }
+    println(gearResult.toSet().groupBy { it.first }
+        .filter { it.value.size == 2 }.values.sumOf { it[0].second * it[1].second })
 
+}
+
+fun getSymbolLocations(grid: Map<Int, Map<Int, Pixel>>, s: String): List<Pair<Int, Int>> {
+    val symbolsByLine =
+        grid.map { it.key to it.value.filter { pixel -> pixel.value.isSymbol && pixel.value.value == s } }
+            .filter { it.second.isNotEmpty() }
+    return symbolsByLine.map { it.second.entries.map { sm -> it.first to sm.key } }.flatten()
 }
 
 fun Map<Int, Map<Int, Pixel>>.getPixel(coordinates: Pair<Int, Int>): Pixel =
     this[coordinates.first]!![coordinates.second]!!
 
+fun Map<Int, Map<Int, Pixel>>.print(
+    symbols: List<Pair<Int, Int>> = emptyList(), searchCoordinates: List<Pair<Int, Int>> = emptyList()
+) {
+    this.entries.forEach { line ->
+        print("${line.key.toString().padStart(3, '0')}: ")
+        for (coord in line.value) {
+            val isDiscoveredSymbol =
+                symbols.filter { symbol -> symbol.first == line.key && symbol.second == coord.key }.isNotEmpty()
+            val isSearched =
+                searchCoordinates.filter { symbol -> symbol.first == line.key && symbol.second == coord.key }
+                    .isNotEmpty()
+
+            print(coord.value.toColorString(isDiscoveredSymbol, isSearched))
+        }
+        println()
+    }
+}
+
+fun Pixel.toColorString(isDiscoveredSymbol: Boolean, isSearched: Boolean): String {
+    if (isDiscoveredSymbol) return "\u001b[32m" + this.value + "\u001b[0m"
+    if (isSearched) return "\u001b[43m" + this.value + "\u001b[0m"
+    if (this.isNumber) return "\u001b[44m" + this.value + "\u001b[0m"
+    if (this.isSymbol) return "\u001b[31m" + this.value + "\u001b[0m"
+    return this.value
+}
 
 private fun getSymbolLocations(grid: Map<Int, Map<Int, Pixel>>): List<Pair<Int, Int>> {
     val symbolsByLine =
@@ -42,27 +94,18 @@ fun getNumberFromLine(map: Map<Int, Pixel>, low: Int, high: Int): Int {
 }
 
 fun findConnected(
-    grid: Map<Int, Map<Int, Pixel>>,
-    start: Pair<Int, Int>,
-    increment: Int,
-    low: Int,
-    usedCoords: List<Pair<Int, Pair<Int, Int>>>
+    grid: Map<Int, Map<Int, Pixel>>, start: Pair<Int, Int>, increment: Int, low: Int
 ): Int {
     var lowest = low
-    if (start.second in 1..140 && !isUsed(usedCoords, start)) {
+    if (start.second in 1..140) {
         var pixel = grid[start.first]!![start.second]!!
         if (pixel.isNumber) {
             lowest = start.second
-            return findConnected(grid, start.first to start.second + increment, increment, lowest, usedCoords)
+            return findConnected(grid, start.first to start.second + increment, increment, lowest)
         }
     }
     return lowest
 }
-
-fun isUsed(usedCoords: List<Pair<Int, Pair<Int, Int>>>, start: Pair<Int, Int>): Boolean =
-    usedCoords.filter { it.first == start.first }
-        .filter { coord -> coord.second.first == start.first && coord.second.second == start.second }.isNotEmpty()
-
 
 fun extractSearchCoordinates(symbol: Pair<Int, Int>): List<Pair<Int, Int>> {
 
@@ -87,7 +130,7 @@ fun extractSearchCoordinates(symbol: Pair<Int, Int>): List<Pair<Int, Int>> {
     //right-down
     if (symbolColumn != 140 && lineNumber != 140) surroundingCoordinates += lineNumber + 1 to symbolColumn + 1
 
-    return surroundingCoordinates.sortedWith(compareBy({it.first}, {it.second}))
+    return surroundingCoordinates.sortedWith(compareBy({ it.first }, { it.second }))
 }
 
 private fun getGrid(lines: Iterable<IndexedValue<String>>): Map<Int, Map<Int, Pixel>> {
@@ -103,9 +146,8 @@ private fun getGrid(lines: Iterable<IndexedValue<String>>): Map<Int, Map<Int, Pi
     return grid
 }
 
-
 data class Pixel(val value: String) {
     val isDot = value == "."
     val isNumber = Regex("[0-9]").containsMatchIn(value)
-    val isSymbol = Regex("([*#+$=&%/@])").containsMatchIn(value)
+    val isSymbol = Regex("([*#+$=&%/@-])").containsMatchIn(value)
 }
