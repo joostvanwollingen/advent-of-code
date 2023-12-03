@@ -23,8 +23,6 @@ fun main() {
 
     println(allowedGameIds)
     println(powerSum)
-
-
 }
 
 
@@ -44,7 +42,6 @@ data class Grabs(val grabs: List<Grab>) {
     override fun toString(): String {
         return "Grabs(grabs=$grabs, maxRed=$maxRed, maxBlue=$maxBlue, maxGreen=$maxGreen, power=$power)"
     }
-
 }
 
 data class Grab(val input: String) {
@@ -60,10 +57,3 @@ data class Grab(val input: String) {
         return "\n\tGrab(red=$red, blue=$blue, green=$green)"
     }
 }
-
-
-//Game 1:
-// 1 red, 5 blue, 1 green;
-// 16 blue, 3 red;
-// 6 blue, 5 red;
-// 4 red, 7 blue, 1 green
