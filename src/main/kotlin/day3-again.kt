@@ -8,7 +8,7 @@ fun main() {
 
     //Part 1
     var partNumbersAdjecentToSymbols: List<Pair<PartNumber, List<Symbol>>> = partNumbers.map { part ->
-        val partIsAdjecent: List<Point> = part.getSurroundingPoints()
+        val partIsAdjecent: List<Point> = part.location.getSurroundingPoints()
         val symbolLocations: List<Point> = symbols.map { symbol -> symbol.location }
         val isValidPartNumber = partIsAdjecent.intersect(symbolLocations)
         part to symbols.filter { symbol -> isValidPartNumber.contains(symbol.location) }
@@ -55,8 +55,8 @@ data class Symbol(val symbol: String, val location: Point)
 
 data class PartNumber(val number: Int, val location: List<Point>)
 
-fun PartNumber.getSurroundingPoints(): List<Point> {
-    return location.asSequence().map { point -> point.getSurroundingPoints() }.flatten().minus(location).toSet()
+fun List<Point>.getSurroundingPoints(): List<Point> {
+    return this.asSequence().map { point -> point.getSurroundingPoints() }.flatten().minus(this).toSet()
         .toList()
 }
 

@@ -20,7 +20,7 @@ fun getFinalCards(
     copiedCards: List<Scratchcard2>
 ): List<Scratchcard2> {
     if (copiedCards.isNotEmpty()) {
-        var newFinalcards: List<Scratchcard2> = finalCards.plus(copiedCards.map { card -> card })
+        var newFinalcards: List<Scratchcard2> = finalCards.plus(copiedCards)
         val copiesToMake = copiedCards.flatMap { card -> card.awardsCopiesOf }
         val copiedCards = copiesToMake.map { copyId -> allCards.filter { card -> card.id == copyId } }.flatten()
         return getFinalCards(allCards, newFinalcards, copiedCards)
