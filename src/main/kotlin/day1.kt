@@ -1,7 +1,7 @@
 import java.io.File
 
 fun main() {
-    val lines = File("day1.real.txt").readLines()
+    val lines = AocUtil.load("day1.real.txt").lines()
     val result = lines.sumOf { "${getFirstNumber(it)}${getLastNumber(it)}".toInt() }
     println(result)
 }

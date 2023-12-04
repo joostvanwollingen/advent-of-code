@@ -1,8 +1,7 @@
 import java.io.File
 
 fun main() {
-    val games = File("day2.input").readLines().map { Game(it) }
-
+    val games = AocUtil.parse("day2.input", Game::class.java)
     val maxRedAllowed = 12
     val maxGreenAllowed = 13
     val maxBlueAllowed = 14

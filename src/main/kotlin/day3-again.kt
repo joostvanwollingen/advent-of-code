@@ -3,7 +3,7 @@ import kotlin.streams.asStream
 import kotlin.streams.toList
 
 fun main() {
-    val lines = File("day3.input").readLines()
+    val lines = AocUtil.load("day3.input").lines()
     val (partNumbers: List<PartNumber>, symbols: List<Symbol>) = readGrid(lines)
 
     //Part 1
@@ -22,6 +22,9 @@ fun main() {
         partNumbersAdjecentToSymbols.groupBy { part -> part.second }.filter { symbol -> symbol.value.size == 2 }
     println(grouped.values.sumOf { part -> part.first().first.number * part.last().first.number })
 }
+
+private fun parseParts(line: String): List<PartNumber> =
+    getPartNumbersFromLine(1, line)
 
 private fun readGrid(lines: List<String>): Pair<List<PartNumber>, List<Symbol>> {
     val partNumbers: MutableList<PartNumber> = mutableListOf()

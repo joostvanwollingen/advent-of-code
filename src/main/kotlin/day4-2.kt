@@ -1,21 +1,16 @@
-import java.io.File
 import java.time.Instant
 import java.util.*
 
 fun main() {
-    val lines = File("day4.input").readLines()
-    val scratchCards = lines.map { Scratchcard2(it) }
+    val scratchCards = AocUtil.parse("day4.input", Scratchcard2::class.java) as List<Scratchcard2>
     println("${Date.from(Instant.now())}")
-    val finalCards: List<Scratchcard2> =
-        getFinalCards(scratchCards, emptyList(), scratchCards)
+    val finalCards: List<Scratchcard2> = getFinalCards(scratchCards, emptyList(), scratchCards)
     println(finalCards.size)
     println("${Date.from(Instant.now())}")
 }
 
 fun getFinalCards(
-    allCards: List<Scratchcard2>,
-    finalCards: List<Scratchcard2>,
-    copiedCards: List<Scratchcard2>
+    allCards: List<Scratchcard2>, finalCards: List<Scratchcard2>, copiedCards: List<Scratchcard2>
 ): List<Scratchcard2> {
     if (copiedCards.isNotEmpty()) {
         val newFinalcards: List<Scratchcard2> = finalCards.plus(copiedCards)

@@ -1,7 +1,7 @@
 import java.io.File
 
 fun main() {
-    val lines = File("day3.input").readLines()
+    val lines = AocUtil.load("day3.input").lines()
     val grid: Map<Int, Map<Int, Pixel>> = getGrid(lines.withIndex())
 
     //Part 1
