@@ -23,10 +23,7 @@ data class Scratchcard(val input:String){
         else->Math.pow(2.0, numberOfMatches-1.toDouble()).toInt()
     }
 
-
-
     override fun toString(): String {
         return "Scratchcard(id='$id', winningNumbers=$winningNumbers, numbers=$numbers)"
     }
-
 }

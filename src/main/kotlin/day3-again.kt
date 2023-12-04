@@ -3,7 +3,7 @@ import kotlin.streams.asStream
 import kotlin.streams.toList
 
 fun main() {
-    val lines = File("day3.test.input").readLines()
+    val lines = File("day3.input").readLines()
     val (partNumbers: List<PartNumber>, symbols: List<Symbol>) = readGrid(lines)
 
     //Part 1
