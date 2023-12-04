@@ -4,10 +4,10 @@ import kotlin.streams.toList
 
 fun main() {
     val lines = File("day3.test.input").readLines()
-    var (partNumbers: List<PartNumber>, symbols: List<Symbol>) = readGrid(lines)
+    val (partNumbers: List<PartNumber>, symbols: List<Symbol>) = readGrid(lines)
 
     //Part 1
-    var partNumbersAdjecentToSymbols: List<Pair<PartNumber, List<Symbol>>> = partNumbers.map { part ->
+    val partNumbersAdjecentToSymbols: List<Pair<PartNumber, List<Symbol>>> = partNumbers.map { part ->
         val partIsAdjecent: List<Point> = part.location.getSurroundingPoints()
         val symbolLocations: List<Point> = symbols.map { symbol -> symbol.location }
         val isValidPartNumber = partIsAdjecent.intersect(symbolLocations)
@@ -18,22 +18,20 @@ fun main() {
     println(partNumbersAdjecentToSymbols.sumOf { it.first.number })
 
     //Part 2
-    var grouped =
+    val grouped =
         partNumbersAdjecentToSymbols.groupBy { part -> part.second }.filter { symbol -> symbol.value.size == 2 }
     println(grouped.values.sumOf { part -> part.first().first.number * part.last().first.number })
 }
 
 private fun readGrid(lines: List<String>): Pair<List<PartNumber>, List<Symbol>> {
-    var partNumbers: List<PartNumber> = emptyList()
-    var symbols: List<Symbol> = emptyList()
+    val partNumbers: MutableList<PartNumber> = mutableListOf()
+    val symbols: MutableList<Symbol> = mutableListOf()
     lines.mapIndexed { index, line ->
         partNumbers += getPartNumbersFromLine(index, line)
         symbols += getSymbolsFromLine(index, line)
     }
     return Pair(partNumbers, symbols)
 }
-
-private fun Symbol.getSurroundingPoints() = this.location.getSurroundingPoints()
 
 fun getSymbolsFromLine(index: Int, line: String): List<Symbol> {
     val matches = Regex("([*#+\$=&%/@-])").findAll(line)
@@ -55,11 +53,6 @@ data class Symbol(val symbol: String, val location: Point)
 
 data class PartNumber(val number: Int, val location: List<Point>)
 
-fun List<Point>.getSurroundingPoints(): List<Point> {
-    return this.asSequence().map { point -> point.getSurroundingPoints() }.flatten().minus(this).toSet()
-        .toList()
-}
-
 data class Point(val y: Int, val x: Int)
 
 fun Point.getSurroundingPoints(): List<Point> {
@@ -70,4 +63,9 @@ fun Point.getSurroundingPoints(): List<Point> {
         }
     }
     return points.minus(this)
+}
+
+fun List<Point>.getSurroundingPoints(): List<Point> {
+    return this.asSequence().map { point -> point.getSurroundingPoints() }.flatten().minus(this).toSet()
+        .toList()
 }

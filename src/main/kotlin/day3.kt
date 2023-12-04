@@ -2,13 +2,13 @@ import java.io.File
 
 fun main() {
     val lines = File("day3.input").readLines()
-    var grid: Map<Int, Map<Int, Pixel>> = getGrid(lines.withIndex())
+    val grid: Map<Int, Map<Int, Pixel>> = getGrid(lines.withIndex())
 
     //Part 1
     val symbols = getSymbolLocations(grid)
     val searchCoordinates =
         symbols.map { symbol -> symbol to extractSearchCoordinates(symbol) }.sortedBy { it.first.first }
-    var result: List<Pair<Pair<Int, Int>, Int>> = emptyList()
+    val result: MutableList<Pair<Pair<Int, Int>, Int>> = mutableListOf()
 
     searchCoordinates.reversed().forEach { symbol ->
         symbol.second.forEach { searchCoordinate ->
@@ -27,7 +27,7 @@ fun main() {
     val gears = getSymbolLocations(grid, "*")
     val gearSearchCoordinates =
         gears.map { symbol -> symbol to extractSearchCoordinates(symbol) }.sortedBy { it.first.first }
-    var gearResult: List<Pair<Pair<Int, Int>, Int>> = emptyList()
+    val gearResult: MutableList<Pair<Pair<Int, Int>, Int>> = mutableListOf()
     gearSearchCoordinates.reversed().forEach { symbol ->
         symbol.second.forEach { searchCoordinate ->
             val pixel = grid.getPixel(searchCoordinate)
@@ -60,10 +60,9 @@ fun Map<Int, Map<Int, Pixel>>.print(
         print("${line.key.toString().padStart(3, '0')}: ")
         for (coord in line.value) {
             val isDiscoveredSymbol =
-                symbols.filter { symbol -> symbol.first == line.key && symbol.second == coord.key }.isNotEmpty()
+                symbols.any { symbol -> symbol.first == line.key && symbol.second == coord.key }
             val isSearched =
-                searchCoordinates.filter { symbol -> symbol.first == line.key && symbol.second == coord.key }
-                    .isNotEmpty()
+                searchCoordinates.any { symbol -> symbol.first == line.key && symbol.second == coord.key }
 
             print(coord.value.toColorString(isDiscoveredSymbol, isSearched))
         }
@@ -98,7 +97,7 @@ fun findConnected(
 ): Int {
     var lowest = low
     if (start.second in 1..140) {
-        var pixel = grid[start.first]!![start.second]!!
+        val pixel = grid[start.first]!![start.second]!!
         if (pixel.isNumber) {
             lowest = start.second
             return findConnected(grid, start.first to start.second + increment, increment, lowest)
@@ -137,7 +136,7 @@ private fun getGrid(lines: Iterable<IndexedValue<String>>): Map<Int, Map<Int, Pi
     var grid: Map<Int, Map<Int, Pixel>> = emptyMap()
     lines.forEach { line ->
         var lineMap: Map<Int, Pixel> = emptyMap()
-        var characters = line.value.toCharArray()
+        val characters = line.value.toCharArray()
         characters.withIndex().forEach {
             lineMap = lineMap.plus(it.index + 1 to Pixel(it.value.toString()))
         }

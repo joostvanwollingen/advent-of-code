@@ -1,7 +1,6 @@
 import java.io.File
 import java.time.Instant
 import java.util.*
-import kotlin.system.exitProcess
 
 fun main() {
     val lines = File("day4.input").readLines()

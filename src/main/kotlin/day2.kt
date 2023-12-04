@@ -45,9 +45,9 @@ data class Grabs(val grabs: List<Grab>) {
 }
 
 data class Grab(val input: String) {
-    val redRegex = Regex("(\\d+) red")
-    val blueRegex = Regex("(\\d+) blue")
-    val greenRegex = Regex("(\\d+) green")
+    private val redRegex = Regex("(\\d+) red")
+    private val blueRegex = Regex("(\\d+) blue")
+    private val greenRegex = Regex("(\\d+) green")
 
     val red = redRegex.find(input)?.groupValues?.last()?.toInt() ?: 0
     val blue = blueRegex.find(input)?.groupValues?.last()?.toInt() ?: 0

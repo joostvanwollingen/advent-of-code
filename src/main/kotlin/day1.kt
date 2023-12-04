@@ -7,7 +7,7 @@ fun main() {
 }
 
 fun getNumbers(input: String): Sequence<MatchResult> {
-    val regex = Regex("([0-9]{1})|(?=(one|two|three|four|five|six|seven|eight|nine)).")
+    val regex = Regex("([0-9])|(?=(one|two|three|four|five|six|seven|eight|nine)).")
     return regex.findAll(input)
 }
 
