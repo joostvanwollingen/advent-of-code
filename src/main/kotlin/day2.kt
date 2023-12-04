@@ -1,5 +1,3 @@
-import java.io.File
-
 fun main() {
     val games = AocUtil.parse("day2.input", Game::class.java)
     val maxRedAllowed = 12

@@ -1,5 +1,3 @@
-import java.io.File
-
 fun main() {
     val scratchCards = AocUtil.parse("day4.test.input", Scratchcard::class.java)
     val points = scratchCards.sumOf { it.points }
