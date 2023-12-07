@@ -30,74 +30,82 @@ fun solvePartOne(input: String) {
 
 }
 
-
 fun solvePartTwo(input: String) {
-    val seedRangeStartEnd = input.lines().get(0).split(":")[1].trim().split(" ")
-    val seedRanges: MutableList<Pair<Long, Long>> = getSeedRanges(seedRangeStartEnd)
-
+    val seedRangeStartEnd = input.lines()[0].split(":")[1].trim().split(" ")
+    val seedRanges: List<Pair<Long, Long>> = getSeedRanges(seedRangeStartEnd).dropLast(1)
     val conversionMaps = getConversionMaps(input)
-    var lowest: Pair<Long, Long>? = null
-    var currentSeed: Pair<Long, Long>? = null
+    var lowestSeedSeen: Pair<Long, Long> = Pair(Long.MAX_VALUE, Long.MAX_VALUE)
 
-    val remap = conversionMaps[0].remap(seedRanges)
-
-//
-//        for (seed in seedRange.first..seedRange.second) {
-//            currentSeed = seed to conversionMaps[6].convertSingle(
-//                conversionMaps[5].convertSingle(
-//                    conversionMaps[4].convertSingle(
-//                        conversionMaps[3].convertSingle(
-//                            conversionMaps[2].convertSingle(
-//                                conversionMaps[1].convertSingle(
-//                                    conversionMaps[0].convertSingle(seed)
-//                                )
-//                            )
-//                        )
-//                    )
-//                )
-//            )
-//            if (lowest == null) lowest = currentSeed
-//            if (lowest.second > currentSeed.second) lowest = currentSeed
-//        }
-//    }
-//    println(lowest)
+    seedRanges.forEach { seedRange ->
+        var currentSeedRange = mutableListOf(seedRange)
+        conversionMaps.forEachIndexed { index, cMap ->
+            var convertedRanges = currentSeedRange.flatMap{range-> extracted(cMap, range) }
+            currentSeedRange = if(convertedRanges.isNotEmpty()) convertedRanges.toMutableList() else currentSeedRange
+        }
+        val lowestObservedInRange = currentSeedRange.minBy { it.first }
+        println("Lowest in Range $lowestObservedInRange")
+        if (lowestSeedSeen.first > lowestObservedInRange.first) lowestSeedSeen = lowestObservedInRange
+        println("$seedRange ====lowest===> : $lowestSeedSeen")
+    }
+    println("Overall Lowest $lowestSeedSeen")
+    println(seedRanges.filter { it.first >= lowestSeedSeen.first  }.filter { it.second <= lowestSeedSeen.second })
 }
 
-private fun getSeedRanges(seedRangeStartEnd: List<String>): MutableList<Pair<Long, Long>> {
-    val seedRanges: MutableList<Pair<Long, Long>> = mutableListOf()
-    seedRangeStartEnd.forEachIndexed { index, s ->
-        if (index % 2 == 0) {
-            var start = s.toLong()
-            var end = s.toLong() + seedRangeStartEnd[index + 1].toLong() - 1
-            seedRanges.add(start to end)
+private fun extracted(
+    cMap: ConversionMap,
+    currentSeedRange: Pair<Long, Long>
+): MutableList<Pair<Long, Long>> {
+        val firstIndex = firstRangeWithEndThatFits(cMap.convTriplesSorted, currentSeedRange.first)
+        val lastIndex = firstRangeWithEndThatFits(cMap.convTriplesSorted, currentSeedRange.second)
+        val newRanges:MutableList<Pair<Long,Long>> = if (firstIndex != -1) newRangesFrom(
+            cMap.convTriplesSorted, firstIndex, lastIndex, currentSeedRange.first, currentSeedRange.second
+        ) else {
+            mutableListOf(currentSeedRange)
+        }
+        println("${cMap.name.padStart(30, ' ')} $currentSeedRange - $newRanges")
+        return newRanges
+}
+
+fun newRangesFrom(
+    convertors: List<Triple<Long, Long, Long>>, firstIndex: Int, lastIndex: Int, rangeStart: Long, rangeEnd: Long
+): MutableList<Pair<Long, Long>> {//: Any {
+    val result: MutableList<Pair<Long, Long>> = mutableListOf()
+    var newRangeStart = rangeStart
+    for (i in firstIndex..lastIndex) {
+        if (rangeEnd <= convertors[i].second) { //Range fully contained
+            result += newRangeStart + convertors[i].third to rangeEnd + convertors[i].third
+        } else if (rangeEnd > convertors[i].second) { //Range ends in later index
+            result += newRangeStart to convertors[i].second
+            newRangeStart = convertors[i].second+1
         }
     }
-    return seedRanges
+    return result
+}
+//This is to calculate the intersection in Python. If the intersection is not null then the potential remaining intervals
+//are (considering x1, l1 being the seeds interval, x2,l2 mapping interval and x0, l0 the result of the above function):
+//(x1, x0-x1) and (x0+l0, x1+l1 - x0 - l0 ) if the length of any of these intervals is <=0 ignore them.
+
+//x1=55
+//l1=67
+//x0=50
+fun calculateintersection(x1: Long, l1: Long, x2: Long, l2: Long): Pair<Long, Long>? {
+    val start = max(x1, x2)
+    val end = min(x1 + l1, x2 + l2)
+    if (end <= start) return null
+    return (start to end - start)
 }
 
-
 data class ConversionMap(val name: String, val conversionRanges: List<NumberRange>) {
+
+    val convTriplesSorted =
+        conversionRanges.map { Triple(it.sourceRangeStart, it.sourceRangeEnd, it.destinationRangeStart) }
+            .sortedBy { it.first }
+
     fun convert(sourceNumber: Long): Long {
         val conversions = conversionRanges.map { range ->
             range.convert(sourceNumber)
         }.filter { c -> c != sourceNumber }
         return if (conversions.isNotEmpty()) conversions.first()!! else sourceNumber
-    }
-
-    fun remap(seedRanges: List<Pair<Long, Long>>) {//: Map<Triple<Long, Long, Long>, NumberRange> {
-        val result: Map<Pair<Long, Long>, Triple<Long,Long,Long>> = mutableMapOf()
-        val sortedConversionRanges = conversionRanges.sortedBy { it.sourceRangeStart }
-            .map { Triple(it.destinationRangeStart, it.sourceRangeStart, it.sourceRangeEnd) }
-        seedRanges.forEach {
-            val firstIndex = firstRangeWithEndThatFits(sortedConversionRanges, it.first)
-            val lastIndex = firstRangeWithEndThatFits(sortedConversionRanges, it.second)
-            val currentMax = it.first
-
-            for (i in firstIndex..lastIndex) {
-                if (currentMax > sortedConversionRanges[i].second) continue
-                result.plus((currentMax to min(it.second, sortedConversionRanges[i].third) )
-            }
-        }
     }
 
     fun convertSingle(sourceNumber: Long): Long {
@@ -125,12 +133,17 @@ data class NumberRange(val input: String) {
 //        return destinationRange.elementAt(sourceRange.indexOf(sourceNumber))
         return destinationRangeStart + (sourceNumber - sourceRangeStart)
     }
+
+    override fun toString(): String {
+        return "range(dest=$destinationRangeStart, start=$sourceRangeStart, end=$sourceRangeEnd)"
+    }
+
 }
 
 fun firstRangeWithEndThatFits(ranges: List<Triple<Long, Long, Long>>, t: Long): Int {
     val n = ranges.size
     for (i: Int in 1..n) {
-        if (ranges[i - 1].third > t) {
+        if (ranges[i - 1].second > t) {
             return i - 1
         }
     }
@@ -145,4 +158,16 @@ private fun getConversionMaps(input: String): List<ConversionMap> {
         .map { line -> line.first() to line.last().split("\n").filter { line -> line.isNotEmpty() } }.map { line ->
             line.first to line.second.map { r -> NumberRange(r) }
         }.map { m -> ConversionMap(m.first, m.second) }
+}
+
+private fun getSeedRanges(seedRangeStartEnd: List<String>): List<Pair<Long, Long>> {
+    val seedRanges: MutableList<Pair<Long, Long>> = mutableListOf()
+    seedRangeStartEnd.forEachIndexed { index, s ->
+        if (index % 2 == 0) {
+            var start = s.toLong()
+            var end = s.toLong() + seedRangeStartEnd[index + 1].toLong() - 1
+            seedRanges.add(start to end)
+        }
+    }
+    return seedRanges.sortedBy { it.first }
 }
