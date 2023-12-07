@@ -9,16 +9,18 @@ fun main() {
 fun solveDay7PartOne(cards: List<Hand>) {
     val sortedCards = cards.sorted()
     val totalWinnings = sortedCards.mapIndexed { index, hand -> hand to (index + 1) * hand.bid }
-    totalWinnings.forEachIndexed{ i,t->println("${(i+1).toString().padStart(4)}\t ${t.second.toString().padStart(6)}\t ${t.first.type}\t ${t.first.cards[0]}${t.first.cards[1]}${t.first.cards[2]}${t.first.cards[3]}${t.first.cards[4]}\t ${t.first.bid}") }
+    totalWinnings.forEachIndexed { i, t ->
+        println(
+            "${(i + 1).toString().padStart(4)}\t ${
+                t.second.toString().padStart(6)
+            }\t ${t.first.type}\t ${t.first.cards[0]}${t.first.cards[1]}${t.first.cards[2]}${t.first.cards[3]}${t.first.cards[4]}\t ${t.first.bid}"
+        )
+    }
     println(totalWinnings.sumOf { it.second })
 }
 
 enum class CardType(i: Int) {
     HighCard(2), OnePair(3), TwoPair(4), ThreeOfAKind(5), FullHouse(6), FourOfAKind(7), FiveOfAKind(8),
-}
-
-val rankComparator = Comparator<CardType> { r1, r2 ->
-    r1.ordinal - r2.ordinal
 }
 
 class Hand(input: String) : Comparable<Hand> {
@@ -30,23 +32,16 @@ class Hand(input: String) : Comparable<Hand> {
     val type: CardType = getType(counts)
 
     private fun getType(cardCount: Map<String, Int>): CardType {
-        if (cardCount["J"] == null) {
-            return defaultCardType(cardCount)
+        return if (cardCount["J"] == null || cardCount["J"] == 5) {
+            defaultCardType(cardCount)
         } else {
-            val defaultCardType = defaultCardType(cardCount)
-            val notJCount = cardCount.filter { it.key != "J" }
-            val maxOther = if(notJCount.isNotEmpty()) notJCount.maxBy { it.value }.value else 0
-            val jCardType = when (cardCount["J"]) { //QQQJA 483
-                5 -> CardType.FiveOfAKind //0
-                4 -> CardType.FiveOfAKind //1
-                3 -> if (maxOther == 2) CardType.FiveOfAKind else CardType.FourOfAKind //QQJJJ AKJJJ
-                2 -> if (maxOther == 3) CardType.FiveOfAKind else if (maxOther == 2) CardType.FourOfAKind else CardType.ThreeOfAKind //QQQJJ AKJJ2
-                1 -> if (maxOther == 4) CardType.FiveOfAKind else if (maxOther == 3) CardType.FourOfAKind else if (maxOther == 2) CardType.FourOfAKind else CardType.OnePair //QQQJJ AKJJ2
-                else -> CardType.OnePair
-            }
-            if (defaultCardType > jCardType) return defaultCardType else return jCardType
+            val newCardCount = cardCount.toMutableMap()
+            val notJCount = cardCount.filter { it.key != "J" }.maxBy { it.value }
+            val jCount = cardCount["J"] ?: 0
+            newCardCount.remove("J")
+            newCardCount[notJCount.key] = newCardCount[notJCount.key]!! + jCount
+            defaultCardType(newCardCount)
         }
-        throw Exception("card type fail")
     }
 
     private fun defaultCardType(cardCount: Map<String, Int>): CardType {
@@ -64,17 +59,11 @@ class Hand(input: String) : Comparable<Hand> {
 
     private fun getCardCount(cards: List<Card>) = cards.groupingBy { it.face }.eachCount()
 
-
-    override fun toString(): String {
-        return "Hand(cards=${cards}, bid=$bid)"
-    }
-
     override fun compareTo(other: Hand): Int = when (this.type) {
         other.type -> compareRank(this, other)
         else -> this.type compareTo other.type
 
     }
-
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -85,11 +74,6 @@ class Hand(input: String) : Comparable<Hand> {
         if (type != other.type) return false
         if (compareRank(this, other) != 0) return false
         return true
-    }
-
-
-    override fun hashCode(): Int {
-        return type.hashCode()
     }
 }
 
@@ -137,11 +121,7 @@ class Card(val face: String) : Comparable<Card> {
         return true
     }
 
-    override fun hashCode(): Int {
-        return points
-    }
-
     override fun toString(): String {
-        return "$face"
+        return face
     }
 }
