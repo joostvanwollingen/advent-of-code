@@ -88,11 +88,11 @@ fun newRangesFrom(
 //x1=55
 //l1=67
 //x0=50
-fun calculateintersection(x1: Long, l1: Long, x2: Long, l2: Long): Pair<Long, Long>? {
-    val start = max(x1, x2)
-    val end = min(x1 + l1, x2 + l2)
-    if (end <= start) return null
-    return (start to end - start)
+fun calculateintersection(s1: Long, e1: Long, s2: Long, e2: Long): Pair<Long, Long>? {
+    val start = max(s1, s2)  //12
+    val end = min(e1,  e2) //20
+    if (end <= start) return null //false
+    return (start to end - start)  //Pair(12, 18)
 }
 
 data class ConversionMap(val name: String, val conversionRanges: List<NumberRange>) {
