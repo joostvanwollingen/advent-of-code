@@ -7,8 +7,9 @@ fun main() {
 //    println(input[1].extraPolate())
 //    input[1].history.forEach( ::println )
 //    println(input[1].extraPolate())
-//    println(input[2].extraPolate())
-    println(input.map { it.extraPolate() }.sum())
+//    println(input[1].intraPolate())
+//    println(input.map { it.extraPolate() }.sum())
+    println(input.map { it.intraPolate() }.sum())
 }
 
 class History(val values: List<Long>) {
@@ -46,10 +47,18 @@ class History(val values: List<Long>) {
     fun isAllZeros(): Boolean = values.all { it == 0L }
 
     fun extraPolate(): Long {
-        var prev: Long = 0L//values.last()
+        var prev: Long = 0L
         history.reversed().windowed(2, 1) {
             prev += it.last().values.last()
         }
         return prev + values.last()
+    }
+
+    fun intraPolate(): Long {
+        var prev: Long = 0L
+        history.reversed().windowed(2, 1) {
+            prev = it.last().values.first() - prev
+        }
+        return values.first() - prev
     }
 }
