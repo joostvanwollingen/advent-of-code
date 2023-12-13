@@ -1,6 +1,6 @@
 fun main() {
-    val input = AocUtil.load("day13.test.input")
-//    val input = AocUtil.load("day13.input")
+//    val input = AocUtil.load("day13.test.input")
+    val input = AocUtil.load("day13.input")
     val reflections = input.reader().readText().split("\n\n")
 
     var columnReflectionIndex: Int = 0
