@@ -1,7 +1,7 @@
 fun main() {
 //    val input = AocUtil.load("day15.test.input")
-    val input = AocUtil.load("day15.test2.input")
-//    val input = AocUtil.load("day15.input")
+//    val input = AocUtil.load("day15.test2.input")
+    val input = AocUtil.load("day15.input")
 //    Day15PartOne(input)
 
     val b: MutableMap<Long, MutableMap<String, Long>> = mutableMapOf()
@@ -15,6 +15,7 @@ fun main() {
     lenses.forEach { lens ->
 //        if (b[h[lens.name]] == null) return@forEach
         if (lens.operation == "-") {
+            if (b[h[lens.name]!!].isNullOrEmpty()) b[h[lens.name]!!] = mutableMapOf()
             if (b[h[lens.name]]!!.containsKey(lens.name)) {
                 b[h[lens.name]!!] = b[h[lens.name]]!!.minus(lens.name).toMutableMap()
             }
