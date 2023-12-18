@@ -54,28 +54,26 @@ private fun Map<Point, String>.determineArea(): Long {
     val maxX = this.keys.maxBy { it.x }.x
     var area = 0L
     for (y in minY..maxY) {
-        var openRange = false
-        var countedInRange = 0L
+        var firstIndex: Int? = null
+        var lastIndex: Int? = null
         for (x in minX..maxX) {
-            if (this[Point(y, x)] != null && openRange) {
-                area += countedInRange
-                countedInRange = 0L
-            }
-
             if (this[Point(y, x)] != null) {
-                openRange = true
+                if (firstIndex == null) {
+                    firstIndex = x
+                }
+                if (firstIndex != null) {
+                    lastIndex = x
+                }
+
+                if (firstIndex != null && lastIndex != null) {
+                    area += (lastIndex - firstIndex)
+                    firstIndex = x
+                    lastIndex = null
+                }
             }
-
-            if (openRange) {
-                countedInRange++
-            }
-
-            if (x == maxX && openRange && this[Point(y, x)] != null) {
-                area += countedInRange
-            }
-
-
         }
+        if (firstIndex != null && lastIndex == null) area += 1
+        println("y:$y $area")
     }
     return area
 }
