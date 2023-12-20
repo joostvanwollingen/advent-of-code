@@ -15,13 +15,35 @@ fun main() {
     val q: Queue<Day20.Pulse> = LinkedList()
 
     val processedPulses: MutableList<Day20.Pulse> = mutableListOf()
-    var buttonPresses = 0
-    while (buttonPresses < 1000) {
+    var buttonPresses = 0L
+    var conjunctionHighWhen: MutableMap<String, Long> = mutableMapOf()
+    while (buttonPresses < 4007) {
         buttonPresses++
         q.addAll(button.push())
         while (q.isNotEmpty()) {
             val currentPulse = q.remove()
             processedPulses += currentPulse
+
+            val highConjuctions =
+                conjunctions.map { it to it.inputModules.values.all { value -> value == Day20.PulseType.HIGH } }
+            if (highConjuctions.any { it.second }) {
+                highConjuctions.filter { it.second }.forEach {
+                    if (conjunctionHighWhen[it.first.name] == null) conjunctionHighWhen[it.first.name] = buttonPresses
+                }
+                if (conjunctionHighWhen.size == 8) {
+                    println(findLCMOfListOfNumbers(conjunctionHighWhen.values.toList()))
+                    println(conjunctionHighWhen)
+                    exitProcess(1)
+                }
+            }
+
+            if (currentPulse.destination == "rx" && currentPulse.type == Day20.PulseType.LOW) {
+                println("low pulse going to rx")
+                println(buttonPresses)
+                println(currentPulse)
+                exitProcess(1)
+            }
+
             if (currentPulse.destination != "rx") {
                 val processingModule = pulseModules.firstOrNull { it.name == currentPulse.destination }
                 if (processingModule == null) {
@@ -33,9 +55,10 @@ fun main() {
     }
 //    println(processedPulses)
     println("button: $buttonPresses")
-    val low = processedPulses.count { it.type == Day20.PulseType.LOW }
-    val high = processedPulses.count { it.type == Day20.PulseType.HIGH }
+    val low: Long = processedPulses.count { it.type == Day20.PulseType.LOW }.toLong()
+    val high: Long = processedPulses.count { it.type == Day20.PulseType.HIGH }.toLong()
     println("low: $low high: $high mul: ${low * high}")
+    println(conjunctionHighWhen)
 }
 
 
