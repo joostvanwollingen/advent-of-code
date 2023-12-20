@@ -1,9 +1,10 @@
 import java.util.*
+import kotlin.system.exitProcess
 
 fun main() {
-    val pulseModules: List<Day20.PulseModule> =
+    val pulseModules: List<Day20.PulseModule> = AocUtil.parse("day20.input", Day20.PulseModule::fromString).toList()
 //        AocUtil.parse("day20.test.input", Day20.PulseModule::fromString).toList()
-        AocUtil.parse("day20.test2.input", Day20.PulseModule::fromString).toList()
+//        AocUtil.parse("day20.test2.input", Day20.PulseModule::fromString).toList()
 
     val conjunctions: List<Day20.Conjunction> =
         pulseModules.filter { it.type == Day20.PulseModule.PulseModuleType.CONJUNCTION } as List<Day20.Conjunction>
@@ -21,14 +22,20 @@ fun main() {
         while (q.isNotEmpty()) {
             val currentPulse = q.remove()
             processedPulses += currentPulse
-            if (currentPulse.destination != "output") {
-                q.addAll(pulseModules.first { it.name == currentPulse.destination }.receivePulse(currentPulse))
+            if (currentPulse.destination != "rx") {
+                val processingModule = pulseModules.firstOrNull { it.name == currentPulse.destination }
+                if (processingModule == null) {
+                    println("module is null $currentPulse"); break
+                }
+                q.addAll(processingModule.receivePulse(currentPulse))
             }
         }
     }
 //    println(processedPulses)
-    println(processedPulses.count { it.type == Day20.PulseType.LOW })
-    println(processedPulses.count { it.type == Day20.PulseType.HIGH })
+    println("button: $buttonPresses")
+    val low = processedPulses.count { it.type == Day20.PulseType.LOW }
+    val high = processedPulses.count { it.type == Day20.PulseType.HIGH }
+    println("low: $low high: $high mul: ${low * high}")
 }
 
 
