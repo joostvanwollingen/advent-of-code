@@ -37,13 +37,6 @@ fun main() {
                 }
             }
 
-            if (currentPulse.destination == "rx" && currentPulse.type == Day20.PulseType.LOW) {
-                println("low pulse going to rx")
-                println(buttonPresses)
-                println(currentPulse)
-                exitProcess(1)
-            }
-
             if (currentPulse.destination != "rx") {
                 val processingModule = pulseModules.firstOrNull { it.name == currentPulse.destination }
                 if (processingModule == null) {
