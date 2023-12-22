@@ -1,3 +1,7 @@
+package nl.vanwollingen.aoc.aoc2023
+
+import nl.vanwollingen.aoc.util.AocUtil
+
 fun main() {
     val lines = AocUtil.load("day3.input").lines()
     val grid: Map<Int, Map<Int, Pixel>> = getGrid(lines.withIndex())

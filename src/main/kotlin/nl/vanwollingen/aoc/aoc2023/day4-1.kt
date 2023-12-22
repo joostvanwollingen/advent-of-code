@@ -1,3 +1,7 @@
+package nl.vanwollingen.aoc.aoc2023
+
+import nl.vanwollingen.aoc.util.AocUtil
+
 fun main() {
     val scratchCards = AocUtil.parse("day4.test.input", Scratchcard::class.java)
     val points = scratchCards.sumOf { it.points }

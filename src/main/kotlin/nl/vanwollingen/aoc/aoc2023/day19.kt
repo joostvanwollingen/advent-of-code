@@ -1,5 +1,9 @@
+package nl.vanwollingen.aoc.aoc2023
+
+import nl.vanwollingen.aoc.util.AocUtil
+
 class Day19() {
-//    val input = AocUtil.load("day19.test.input")
+//    val input = nl.vanwollingen.aoc.util.AocUtil.load("day19.test.input")
 
         val input = AocUtil.load("day19.input")
     val workflows = input.split("\n\n")[0].split("\n").map { Workflow.fromString(it) }

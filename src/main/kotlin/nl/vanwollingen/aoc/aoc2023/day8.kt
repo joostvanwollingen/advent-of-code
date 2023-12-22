@@ -1,7 +1,11 @@
+package nl.vanwollingen.aoc.aoc2023
+
+import nl.vanwollingen.aoc.util.AocUtil
+
 fun main() {
-//    val input = AocUtil.load("day8.test.input")
-//    val input = AocUtil.load("day8.test2.input")
-//    val input = AocUtil.load("day8.test3.input")
+//    val input = nl.vanwollingen.aoc.util.AocUtil.load("day8.test.input")
+//    val input = nl.vanwollingen.aoc.util.AocUtil.load("day8.test2.input")
+//    val input = nl.vanwollingen.aoc.util.AocUtil.load("day8.test3.input")
     val input = AocUtil.load("day8.input")
     val instructions = input.lines()[0].toCharArray().map { it.toString() }
     val directions: List<Node> = input.lines().subList(2, input.lines().size).map {

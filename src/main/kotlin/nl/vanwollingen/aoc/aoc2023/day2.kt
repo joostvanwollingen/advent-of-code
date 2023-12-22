@@ -1,3 +1,7 @@
+package nl.vanwollingen.aoc.aoc2023
+
+import nl.vanwollingen.aoc.util.AocUtil
+
 fun main() {
     val games = AocUtil.parse("day2.input", Game::class.java)
     val maxRedAllowed = 12

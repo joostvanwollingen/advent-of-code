@@ -1,5 +1,9 @@
+package nl.vanwollingen.aoc.aoc2023
+
+import nl.vanwollingen.aoc.util.AocUtil
+
 fun main() {
-//    val input = AocUtil.parse("day9.test.input", History::fromString).toList()
+//    val input = nl.vanwollingen.aoc.util.AocUtil.parse("day9.test.input", History::fromString).toList()
     val input = AocUtil.parse("day9.input", History::fromString).toList()
 //    println(input[1])
 //    println(input[0].extraPolate())

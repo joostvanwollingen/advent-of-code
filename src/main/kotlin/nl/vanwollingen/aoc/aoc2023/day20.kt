@@ -1,10 +1,13 @@
+package nl.vanwollingen.aoc.aoc2023
+
+import nl.vanwollingen.aoc.util.AocUtil
 import java.util.*
 import kotlin.system.exitProcess
 
 fun main() {
     val pulseModules: List<Day20.PulseModule> = AocUtil.parse("day20.input", Day20.PulseModule::fromString).toList()
-//        AocUtil.parse("day20.test.input", Day20.PulseModule::fromString).toList()
-//        AocUtil.parse("day20.test2.input", Day20.PulseModule::fromString).toList()
+//        nl.vanwollingen.aoc.util.AocUtil.parse("day20.test.input", Day20.PulseModule::fromString).toList()
+//        nl.vanwollingen.aoc.util.AocUtil.parse("day20.test2.input", Day20.PulseModule::fromString).toList()
 
     val conjunctions: List<Day20.Conjunction> =
         pulseModules.filter { it.type == Day20.PulseModule.PulseModuleType.CONJUNCTION } as List<Day20.Conjunction>
@@ -24,10 +27,10 @@ fun main() {
             val currentPulse = q.remove()
             processedPulses += currentPulse
 
-            val highConjuctions =
+            val highConjunctions =
                 conjunctions.map { it to it.inputModules.values.all { value -> value == Day20.PulseType.HIGH } }
-            if (highConjuctions.any { it.second }) {
-                highConjuctions.filter { it.second }.forEach {
+            if (highConjunctions.any { it.second }) {
+                highConjunctions.filter { it.second }.forEach {
                     if (conjunctionHighWhen[it.first.name] == null) conjunctionHighWhen[it.first.name] = buttonPresses
                 }
                 if (conjunctionHighWhen.size == 8) {
@@ -51,7 +54,6 @@ fun main() {
     val low: Long = processedPulses.count { it.type == Day20.PulseType.LOW }.toLong()
     val high: Long = processedPulses.count { it.type == Day20.PulseType.HIGH }.toLong()
     println("low: $low high: $high mul: ${low * high}")
-    println(conjunctionHighWhen)
 }
 
 

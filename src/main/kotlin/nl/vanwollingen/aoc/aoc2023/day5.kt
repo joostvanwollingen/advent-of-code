@@ -1,9 +1,12 @@
+package nl.vanwollingen.aoc.aoc2023
+
+import nl.vanwollingen.aoc.util.AocUtil
 import java.lang.Long.max
 import java.lang.Long.min
 
 fun main() {
     val input = AocUtil.load("day5.input")
-//    val input = AocUtil.load("day5.test.input")
+//    val input = nl.vanwollingen.aoc.util.AocUtil.load("day5.test.input")
 //    solvePartOne(input)
     solvePartTwo(input) //wrong:(3894936732, 50716417)
 }

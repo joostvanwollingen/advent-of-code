@@ -1,3 +1,7 @@
+package nl.vanwollingen.aoc.aoc2023
+
+import nl.vanwollingen.aoc.util.AocUtil
+
 fun main() {
     val lines = AocUtil.load("day1.real.txt").lines()
     val result = lines.sumOf { "${getFirstNumber(it)}${getLastNumber(it)}".toInt() }

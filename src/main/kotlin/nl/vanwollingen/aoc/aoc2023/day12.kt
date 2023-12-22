@@ -1,7 +1,9 @@
-import java.util.*
+package nl.vanwollingen.aoc.aoc2023
+
+import nl.vanwollingen.aoc.util.AocUtil
 
 fun main() {
-//    val input = AocUtil.load("day12.test.input")
+//    val input = nl.vanwollingen.aoc.util.AocUtil.load("day12.test.input")
     val input = AocUtil.load("day12.input")
     val springConditions: List<SpringConditions> = input.lines().map {
         SpringConditions.fromString(it)

@@ -1,6 +1,10 @@
+package nl.vanwollingen.aoc.aoc2023
+
+import nl.vanwollingen.aoc.util.AocUtil
+
 fun main() {
-//    val input = AocUtil.load("day15.test.input")
-//    val input = AocUtil.load("day15.test2.input")
+//    val input = nl.vanwollingen.aoc.util.AocUtil.load("day15.test.input")
+//    val input = nl.vanwollingen.aoc.util.AocUtil.load("day15.test2.input")
     val input = AocUtil.load("day15.input")
 
     Day15PartOne(input)

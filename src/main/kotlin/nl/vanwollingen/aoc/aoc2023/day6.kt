@@ -1,7 +1,11 @@
+package nl.vanwollingen.aoc.aoc2023
+
+import nl.vanwollingen.aoc.util.AocUtil
+
 fun main() {
     val input1 = AocUtil.load("day6.input")
     val input = AocUtil.load("day6.2.input")
-//    val input = AocUtil.load("day6.test.input")
+//    val input = nl.vanwollingen.aoc.util.AocUtil.load("day6.test.input")
     solveOne(input1)
     solveTwo(input)
 }

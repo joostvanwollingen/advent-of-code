@@ -1,8 +1,11 @@
+package nl.vanwollingen.aoc.aoc2023
+
+import nl.vanwollingen.aoc.util.AocUtil
 import java.time.Instant
 import java.util.Date
 
 fun main() {
-//    val input = AocUtil.load("day5.test.input")
+//    val input = nl.vanwollingen.aoc.util.AocUtil.load("day5.test.input")
     val input = AocUtil.load("day5.input")
 //    solvePartOneDay5(input)
     solvePartTwoDay5(input)

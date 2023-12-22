@@ -1,3 +1,8 @@
+package nl.vanwollingen.aoc.aoc2023
+
+import nl.vanwollingen.aoc.grid.Point
+import nl.vanwollingen.aoc.grid.getSurroundingPoints
+import nl.vanwollingen.aoc.util.AocUtil
 import kotlin.streams.asStream
 import kotlin.streams.toList
 
@@ -54,20 +59,3 @@ fun getPartNumbersFromLine(index: Int, line: String): List<PartNumber> {
 data class Symbol(val symbol: String, val location: Point)
 
 data class PartNumber(val number: Int, val location: List<Point>)
-
-data class Point(val y: Int, val x: Int)
-
-fun Point.getSurroundingPoints(): List<Point> {
-    val points = mutableListOf<Point>()
-    for (i in this.x - 1..this.x + 1) {
-        for (o in this.y - 1..this.y + 1) {
-            points.add(Point(o, i))
-        }
-    }
-    return points.minus(this)
-}
-
-fun List<Point>.getSurroundingPoints(): List<Point> {
-    return this.asSequence().map { point -> point.getSurroundingPoints() }.flatten().minus(this).toSet()
-        .toList()
-}

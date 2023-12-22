@@ -1,3 +1,6 @@
+package nl.vanwollingen.aoc.aoc2023
+
+import nl.vanwollingen.aoc.util.AocUtil
 import java.time.Instant
 import java.util.*
 
