@@ -6,35 +6,40 @@ import kotlin.streams.asStream
 import kotlin.streams.toList
 
 fun main() {
-    val gridd: List<List<Tile>> = Day21().grid
-    val grid = gridd.flatten()
-    val gardenPlotsVisited: MutableSet<Tile> = mutableSetOf()
-    var newGardenPlots: MutableSet<Tile> = mutableSetOf()
-    val steps = 6
-
-    val startingPoint = grid.first { it.s == "S" }
-
-    newGardenPlots.add(startingPoint)
-
-    for (i in 1..64) {
-
-        newGardenPlots = newGardenPlots.map { plot ->
-            grid.filter { g ->
-                plot.l.getManhattanNeighbours().contains(g.l) && g.s != "#"
-            }
-        }.flatten().toMutableSet()
-//        gardenPlotsVisited.addAll(newGardenPlots)
-//        grid.print(newGardenPlots.map { it.l })
-//        println()
-    }
-    println(newGardenPlots)
-    println(newGardenPlots.size)
+    Day21()
+//        .solvePart1()
+        .solvePart2()
 }
 
 
 class Day21() {
 //    val grid = readGridArray(AocUtil.load("day21.test.input"))
     val grid = readGridArray(AocUtil.load("day21.input"))
+
+    fun solvePart1(){
+        val grid: List<Tile> = Day21().grid.flatten()
+        val gardenPlotsVisited: MutableSet<Tile> = mutableSetOf()
+        var newGardenPlots: MutableSet<Tile> = mutableSetOf()
+        val startingPoint = grid.first { it.s == "S" }
+        newGardenPlots.add(startingPoint)
+
+        for (i in 1..64) {
+            newGardenPlots = newGardenPlots.map { plot ->
+                grid.filter { g ->
+                    plot.l.getManhattanNeighbours().contains(g.l) && g.s != "#"
+                }
+            }.flatten().toMutableSet()
+            gardenPlotsVisited.addAll(newGardenPlots)
+//            grid.print(newGardenPlots.map { it.l })
+//            println()
+        }
+        println(newGardenPlots)
+        println(newGardenPlots.size)
+    }
+
+    fun solvePart2() {
+        
+    }
 
     private fun readGridArray(input: String): List<List<Tile>> {
         var lines = input.lines()
