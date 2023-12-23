@@ -3,6 +3,7 @@ package nl.vanwollingen.aoc.aoc2023
 import nl.vanwollingen.aoc.util.PuzzleInputUtil
 import java.time.Instant
 import java.util.*
+import kotlin.math.pow
 
 fun main() {
     val d4 = Day4()
@@ -37,8 +38,8 @@ class Day4 {
 
     data class Scratchcard(val input: String) {
         val id = Regex("Card\\W*(\\d*):").find(input)!!.groupValues[1].toInt()
-        private val winningNumbers: List<String> = Regex("Card\\W*\\d*:(.*)").find(input)!!.groupValues[1].split("|")[0].strip().split(" ").filter { it.isNotEmpty() }
-        private val numbers: List<String> = Regex("Card\\W*\\d*:(.*)").find(input)!!.groupValues[1].split("|")[1].strip().split(" ").filter { it.isNotEmpty() }
+        private val winningNumbers: List<String> = Regex("Card\\W*\\d*:(.*)").find(input)!!.groupValues[1].split("|")[0].split(" ").filter { it.isNotEmpty() }
+        private val numbers: List<String> = Regex("Card\\W*\\d*:(.*)").find(input)!!.groupValues[1].split("|")[1].split(" ").filter { it.isNotEmpty() }
         private val numberOfMatches = winningNumbers.intersect(numbers.toSet()).size
         val points = getPoints(numberOfMatches)
         val awardsCopiesOf = getCopyIds(id, numberOfMatches)
@@ -48,7 +49,7 @@ class Day4 {
         private fun getPoints(numberOfMatches: Int): Int = when (numberOfMatches) {
             0 -> 0
             1 -> 1
-            else -> Math.pow(2.0, numberOfMatches - 1.toDouble()).toInt()
+            else -> 2.0.pow(numberOfMatches - 1.toDouble()).toInt()
         }
 
         override fun toString(): String {
