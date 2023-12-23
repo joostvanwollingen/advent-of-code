@@ -1,6 +1,6 @@
 package nl.vanwollingen.aoc.util
 
-class AocUtil {
+class PuzzleInputUtil {
     companion object {
         fun load(input: String): String = this::class.java.classLoader.getResource(input)?.readText()
             ?: throw Exception("$input is not a valid path.")
