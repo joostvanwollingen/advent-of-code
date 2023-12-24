@@ -27,8 +27,8 @@ class Day7 {
         println(totalWinnings.sumOf { it.second })
     }
 
-    enum class HandType(i: Int) {
-        HighCard(2), OnePair(3), TwoPair(4), ThreeOfAKind(5), FullHouse(6), FourOfAKind(7), FiveOfAKind(8),
+    enum class HandType {
+        HighCard, OnePair, TwoPair, ThreeOfAKind, FullHouse, FourOfAKind, FiveOfAKind,
     }
 
     class Hand(input: String, private val jacksEnabled: Boolean = false) : Comparable<Hand> {
@@ -125,9 +125,7 @@ class Day7 {
 
             other as Card
 
-            if (points != other.points) return false
-
-            return true
+            return points == other.points
         }
 
         override fun toString(): String {
