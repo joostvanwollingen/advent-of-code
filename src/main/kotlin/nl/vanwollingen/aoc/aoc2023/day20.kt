@@ -1,6 +1,7 @@
 package nl.vanwollingen.aoc.aoc2023
 
 import nl.vanwollingen.aoc.util.PuzzleInputUtil
+import nl.vanwollingen.aoc.util.quickmaths.mansnothot.bigshaq.findLcm
 import java.util.*
 import kotlin.system.exitProcess
 
@@ -34,7 +35,7 @@ fun main() {
                     if (conjunctionHighWhen[it.first.name] == null) conjunctionHighWhen[it.first.name] = buttonPresses
                 }
                 if (conjunctionHighWhen.size == 8) {
-                    println(findLCMOfListOfNumbers(conjunctionHighWhen.values.toList()))
+                    println(findLcm(conjunctionHighWhen.values.toList()))
                     println(conjunctionHighWhen)
                     exitProcess(1)
                 }

@@ -1,4 +1,4 @@
-package nl.vanwollingen.aoc.grid
+package nl.vanwollingen.aoc.util.grid
 
 data class Point(val y: Int, val x: Int) {
     override fun equals(other: Any?): Boolean {

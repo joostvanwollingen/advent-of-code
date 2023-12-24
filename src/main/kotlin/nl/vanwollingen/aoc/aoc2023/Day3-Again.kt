@@ -1,7 +1,7 @@
 package nl.vanwollingen.aoc.aoc2023
 
-import nl.vanwollingen.aoc.grid.Point
-import nl.vanwollingen.aoc.grid.getSurroundingPoints
+import nl.vanwollingen.aoc.util.grid.Point
+import nl.vanwollingen.aoc.util.grid.getSurroundingPoints
 import nl.vanwollingen.aoc.util.PuzzleInputUtil
 import kotlin.streams.asStream
 

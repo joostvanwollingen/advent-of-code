@@ -1,6 +1,7 @@
 package nl.vanwollingen.aoc.aoc2023
 
 import nl.vanwollingen.aoc.util.PuzzleInputUtil
+import nl.vanwollingen.aoc.util.quickmaths.mansnothot.bigshaq.findLcm
 
 fun main() {
 //    val input = nl.vanwollingen.aoc.util.AocUtil.load("day8.test.input")
@@ -22,30 +23,9 @@ fun solvePartTwoDay8Again(instructions: List<String>, directions: List<Node>) {
     var map = createMap(directions)
     var startingNodes = directions.filter { it.start.endsWith("A") }.map { it.start }
     var zNodes = startingNodes.map { findPathToNodesEndingWith(it, "Z", instructions, map) }
-    var LCM = findLCMOfListOfNumbers(zNodes.flatMap { it.keys })
+    var LCM = findLcm(zNodes.flatMap { it.keys })
     println(LCM)
 
-}
-
-fun findLCM(a: Long, b: Long): Long {
-    val larger = if (a > b) a else b
-    val maxLcm = a * b
-    var lcm = larger
-    while (lcm <= maxLcm) {
-        if (lcm % a == 0L && lcm % b == 0L) {
-            return lcm
-        }
-        lcm += larger
-    }
-    return maxLcm
-}
-
-fun findLCMOfListOfNumbers(numbers: List<Long>): Long {
-    var result = numbers[0]
-    for (i in 1 until numbers.size) {
-        result = findLCM(result, numbers[i])
-    }
-    return result
 }
 
 fun findPathToNodesEndingWith(
