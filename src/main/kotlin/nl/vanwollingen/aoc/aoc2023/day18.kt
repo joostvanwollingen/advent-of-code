@@ -1,11 +1,11 @@
 package nl.vanwollingen.aoc.aoc2023
 
 import nl.vanwollingen.aoc.grid.Point
-import nl.vanwollingen.aoc.util.AocUtil
+import nl.vanwollingen.aoc.util.PuzzleInputUtil
 import java.util.*
 
 class Day18() {
-    val input = AocUtil.load("day18.test.input")
+    val input = PuzzleInputUtil.load("2023/day18.test.input")
 
     //        val input = nl.vanwollingen.aoc.util.AocUtil.load("day18.input")
     fun solve1() {

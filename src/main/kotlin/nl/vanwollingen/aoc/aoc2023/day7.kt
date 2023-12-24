@@ -1,9 +1,9 @@
 package nl.vanwollingen.aoc.aoc2023
 
-import nl.vanwollingen.aoc.util.AocUtil
+import nl.vanwollingen.aoc.util.PuzzleInputUtil
 
 fun main() {
-    val input = AocUtil.parse("day7.input", Hand::class.java).toList()
+    val input = PuzzleInputUtil.parse("2023/day7.input", Hand::class.java).toList()
 //    val input = nl.vanwollingen.aoc.util.AocUtil.parse("day7.test.input", Hand::class.java).toList()
     solveDay7PartOne(input)
 //    val t = Hand("QQQJA 483")

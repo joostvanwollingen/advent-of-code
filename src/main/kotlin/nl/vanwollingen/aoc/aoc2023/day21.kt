@@ -1,9 +1,8 @@
 package nl.vanwollingen.aoc.aoc2023
 
 import nl.vanwollingen.aoc.grid.Point
-import nl.vanwollingen.aoc.util.AocUtil
+import nl.vanwollingen.aoc.util.PuzzleInputUtil
 import kotlin.streams.asStream
-import kotlin.streams.toList
 
 fun main() {
     Day21()
@@ -14,7 +13,7 @@ fun main() {
 
 class Day21() {
 //    val grid = readGridArray(AocUtil.load("day21.test.input"))
-    val grid = readGridArray(AocUtil.load("day21.input"))
+    val grid = readGridArray(PuzzleInputUtil.load("2023/day21.input"))
 
     fun solvePart1(){
         val grid: List<Tile> = Day21().grid.flatten()

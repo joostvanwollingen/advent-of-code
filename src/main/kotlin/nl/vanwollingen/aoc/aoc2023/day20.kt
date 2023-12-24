@@ -1,11 +1,11 @@
 package nl.vanwollingen.aoc.aoc2023
 
-import nl.vanwollingen.aoc.util.AocUtil
+import nl.vanwollingen.aoc.util.PuzzleInputUtil
 import java.util.*
 import kotlin.system.exitProcess
 
 fun main() {
-    val pulseModules: List<Day20.PulseModule> = AocUtil.parse("day20.input", Day20.PulseModule::fromString).toList()
+    val pulseModules: List<Day20.PulseModule> = PuzzleInputUtil.parse("2023/day20.input", Day20.PulseModule::fromString).toList()
 //        nl.vanwollingen.aoc.util.AocUtil.parse("day20.test.input", Day20.PulseModule::fromString).toList()
 //        nl.vanwollingen.aoc.util.AocUtil.parse("day20.test2.input", Day20.PulseModule::fromString).toList()
 

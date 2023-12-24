@@ -10,7 +10,7 @@ fun main() {
 
 class Day2() {
 
-    private val games = PuzzleInputUtil.parse("day2.input", Game::class.java)
+    private val games = PuzzleInputUtil.parse("2023/day2.input", Game::class.java)
     private val maxRedAllowed = 12
     private val maxGreenAllowed = 13
     private val maxBlueAllowed = 14

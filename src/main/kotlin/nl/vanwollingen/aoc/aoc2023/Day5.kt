@@ -3,7 +3,7 @@ package nl.vanwollingen.aoc.aoc2023
 import nl.vanwollingen.aoc.util.PuzzleInputUtil
 
 fun main() {
-    val input = PuzzleInputUtil.load("day5.input")
+    val input = PuzzleInputUtil.load("2023/day5.input")
 //    val input = nl.vanwollingen.aoc.util.AocUtil.load("day5.test.input")
     Day5().solvePartOne(input)
     Day5().solvePartTwo(input) //wrong:(3894936732, 50716417)

@@ -4,8 +4,8 @@ import nl.vanwollingen.aoc.util.PuzzleInputUtil
 
 fun main() {
     val d6 = Day6()
-    val input1 = PuzzleInputUtil.load("day6.input")
-    val input2 = PuzzleInputUtil.load("day6.2.input")
+    val input1 = PuzzleInputUtil.load("2023/day6.input")
+    val input2 = PuzzleInputUtil.load("2023/day6.2.input")
 
     d6.solvePart1(input1)
     d6.solvePart2(input2)

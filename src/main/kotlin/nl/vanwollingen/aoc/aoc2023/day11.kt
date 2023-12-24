@@ -1,12 +1,11 @@
 package nl.vanwollingen.aoc.aoc2023
 
 import nl.vanwollingen.aoc.grid.Point
-import nl.vanwollingen.aoc.util.AocUtil
+import nl.vanwollingen.aoc.util.PuzzleInputUtil
 import kotlin.streams.asStream
-import kotlin.streams.toList
 
 fun main() {
-    val input = AocUtil.load("day11.input").lines()
+    val input = PuzzleInputUtil.load("2023/day11.input").lines()
 //    val input = nl.vanwollingen.aoc.util.AocUtil.load("day11.test.input").lines()
 //    val input = nl.vanwollingen.aoc.util.AocUtil.load("day11.test2.input").lines()
     val grid = readGrid(input).groupBy { PointKey(it.l.y, it.l.x) }.mapValues { it.value.first() }.assignGalaxyIds()

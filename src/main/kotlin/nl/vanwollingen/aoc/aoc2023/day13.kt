@@ -1,9 +1,9 @@
 package nl.vanwollingen.aoc.aoc2023
 
-import nl.vanwollingen.aoc.util.AocUtil
+import nl.vanwollingen.aoc.util.PuzzleInputUtil
 
 fun main() {
-    val input = AocUtil.load("day13.test.input")
+    val input = PuzzleInputUtil.load("2023/day13.test.input")
 //    val input = nl.vanwollingen.aoc.util.AocUtil.load("day13.input")
 //    Day13Part1(input)
     Day13Part2(input)

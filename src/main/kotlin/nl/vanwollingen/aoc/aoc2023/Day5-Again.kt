@@ -5,7 +5,7 @@ import java.time.Instant
 import java.util.Date
 
 fun main() {
-    val input = PuzzleInputUtil.load("day5.input")
+    val input = PuzzleInputUtil.load("2023/day5.input")
     val day5 = Day5Again()
     day5.solvePart1(input)
     day5.solvePart2(input)

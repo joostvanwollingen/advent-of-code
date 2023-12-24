@@ -2,102 +2,106 @@ package nl.vanwollingen.aoc.aoc2023
 
 import nl.vanwollingen.aoc.grid.Point
 import nl.vanwollingen.aoc.grid.getSurroundingPoints
-import nl.vanwollingen.aoc.util.AocUtil
-import java.util.LinkedList
-import java.util.Queue
 import kotlin.streams.asStream
-import kotlin.streams.toList
 import kotlin.system.exitProcess
 
 fun main() {
-//    val lines = nl.vanwollingen.aoc.util.AocUtil.load("day10.test.input").lines()
-    val lines = AocUtil.load("day10.test3.input").lines() //4
+    Day10().solvePart1()
+}
+class Day10() {
+    fun solvePart1() {
+    val lines = nl.vanwollingen.aoc.util.PuzzleInputUtil.load("2023/day10.test.input").lines()
+//        val lines = AocUtil.load("day10.test3.input").lines() //4
 //    val lines = nl.vanwollingen.aoc.util.AocUtil.load("day10.test4.input").lines() //4
 //    val lines = nl.vanwollingen.aoc.util.AocUtil.load("day10.test5.input").lines() //8
 //    val lines = nl.vanwollingen.aoc.util.AocUtil.load("day10.test6.input").lines() //10
-//    val lines = nl.vanwollingen.aoc.util.AocUtil.load("day10.input").lines()
-    val grid = readGrid(lines)
-    val start = grid.first { it.s == "S" }
-    val possibleStartConnections = start.getConnections(grid)
-    //grid.print(start)
+//    val lines = AocUtil.load("day10.input").lines()
+        val grid = readGrid(lines)
+        val start = grid.first { it.s == "S" }
+        val possibleStartConnections = start.getConnections(grid)
+        //grid.print(start)
 //    println(possibleStartConnections)
 //
-    var possibleNextConnection: Pipe? = possibleStartConnections.first()
-    val visited = mutableListOf(start, possibleNextConnection)
-    var steps = 0L
-    while (possibleNextConnection != null) {
-        val notVisitedConnections = possibleNextConnection.getConnections(grid).filterNot { visited.contains(it) }
+        var possibleNextConnection: Pipe? = possibleStartConnections.first()
+        val visited = mutableListOf(start, possibleNextConnection)
+        var steps = 0L
+        while (possibleNextConnection != null) {
+            val notVisitedConnections = possibleNextConnection.getConnections(grid).filterNot { visited.contains(it) }
 
-        if (notVisitedConnections.size > 1) {
+            if (notVisitedConnections.size > 1) {
 //            println("more than 1 connection found for $possibleNextConnection : $notVisitedConnections at step $steps")
-            exitProcess(1)
-        }
-        if (notVisitedConnections.isEmpty()) {
+                exitProcess(1)
+            }
+            if (notVisitedConnections.isEmpty()) {
 //            println("no more connections founds for $possibleNextConnection at step $steps")
-            steps++
-            break
-        }
+                steps++
+                break
+            }
 
-        possibleNextConnection = notVisitedConnections.first()
-        visited += possibleNextConnection
-        steps++
-    }
+            possibleNextConnection = notVisitedConnections.first()
+            visited += possibleNextConnection
+            steps++
+        }
+        println(visited.size)
+}
+
+
 //    grid.print(visited = visited.filterNotNull().toList())
 //    val answer = ((visited.size - 1) / 2) + 1
 //    println("Answer = $answer from ${visited[answer]}")
 
-    //Part 2
-    var maxX = visited.maxBy { it!!.l.x }!!.l.x
-    var minX = visited.minBy { it!!.l.x }!!.l.x
-    var maxY = visited.maxBy { it!!.l.y }!!.l.y
-    var minY = visited.minBy { it!!.l.y }!!.l.y
-
-    val noVisited = grid - visited.map { it!! }.toSet()
-    val mightBeFillable = noVisited.filter {
-        it.s == "." && it.l.x <= maxX && it.l.x >= minX && it.l.y >= minY && it.l.y <= maxY
-    }
-//    grid.print()
-
-    val gridK = grid.groupBy { PointKey(it.l.y, it.l.x) }.mapValues { it.value.first() }
-    var filled: MutableList<Pipe> = mutableListOf()
-
-    mightBeFillable.forEach {
-        var searched: MutableList<Pipe> = mutableListOf()
-        var q: Queue<Pipe> = LinkedList(listOf(it))
-        var focus: Pipe? = q.peek()
-        var currentLine = minY
-
-        println("Starting search from ${focus!!.l}")
-        while (focus != null) {
-            grid.print(focus, searched)
-
-            val notFilledNeighbours =
-                focus.getFillableNeighbours(gridK, currentLine).filterNot { searched.contains(it) }
-
-            q.addAll(notFilledNeighbours)
-            q = LinkedList(q.distinct())
-            searched += focus!!
-
-            if (q.peek() != null) focus = q.remove() else {
-                currentLine++
-                if (currentLine > maxY) {
-//                    grid.print(visited = searched, focus = focus)
-//                    println("Filled")
-//                    grid.print(visited = filled, focus = focus)
-
-                    break
-                }
-            }
-        }
-//        println("final")
-//        println("filled: $filled")
-//        grid.print(visited = filled.map { it!! })
-        if (!searched.flatMap { s -> s.getFillableNeighbours(gridK) }
-                .any { s -> s.l.outside(minX, maxX, minY, maxY) }) filled += searched
-        filled = filled.distinct() as MutableList<Pipe>
-    }
-    grid.print(visited = filled.map { it!! })
-    println(filled.size)
+//    //Part 2
+//    var maxX = visited.maxBy { it!!.l.x }!!.l.x
+//    var minX = visited.minBy { it!!.l.x }!!.l.x
+//    var maxY = visited.maxBy { it!!.l.y }!!.l.y
+//    var minY = visited.minBy { it!!.l.y }!!.l.y
+//
+//    val notAPipe = grid - visited.map { it!! }.toSet()
+//    val mightBeFillable = notAPipe.filter {
+//        it.s == "." && it.l.x <= maxX && it.l.x >= minX && it.l.y >= minY && it.l.y <= maxY
+//    }
+////    grid.print()
+//
+//    val gridK = grid.groupBy { PointKey(it.l.y, it.l.x) }.mapValues { it.value.first() }
+//    var filled: MutableList<Pipe> = mutableListOf()
+//
+//    mightBeFillable.forEach {
+//        var searched: MutableList<Pipe> = mutableListOf()
+//        var q: Queue<Pipe> = LinkedList(listOf(it))
+//        var focus: Pipe? = q.peek()
+//        var currentLine = minY
+//
+//        println("Starting search from ${focus!!.l}")
+//        while (focus != null) {
+//            grid.print(focus, searched)
+//
+//            val notFilledNeighbours =
+//                focus.getFillableNeighbours(gridK, currentLine).filterNot { searched.contains(it) }
+//
+//            q.addAll(notFilledNeighbours)
+//            q = LinkedList(q.distinct())
+//            searched += focus!!
+//
+//            if (q.peek() != null) focus = q.remove() else {
+//                currentLine++
+//                if (currentLine > maxY) {
+////                    grid.print(visited = searched, focus = focus)
+////                    println("Filled")
+////                    grid.print(visited = filled, focus = focus)
+//
+//                    break
+//                }
+//            }
+//        }
+////        println("final")
+////        println("filled: $filled")
+////        grid.print(visited = filled.map { it!! })
+//        if (!searched.flatMap { s -> s.getFillableNeighbours(gridK) }
+//                .any { s -> s.l.outside(minX, maxX, minY, maxY) }) filled += searched
+//        filled = filled.distinct() as MutableList<Pipe>
+//    }
+//    grid.print(visited = filled.map { it!! })
+//    println(filled.size)
 }
 
 private fun Point.outside(minX: Int, maxX: Int, minY: Int, maxY: Int): Boolean {

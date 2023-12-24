@@ -1,10 +1,10 @@
 package nl.vanwollingen.aoc.aoc2023
 
-import nl.vanwollingen.aoc.util.AocUtil
+import nl.vanwollingen.aoc.util.PuzzleInputUtil
 
 fun main() {
 //    val input = nl.vanwollingen.aoc.util.AocUtil.load("day12.test.input")
-    val input = AocUtil.load("day12.input")
+    val input = PuzzleInputUtil.load("2023/day12.input")
     val springConditions: List<SpringConditions> = input.lines().map {
         SpringConditions.fromString(it)
     }

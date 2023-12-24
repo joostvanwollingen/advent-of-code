@@ -10,13 +10,13 @@ fun main() {
 class Day1() {
     companion object {
         fun solvePart1() {
-            val lines = PuzzleInputUtil.load("day1.input").lines()
+            val lines = PuzzleInputUtil.load("2023/day1.input").lines()
             val result = lines.sumOf { "${Day1.getFirstNumber(it)}${Day1.getLastNumber(it)}".toInt() }
             println(result)
         }
 
         fun solvePart2() {
-            val lines = PuzzleInputUtil.load("day1.input").lines()
+            val lines = PuzzleInputUtil.load("2023/day1.input").lines()
             val result = lines.sumOf { "${Day1.getFirstNumber(it, true)}${Day1.getLastNumber(it, true)}".toInt() }
             println(result)
         }

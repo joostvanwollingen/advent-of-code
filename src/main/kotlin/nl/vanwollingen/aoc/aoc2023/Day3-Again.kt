@@ -12,7 +12,7 @@ fun main() {
 }
 
 class Day3Again {
-    val lines = PuzzleInputUtil.load("day3.input").lines()
+    val lines = PuzzleInputUtil.load("2023/day3.input").lines()
     val grid = readGrid(lines)
     private val partNumbers: kotlin.collections.List<PartNumber> = grid.first
     private val symbols: kotlin.collections.List<Symbol> = grid.second

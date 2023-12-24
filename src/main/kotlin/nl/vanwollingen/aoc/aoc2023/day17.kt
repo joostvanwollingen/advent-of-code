@@ -1,11 +1,10 @@
 package nl.vanwollingen.aoc.aoc2023
 
 import nl.vanwollingen.aoc.grid.Point
-import nl.vanwollingen.aoc.util.AocUtil
+import nl.vanwollingen.aoc.util.PuzzleInputUtil
 import kotlin.streams.asStream
-import kotlin.streams.toList
 
-val input = AocUtil.load("day17.test.input")
+val input = PuzzleInputUtil.load("2023/day17.test.input")
 val cityBlock = readGrid(input.lines())
 
 fun main() {

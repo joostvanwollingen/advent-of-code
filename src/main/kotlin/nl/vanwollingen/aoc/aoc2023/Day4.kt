@@ -12,7 +12,7 @@ fun main() {
 }
 
 class Day4 {
-    private val scratchCards = PuzzleInputUtil.parse("day4.input", Scratchcard::class.java).toList()
+    private val scratchCards = PuzzleInputUtil.parse("2023/day4.input", Scratchcard::class.java).toList()
 
     fun solvePart1() {
         val points = scratchCards.sumOf { it.points }

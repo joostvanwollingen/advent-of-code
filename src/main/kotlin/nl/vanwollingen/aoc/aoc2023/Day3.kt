@@ -9,7 +9,7 @@ fun main() {
 }
 
 class Day3 {
-    val lines = PuzzleInputUtil.load("day3.input").lines()
+    val lines = PuzzleInputUtil.load("2023/day3.input").lines()
     val grid: Map<Int, Map<Int, Pixel>> = getGrid(lines.withIndex())
 
     fun solvePart1() {

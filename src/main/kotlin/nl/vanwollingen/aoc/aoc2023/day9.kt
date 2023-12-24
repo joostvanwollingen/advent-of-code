@@ -1,10 +1,10 @@
 package nl.vanwollingen.aoc.aoc2023
 
-import nl.vanwollingen.aoc.util.AocUtil
+import nl.vanwollingen.aoc.util.PuzzleInputUtil
 
 fun main() {
 //    val input = nl.vanwollingen.aoc.util.AocUtil.parse("day9.test.input", History::fromString).toList()
-    val input = AocUtil.parse("day9.input", History::fromString).toList()
+    val input = PuzzleInputUtil.parse("2023/day9.input", History::fromString).toList()
 //    println(input[1])
 //    println(input[0].extraPolate())
 //    println(input[1])

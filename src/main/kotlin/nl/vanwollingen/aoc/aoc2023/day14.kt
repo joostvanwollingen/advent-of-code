@@ -1,14 +1,13 @@
 package nl.vanwollingen.aoc.aoc2023
 
 import nl.vanwollingen.aoc.grid.Point
-import nl.vanwollingen.aoc.util.AocUtil
+import nl.vanwollingen.aoc.util.PuzzleInputUtil
 import java.util.*
 import kotlin.streams.asStream
-import kotlin.streams.toList
 
 fun main() {
 //    val input = nl.vanwollingen.aoc.util.AocUtil.load("day14.test.input")
-    val input = AocUtil.load("day14.input")
+    val input = PuzzleInputUtil.load("2023/day14.input")
     var reflectorDish = input.lines()
 
     var cycle = 0L

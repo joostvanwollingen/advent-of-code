@@ -1,11 +1,11 @@
 package nl.vanwollingen.aoc.aoc2023
 
-import nl.vanwollingen.aoc.util.AocUtil
+import nl.vanwollingen.aoc.util.PuzzleInputUtil
 
 class Day19() {
 //    val input = nl.vanwollingen.aoc.util.AocUtil.load("day19.test.input")
 
-        val input = AocUtil.load("day19.input")
+        val input = PuzzleInputUtil.load("2023/day19.input")
     val workflows = input.split("\n\n")[0].split("\n").map { Workflow.fromString(it) }
     val parts = input.split("\n\n")[1].split("\n").map { MachinePart.fromString(it) }
 
