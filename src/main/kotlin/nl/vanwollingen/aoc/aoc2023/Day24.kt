@@ -1,6 +1,10 @@
 package nl.vanwollingen.aoc.aoc2023
 
 import nl.vanwollingen.aoc.util.PuzzleInputUtil
+import nl.vanwollingen.aoc.util.quickmaths.mansnothot.bigshaq.Line
+import nl.vanwollingen.aoc.util.quickmaths.mansnothot.bigshaq.Point
+import nl.vanwollingen.aoc.util.quickmaths.mansnothot.bigshaq.findIntersection
+import nl.vanwollingen.aoc.util.quickmaths.mansnothot.bigshaq.intercept
 
 
 fun main() {
@@ -9,37 +13,50 @@ fun main() {
         Day24.Hail.fromString(input)
     }.toList()
 
-    val testArea = Day24.TestArea(7.toDouble(), 27.toDouble(), 7.toDouble(), 27.toDouble())
-
+    val testArea = Day24.TestArea(7F, 27F, 7F, 27F)
     d24.solvePart1(allHail, testArea)
 }
 
 class Day24 {
 
-    fun zero(main: Double, delta: Int) = main / delta
-    fun intercept(x: Double, dx: Int, y: Double, dy: Int): Pair<Double, Double> {
-        val yzero = zero(x, dx)
-
-        val xzero = zero(y, dy)
-
-        return x - (xzero * dx) to y - (yzero * dy)
-    }
-
 
     fun solvePart1(allHail: List<Hail>, testArea: TestArea) {
-        val hailA = intercept(19.toDouble(), -2, 13.toDouble(), 1)
-        val hailB = intercept(18.toDouble(), -1, 19.toDouble(), -1)
+        var count = 0
+        for (i in 0..allHail.size) {
+            for (j in i + 1..<allHail.size) {
+                val a = allHail[i]
+                val b = allHail[j]
 
-//        println(hailA)
-//        println(hailB)
+                val aIntercept = intercept(a.x, a.deltaX, a.y, a.deltaY)
+                val bIntercept = intercept(b.x, b.deltaX, b.y, b.deltaY)
 
-        val first = LineF(PointF(45F, 0F), PointF(0F, 22.5F))
-        val second = LineF(PointF(-1.0F, 0F), PointF(0F, 1.0F))
-        println(findIntersection(first, second))
+                val aLine = Line(Point(aIntercept.first, 0F), Point(0F, aIntercept.second))
+                val bLine = Line(Point(bIntercept.first, 0F), Point(0F, bIntercept.second))
+                val aBIntersection = findIntersection(aLine, bLine)
 
-//        println(intersectionOfTwoLines(45.0, 22.5, -1.0, 1.0))
+                if (testArea.isInside(aBIntersection) && isInFuture(aBIntersection, a) && isInFuture(aBIntersection, b)) count++
+            }
+        }
+        println(count)
+    }
 
+    fun isInFuture(intersectionPoint: Point, hail: Hail): Boolean {
+        return inFuture(hail.deltaX, hail.x, intersectionPoint.x) &&
+                inFuture(hail.deltaY, hail.y, intersectionPoint.y)
+    }
 
+    private fun inFuture(delta: Float, l: Float, intersect: Float): Boolean {
+        var inFuture = false
+        if (delta > 0) {
+            if (l < intersect) {
+                inFuture = true
+            }
+        } else {
+            if (l > intersect) {
+                inFuture = true
+            }
+        }
+        return inFuture
     }
 
 
@@ -47,13 +64,13 @@ class Day24 {
 
     }
 
-    class Hail(val x: Double, val y: Double, val z: Double, val deltaX: Double, val deltaY: Double, val deltaZ: Double) {
+    class Hail(val x: Float, val y: Float, val z: Float, val deltaX: Float, val deltaY: Float, val deltaZ: Float) {
         companion object {
             fun fromString(input: String): Hail {
                 val (coordinates, deltas) = input.split(Regex(" @\\s+"))
                 val (x, y, z) = coordinates.split(", ")
                 val (deltaX, deltaY, deltaZ) = deltas.split(Regex(",\\s+"))
-                return Hail(x.toDouble(), y.toDouble(), z.toDouble(), deltaX.toDouble(), deltaY.toDouble(), deltaZ.toDouble())
+                return Hail(x.toFloat(), y.toFloat(), z.toFloat(), deltaX.toFloat(), deltaY.toFloat(), deltaZ.toFloat())
             }
         }
 
@@ -62,25 +79,8 @@ class Day24 {
         }
     }
 
-    data class TestArea(val minX: Double, val maxX: Double, val minY: Double, val maxY: Double)
-
-    fun findIntersection(l1: LineF, l2: LineF): PointF {
-        val a1 = l1.e.y - l1.s.y
-        val b1 = l1.s.x - l1.e.x
-        val c1 = a1 * l1.s.x + b1 * l1.s.y
-
-        val a2 = l2.e.y - l2.s.y
-        val b2 = l2.s.x - l2.e.x
-        val c2 = a2 * l2.s.x + b2 * l2.s.y
-
-        val delta = a1 * b2 - a2 * b1
-        // If lines are parallel, intersection point will contain infinite values
-        return PointF((b2 * c1 - b1 * c2) / delta, (a1 * c2 - a2 * c1) / delta)
+    data class TestArea(val minX: Float, val maxX: Float, val minY: Float, val maxY: Float) {
+        fun isInside(intersectionPoint: Point): Boolean =
+                intersectionPoint.x >= this.minX && intersectionPoint.x <= this.maxX && intersectionPoint.y >= this.minY && intersectionPoint.y <= this.maxY
     }
-
-    class PointF(val x: Float, val y: Float) {
-        override fun toString() = "{$x, $y}"
-    }
-
-    class LineF(val s: PointF, val e: PointF)
 }
