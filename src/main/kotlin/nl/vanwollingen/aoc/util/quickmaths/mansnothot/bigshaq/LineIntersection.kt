@@ -15,7 +15,7 @@ fun findIntersection(l1: Line, l2: Line): Point {
     return Point((b2 * c1 - b1 * c2) / delta, (a1 * c2 - a2 * c1) / delta)
 }
 
-class Point(val x: Float, val y: Float) {
+class Point(val x: Double, val y: Double) {
     override fun toString() = "{$x, $y}"
 }
 
@@ -25,8 +25,8 @@ class Line(val s: Point, val e: Point) {
     }
 }
 
-fun zero(main: Float, delta: Float) = main / delta
-fun intercept(x: Float, dx: Float, y: Float, dy: Float): Pair<Float, Float> {
+fun zero(main: Double, delta: Double) = main.toDouble() / delta
+fun intercept(x: Double, dx: Double, y: Double, dy: Double): Pair<Double, Double> {
     val yzero = zero(x, dx)
 
     val xzero = zero(y, dy)

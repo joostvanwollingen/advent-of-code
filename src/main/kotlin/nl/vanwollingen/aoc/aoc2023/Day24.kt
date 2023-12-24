@@ -9,11 +9,11 @@ import nl.vanwollingen.aoc.util.quickmaths.mansnothot.bigshaq.intercept
 
 fun main() {
     val d24 = Day24()
-    val allHail = PuzzleInputUtil.parse("2023/day24.test.input") { input ->
+    val allHail = PuzzleInputUtil.parse("2023/day24.input") { input ->
         Day24.Hail.fromString(input)
     }.toList()
 
-    val testArea = Day24.TestArea(7F, 27F, 7F, 27F)
+    val testArea = Day24.TestArea(200000000000000, 400000000000000, 200000000000000, 400000000000000)
     d24.solvePart1(allHail, testArea)
 }
 
@@ -30,8 +30,8 @@ class Day24 {
                 val aIntercept = intercept(a.x, a.deltaX, a.y, a.deltaY)
                 val bIntercept = intercept(b.x, b.deltaX, b.y, b.deltaY)
 
-                val aLine = Line(Point(aIntercept.first, 0F), Point(0F, aIntercept.second))
-                val bLine = Line(Point(bIntercept.first, 0F), Point(0F, bIntercept.second))
+                val aLine = Line(Point(aIntercept.first, 0.0), Point(0.0, aIntercept.second))
+                val bLine = Line(Point(bIntercept.first, 0.0), Point(0.0, bIntercept.second))
                 val aBIntersection = findIntersection(aLine, bLine)
 
                 if (testArea.isInside(aBIntersection) && isInFuture(aBIntersection, a) && isInFuture(aBIntersection, b)) count++
@@ -45,7 +45,7 @@ class Day24 {
                 inFuture(hail.deltaY, hail.y, intersectionPoint.y)
     }
 
-    private fun inFuture(delta: Float, l: Float, intersect: Float): Boolean {
+    private fun inFuture(delta: Double, l: Double, intersect: Double): Boolean {
         var inFuture = false
         if (delta > 0) {
             if (l < intersect) {
@@ -64,13 +64,13 @@ class Day24 {
 
     }
 
-    class Hail(val x: Float, val y: Float, val z: Float, val deltaX: Float, val deltaY: Float, val deltaZ: Float) {
+    class Hail(val x: Double, val y: Double, val z: Double, val deltaX: Double, val deltaY: Double, val deltaZ: Double) {
         companion object {
             fun fromString(input: String): Hail {
                 val (coordinates, deltas) = input.split(Regex(" @\\s+"))
                 val (x, y, z) = coordinates.split(", ")
                 val (deltaX, deltaY, deltaZ) = deltas.split(Regex(",\\s+"))
-                return Hail(x.toFloat(), y.toFloat(), z.toFloat(), deltaX.toFloat(), deltaY.toFloat(), deltaZ.toFloat())
+                return Hail(x.toDouble(), y.toDouble(), z.toDouble(), deltaX.toDouble(), deltaY.toDouble(), deltaZ.toDouble())
             }
         }
 
@@ -79,7 +79,7 @@ class Day24 {
         }
     }
 
-    data class TestArea(val minX: Float, val maxX: Float, val minY: Float, val maxY: Float) {
+    data class TestArea(val minX: Long, val maxX: Long, val minY: Long, val maxY: Long) {
         fun isInside(intersectionPoint: Point): Boolean =
                 intersectionPoint.x >= this.minX && intersectionPoint.x <= this.maxX && intersectionPoint.y >= this.minY && intersectionPoint.y <= this.maxY
     }
