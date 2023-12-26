@@ -2,13 +2,18 @@ package nl.vanwollingen.aoc.aoc2023
 
 import nl.vanwollingen.aoc.util.grid.Point
 import nl.vanwollingen.aoc.util.PuzzleInputUtil
+import nl.vanwollingen.aoc.util.grid.outside
 import java.util.*
+
+fun main() {
+    Day18().solvePart1()
+}
 
 class Day18() {
     val input = PuzzleInputUtil.load("2023/day18.test.input")
 
     //        val input = nl.vanwollingen.aoc.util.AocUtil.load("day18.input")
-    fun solve1() {
+    fun solvePart1() {
         var currentPoint = Point(0, 0)
         val grid: MutableMap<Point, String> = mutableMapOf(currentPoint to "")
         input.lines().forEach { instruction ->
@@ -34,10 +39,6 @@ class Day18() {
         "D" -> nl.vanwollingen.aoc.aoc2023.DeltaPoint(1, 0)
         else -> throw Exception("Unknown direction $direction")
     }
-}
-
-fun main() {
-    nl.vanwollingen.aoc.aoc2023.Day18().solve1()
 }
 
 private fun Map<Point, String>.print() {
@@ -112,8 +113,4 @@ fun scan(lx: Int, rx: Int, y: Int, q: Queue<Point>, minY: Int, maxY: Int, minX: 
             spanAdded = true
         }
     }
-}
-
-private fun Point.outside(minX: Int, maxX: Int, minY: Int, maxY: Int): Boolean {
-    return this.y < minY || this.y > maxY || this.x < minX || this.x > maxX
 }

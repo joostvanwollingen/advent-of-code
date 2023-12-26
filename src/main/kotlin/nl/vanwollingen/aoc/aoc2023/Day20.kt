@@ -6,59 +6,61 @@ import java.util.*
 import kotlin.system.exitProcess
 
 fun main() {
-    val pulseModules: List<Day20.PulseModule> = PuzzleInputUtil.parse("2023/day20.input", Day20.PulseModule::fromString).toList()
-//        nl.vanwollingen.aoc.util.AocUtil.parse("day20.test.input", Day20.PulseModule::fromString).toList()
-//        nl.vanwollingen.aoc.util.AocUtil.parse("day20.test2.input", Day20.PulseModule::fromString).toList()
-
-    val conjunctions: List<Day20.Conjunction> =
-        pulseModules.filter { it.type == Day20.PulseModule.PulseModuleType.CONJUNCTION } as List<Day20.Conjunction>
-    conjunctions.forEach { it.loadInputModules(pulseModules) }
-    println(pulseModules)
-
-    val button = Day20.Button("button", type = Day20.PulseModule.PulseModuleType.BUTTON)
-    val q: Queue<Day20.Pulse> = LinkedList()
-
-    val processedPulses: MutableList<Day20.Pulse> = mutableListOf()
-    var buttonPresses = 0L
-    var conjunctionHighWhen: MutableMap<String, Long> = mutableMapOf()
-    while (buttonPresses < 4007) {
-        buttonPresses++
-        q.addAll(button.push())
-        while (q.isNotEmpty()) {
-            val currentPulse = q.remove()
-            processedPulses += currentPulse
-
-            val highConjunctions =
-                conjunctions.map { it to it.inputModules.values.all { value -> value == Day20.PulseType.HIGH } }
-            if (highConjunctions.any { it.second }) {
-                highConjunctions.filter { it.second }.forEach {
-                    if (conjunctionHighWhen[it.first.name] == null) conjunctionHighWhen[it.first.name] = buttonPresses
-                }
-                if (conjunctionHighWhen.size == 8) {
-                    println(findLcm(conjunctionHighWhen.values.toList()))
-                    println(conjunctionHighWhen)
-                    exitProcess(1)
-                }
-            }
-
-            if (currentPulse.destination != "rx") {
-                val processingModule = pulseModules.firstOrNull { it.name == currentPulse.destination }
-                if (processingModule == null) {
-                    println("module is null $currentPulse"); break
-                }
-                q.addAll(processingModule.receivePulse(currentPulse))
-            }
-        }
-    }
-//    println(processedPulses)
-    println("button: $buttonPresses")
-    val low: Long = processedPulses.count { it.type == Day20.PulseType.LOW }.toLong()
-    val high: Long = processedPulses.count { it.type == Day20.PulseType.HIGH }.toLong()
-    println("low: $low high: $high mul: ${low * high}")
+    Day20().solvePart1(1000)
+    Day20().solvePart1(4007)
 }
 
-
 class Day20() {
+
+    fun solvePart1(requiredButtonPresses:Int = 4) {
+        val pulseModules: List<PulseModule> = PuzzleInputUtil.parse("2023/day20.input", PulseModule::fromString).toList()
+
+        val conjunctions: List<Conjunction> =
+                pulseModules.filter { it.type == PulseModule.PulseModuleType.CONJUNCTION } as List<Conjunction>
+        conjunctions.forEach { it.loadInputModules(pulseModules) }
+        println(pulseModules)
+
+        val button = Button("button", type = PulseModule.PulseModuleType.BUTTON)
+        val q: Queue<Pulse> = LinkedList()
+
+        val processedPulses: MutableList<Pulse> = mutableListOf()
+        var buttonPresses = 0L
+        var conjunctionHighWhen: MutableMap<String, Long> = mutableMapOf()
+        while (buttonPresses < requiredButtonPresses) {
+            buttonPresses++
+            q.addAll(button.push())
+            while (q.isNotEmpty()) {
+                val currentPulse = q.remove()
+                processedPulses += currentPulse
+
+                val highConjunctions =
+                        conjunctions.map { it to it.inputModules.values.all { value -> value == Day20.PulseType.HIGH } }
+                if (highConjunctions.any { it.second }) {
+                    highConjunctions.filter { it.second }.forEach {
+                        if (conjunctionHighWhen[it.first.name] == null) conjunctionHighWhen[it.first.name] = buttonPresses
+                    }
+                    if (conjunctionHighWhen.size == 8) {
+                        println(findLcm(conjunctionHighWhen.values.toList()))
+//                        println(conjunctionHighWhen)
+                        exitProcess(1)
+                    }
+                }
+
+                if (currentPulse.destination != "rx") {
+                    val processingModule = pulseModules.firstOrNull { it.name == currentPulse.destination }
+                    if (processingModule == null) {
+//                        println("module is null $currentPulse");
+                        break
+                    }
+                    q.addAll(processingModule.receivePulse(currentPulse))
+                }
+            }
+        }
+//        println("button: $buttonPresses")
+        val low: Long = processedPulses.count { it.type == Day20.PulseType.LOW }.toLong()
+        val high: Long = processedPulses.count { it.type == Day20.PulseType.HIGH }.toLong()
+        println("low: $low high: $high mul: ${low * high}")
+    }
     interface PulseModule {
         val type: PulseModuleType
 

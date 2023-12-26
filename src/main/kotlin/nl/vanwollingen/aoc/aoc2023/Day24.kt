@@ -15,10 +15,10 @@ fun main() {
 
     val testArea = Day24.TestArea(200000000000000, 400000000000000, 200000000000000, 400000000000000)
     d24.solvePart1(allHail, testArea)
+    d24.solvePart2(allHail)
 }
 
 class Day24 {
-
 
     fun solvePart1(allHail: List<Hail>, testArea: TestArea) {
         var count = 0
@@ -40,12 +40,30 @@ class Day24 {
         println(count)
     }
 
-    fun isInFuture(intersectionPoint: Point, hail: Hail): Boolean {
-        return inFuture(hail.deltaX, hail.x, intersectionPoint.x) &&
-                inFuture(hail.deltaY, hail.y, intersectionPoint.y)
+    fun solvePart2(allHail: List<Hail>) {
+        val sortedHail = allHail.sortedBy { it.x }
+        for (i in 0..sortedHail.size) {
+            for (j in i + 1..<sortedHail.size) {
+                val a = sortedHail[i]
+                val b = sortedHail[j]
+
+                val aIntercept = intercept(a.x, a.deltaX, a.y, a.deltaY)
+                val bIntercept = intercept(b.x, b.deltaX, b.y, b.deltaY)
+
+                val aLine = Line(Point(aIntercept.first, 0.0), Point(0.0, aIntercept.second))
+                val bLine = Line(Point(bIntercept.first, 0.0), Point(0.0, bIntercept.second))
+                val aBIntersection = findIntersection(aLine, bLine)
+                println("${a.x} ${b.x} ${b.deltaX}")
+
+            }
+        }
     }
 
-    private fun inFuture(delta: Double, l: Double, intersect: Double): Boolean {
+    private fun isInFuture(intersectionPoint: Point, hail: Hail): Boolean {
+        return isInFuture(hail.deltaX, hail.x, intersectionPoint.x) && isInFuture(hail.deltaY, hail.y, intersectionPoint.y)
+    }
+
+    private fun isInFuture(delta: Double, l: Double, intersect: Double): Boolean {
         var inFuture = false
         if (delta > 0) {
             if (l < intersect) {
@@ -57,11 +75,6 @@ class Day24 {
             }
         }
         return inFuture
-    }
-
-
-    fun solvePart2() {
-
     }
 
     class Hail(val x: Double, val y: Double, val z: Double, val deltaX: Double, val deltaY: Double, val deltaZ: Double) {
@@ -80,7 +93,6 @@ class Day24 {
     }
 
     data class TestArea(val minX: Long, val maxX: Long, val minY: Long, val maxY: Long) {
-        fun isInside(intersectionPoint: Point): Boolean =
-                intersectionPoint.x >= this.minX && intersectionPoint.x <= this.maxX && intersectionPoint.y >= this.minY && intersectionPoint.y <= this.maxY
+        fun isInside(intersectionPoint: Point): Boolean = intersectionPoint.x >= this.minX && intersectionPoint.x <= this.maxX && intersectionPoint.y >= this.minY && intersectionPoint.y <= this.maxY
     }
 }

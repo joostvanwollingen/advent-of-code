@@ -2,20 +2,20 @@ package nl.vanwollingen.aoc.aoc2023
 
 import nl.vanwollingen.aoc.util.grid.Point
 import nl.vanwollingen.aoc.util.PuzzleInputUtil
+import nl.vanwollingen.aoc.util.grid.getManhattanNeighbours
 import kotlin.streams.asStream
 
 fun main() {
-    Day21()
-//        .solvePart1()
-        .solvePart2()
+    Day21().solvePart1()
+    Day21().solvePart2()
 }
 
 
 class Day21() {
-//    val grid = readGridArray(AocUtil.load("day21.test.input"))
+    //    val grid = readGridArray(AocUtil.load("day21.test.input"))
     val grid = readGridArray(PuzzleInputUtil.load("2023/day21.input"))
 
-    fun solvePart1(){
+    fun solvePart1() {
         val grid: List<Tile> = Day21().grid.flatten()
         val gardenPlotsVisited: MutableSet<Tile> = mutableSetOf()
         var newGardenPlots: MutableSet<Tile> = mutableSetOf()
@@ -37,7 +37,7 @@ class Day21() {
     }
 
     fun solvePart2() {
-        
+
     }
 
     private fun readGridArray(input: String): List<List<Tile>> {
@@ -54,9 +54,7 @@ class Day21() {
     private fun getTilesFromLine(index: Int, line: String): List<Tile> {
         val matches = Regex("([#-|./\\\\])").findAll(line)
         return matches.asStream().map { match ->
-            Tile(
-                match.value, Point(index + 1, match.range.first + 1)
-            )
+            Tile(match.value, Point(index + 1, match.range.first + 1))
         }.toList()
     }
 }

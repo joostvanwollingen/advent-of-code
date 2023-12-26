@@ -2,15 +2,17 @@ package nl.vanwollingen.aoc.aoc2023
 
 import nl.vanwollingen.aoc.util.PuzzleInputUtil
 
-class Day19() {
-//    val input = nl.vanwollingen.aoc.util.AocUtil.load("day19.test.input")
+fun main() {
+    Day19().solvePart1()
+}
 
-        val input = PuzzleInputUtil.load("2023/day19.input")
+class Day19() {
+    //val input = nl.vanwollingen.aoc.util.AocUtil.load("day19.test.input")
+    val input = PuzzleInputUtil.load("2023/day19.input")
     val workflows = input.split("\n\n")[0].split("\n").map { Workflow.fromString(it) }
     val parts = input.split("\n\n")[1].split("\n").map { MachinePart.fromString(it) }
 
-
-    fun solve1() {
+    fun solvePart1() {
         println(workflows)
         println(parts)
 
@@ -21,8 +23,7 @@ class Day19() {
             var result: RuleResult? = RuleResult(nextWorkflow = "in")
 
             while (result?.accept != true && result?.reject != true) {
-                currentWorkflow =
-                    if (result?.nextWorkflow != "A" && result?.nextWorkflow != "R") workflows.first { it.name == result!!.nextWorkflow } else workflows.first { it.name == "in" }
+                currentWorkflow = if (result?.nextWorkflow != "A" && result?.nextWorkflow != "R") workflows.first { it.name == result!!.nextWorkflow } else workflows.first { it.name == "in" }
                 for (i in currentWorkflow.rules.indices) {
                     result = currentWorkflow.rules[i].evaluate(p)
                     if (result.evaluation == true) {
@@ -50,16 +51,10 @@ class Day19() {
         companion object {
             fun fromString(input: String): MachinePart {
                 val xmas = input.drop(1).dropLast(1).split(",")
-                return MachinePart(
-                    xmas[0].split("=")[1].toInt(),
-                    xmas[1].split("=")[1].toInt(),
-                    xmas[2].split("=")[1].toInt(),
-                    xmas[3].split("=")[1].toInt()
-                )
+                return MachinePart(xmas[0].split("=")[1].toInt(), xmas[1].split("=")[1].toInt(), xmas[2].split("=")[1].toInt(), xmas[3].split("=")[1].toInt())
             }
         }
     }
-
 
     class Workflow(val name: String, val rules: List<Rule>) {
 
@@ -77,16 +72,12 @@ class Day19() {
                         val semiIndex = rule.indexOf(':')
                         if (semiIndex > 0) {
                             Rule(
-                                rule[0].toString(),
-                                rule[1].toString(),
-                                rule.subSequence(2, semiIndex).toString().toInt(),
-                                rule.subSequence(semiIndex + 1, rule.length).toString(),
-                                accept = if (rule.subSequence(semiIndex + 1, rule.length)
-                                        .toString() == "A"
-                                ) true else null,
-                                reject = if (rule.subSequence(semiIndex + 1, rule.length)
-                                        .toString() == "R"
-                                ) true else null,
+                                    rule[0].toString(),
+                                    rule[1].toString(),
+                                    rule.subSequence(2, semiIndex).toString().toInt(),
+                                    rule.subSequence(semiIndex + 1, rule.length).toString(),
+                                    accept = if (rule.subSequence(semiIndex + 1, rule.length).toString() == "A") true else null,
+                                    reject = if (rule.subSequence(semiIndex + 1, rule.length).toString() == "R") true else null,
                             )
                         } else {
                             Rule(nextWorkflow = rule)
@@ -103,12 +94,12 @@ class Day19() {
     }
 
     data class Rule(
-        val field: String? = null,
-        val operator: String? = null,
-        val value: Int? = null,
-        val nextWorkflow: String? = null,
-        val accept: Boolean? = null,
-        val reject: Boolean? = null,
+            val field: String? = null,
+            val operator: String? = null,
+            val value: Int? = null,
+            val nextWorkflow: String? = null,
+            val accept: Boolean? = null,
+            val reject: Boolean? = null,
     ) {
         fun evaluate(machinePart: MachinePart): RuleResult {
             if (field != null) {
@@ -128,20 +119,9 @@ class Day19() {
 
                 return RuleResult(result, accepted, rejected, nextWorkflow)
             }
-            return RuleResult(
-                evaluation = if (nextWorkflow == "R" || nextWorkflow == "A") true else null,
-                nextWorkflow = nextWorkflow,
-                reject = reject,
-                accept = accept
-            )
+            return RuleResult(evaluation = if (nextWorkflow == "R" || nextWorkflow == "A") true else null, nextWorkflow = nextWorkflow, reject = reject, accept = accept)
         }
     }
-}
 
-data class RuleResult(
-    val evaluation: Boolean? = null, val accept: Boolean? = null, val reject: Boolean? = null, val nextWorkflow: String?
-)
-
-fun main() {
-    Day19().solve1()
+    data class RuleResult(val evaluation: Boolean? = null, val accept: Boolean? = null, val reject: Boolean? = null, val nextWorkflow: String?)
 }

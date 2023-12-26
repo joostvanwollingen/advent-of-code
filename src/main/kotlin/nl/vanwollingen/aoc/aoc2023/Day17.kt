@@ -2,12 +2,15 @@ package nl.vanwollingen.aoc.aoc2023
 
 import nl.vanwollingen.aoc.util.grid.Point
 import nl.vanwollingen.aoc.util.PuzzleInputUtil
+import nl.vanwollingen.aoc.util.grid.getManhattanNeighbours
 import kotlin.streams.asStream
 
-val input = PuzzleInputUtil.load("2023/day17.test.input")
-val cityBlock = readGrid(input.lines())
+
 
 fun main() {
+    val input = PuzzleInputUtil.load("2023/day17.test.input")
+    val cityBlock = readGrid(input.lines())
+
     val adjacencyListGraph = AdjacencyList<CityBlock>()
 
     cityBlock.forEach { block ->
@@ -195,9 +198,3 @@ private fun getCityBlocksFromLine(index: Int, line: String): List<CityBlock> {
     }.toList()
 }
 
-fun Point.getManhattanNeighbours(): List<Point> = listOf(
-    Point(this.y + 1, x),
-    Point(this.y - 1, x),
-    Point(this.y, x - 1),
-    Point(this.y, x + 1),
-)
