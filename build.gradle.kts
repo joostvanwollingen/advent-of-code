@@ -11,9 +11,7 @@ plugins {
 
 repositories {
     mavenCentral()
-    maven("https://jitpack.io")
 }
 
 dependencies {
-    implementation("com.github.jkcclemens:khttp:-SNAPSHOT")
 }
