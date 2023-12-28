@@ -6,7 +6,6 @@ import nl.vanwollingen.aoc.util.grid.getManhattanNeighbours
 import kotlin.streams.asStream
 
 
-
 fun main() {
     val input = PuzzleInputUtil.load("2023/day17.test.input")
     val cityBlock = readGrid(input.lines())
@@ -26,7 +25,7 @@ fun main() {
 
         neighbours.forEach {
             adjacencyListGraph.addDirectedEdge(
-                vertex, adjacencyListGraph.getVertex(it)!!, it.heatLoss.toDouble()
+                    vertex, adjacencyListGraph.getVertex(it)!!, it.heatLoss.toDouble()
             )
         }
     }
@@ -36,10 +35,10 @@ fun main() {
     val start = adjacencyListGraph.getVertex(cityBlock.first())!!
     val end = adjacencyListGraph.getVertex(cityBlock.last())!!
     val result = findShortestPath(
-        adjacencyListGraph.adjacencyMap.keys,
-        adjacencyListGraph.adjacencyMap.values.flatten().toList(),
-        start,
-        end
+            adjacencyListGraph.adjacencyMap.keys,
+            adjacencyListGraph.adjacencyMap.values.flatten().toList(),
+            start,
+            end
     )
     println(result)
     val shorte = result.shortestPath(start, end)
@@ -47,10 +46,10 @@ fun main() {
 }
 
 fun findShortestPath(
-    nodes: MutableSet<Vertex<CityBlock>>,
-    edges: List<Edge<CityBlock>>,
-    source: Vertex<CityBlock>,
-    target: Vertex<CityBlock>
+        nodes: MutableSet<Vertex<CityBlock>>,
+        edges: List<Edge<CityBlock>>,
+        source: Vertex<CityBlock>,
+        target: Vertex<CityBlock>
 ): ShortestPathResult {
 
     // Note: this implementation uses similar variable names as the algorithm given do.
@@ -74,31 +73,31 @@ fun findShortestPath(
             break // Found shortest path to target
         }
         edges
-            .filter { it.source == u }
-            .forEach { edge ->
-                val v = edge.destination
-                val alt = (dist[u] ?: 0) + edge.weight!!.toInt()
-                if (alt < (dist[v] ?: 0)) {
-                    dist[v] = alt
-                    prev[v] = u
+                .filter { it.source == u }
+                .forEach { edge ->
+                    val v = edge.destination
+                    val alt = (dist[u] ?: 0) + edge.weight!!.toInt()
+                    if (alt < (dist[v] ?: 0)) {
+                        dist[v] = alt
+                        prev[v] = u
+                    }
                 }
-            }
     }
 
     return ShortestPathResult(prev, dist, source, target)
 }
 
 class ShortestPathResult(
-    val prev: Map<Vertex<CityBlock>, Vertex<CityBlock>?>,
-    val dist: Map<Vertex<CityBlock>, Int>,
-    val source: Vertex<CityBlock>,
-    val target: Vertex<CityBlock>
+        val prev: Map<Vertex<CityBlock>, Vertex<CityBlock>?>,
+        val dist: Map<Vertex<CityBlock>, Int>,
+        val source: Vertex<CityBlock>,
+        val target: Vertex<CityBlock>
 ) {
 
     fun shortestPath(
-        from: Vertex<CityBlock> = source,
-        to: Vertex<CityBlock> = target,
-        list: List<Vertex<CityBlock>> = emptyList()
+            from: Vertex<CityBlock> = source,
+            to: Vertex<CityBlock> = target,
+            list: List<Vertex<CityBlock>> = emptyList()
     ): List<Vertex<CityBlock>> {
         val last = prev[to] ?: return if (from == to) {
             list + to
@@ -167,16 +166,19 @@ class AdjacencyList<T> {
         }
     }
 
-    fun findShortestRoute(start: Vertex<T>, end: Vertex<T>) {
+    fun findShortestRoute(start: Vertex<T>, end: Vertex<T>): Set<Vertex<T>> {
         var current = start
         val visited: MutableSet<Vertex<T>> = mutableSetOf()
 
         while (current != end) {
             visited += current
-            current = adjacencyMap[current]!!.filter { edge -> !visited.contains(edge.destination) }
-                .minBy { it.weight!! }.destination
+            val possibleDestination = adjacencyMap[current]!!.filter { edge -> !visited.contains(edge.destination) }
+            if (possibleDestination.isEmpty()) {
+                break
+            }
+            current = possibleDestination.minBy { it.weight!! }.destination
         }
-        println(visited)
+        return visited
     }
 }
 
@@ -193,7 +195,7 @@ private fun getCityBlocksFromLine(index: Int, line: String): List<CityBlock> {
     val matches = Regex("([0-9])").findAll(line)
     return matches.asStream().map { match ->
         CityBlock(
-            match.value.toInt(), Point(index + 1, match.range.first + 1)
+                match.value.toInt(), Point(index + 1, match.range.first + 1)
         )
     }.toList()
 }

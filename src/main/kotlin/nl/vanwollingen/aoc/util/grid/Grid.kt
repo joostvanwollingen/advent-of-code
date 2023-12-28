@@ -2,7 +2,7 @@ package nl.vanwollingen.aoc.util.grid
 
 import kotlin.math.abs
 
-data class Point(val y: Int, val x: Int) {
+data class Point(var y: Int, var x: Int) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

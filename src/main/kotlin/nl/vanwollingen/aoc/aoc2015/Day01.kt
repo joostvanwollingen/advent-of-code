@@ -1,0 +1,34 @@
+package nl.vanwollingen.aoc.aoc2015
+
+import nl.vanwollingen.aoc.util.Puzzle
+import kotlin.system.exitProcess
+
+fun main() {
+    val d1 = Day01(2015, 1)
+    d1.solvePart1()
+    d1.solvePart2()
+}
+
+class Day01(year: Int, day: Int) : Puzzle(year, day) {
+    val up = '('
+
+    override fun solvePart1() {
+        var floor = 0
+        input.forEach {
+            if (it == up) floor++ else floor--
+        }
+        println(floor)
+    }
+
+    override fun solvePart2() {
+        var floor = 0
+        input.forEachIndexed { i, it ->
+            if (it == up) floor++ else floor--
+            if (floor < 0) {
+                println(i + 1)
+                exitProcess(1)
+            }
+        }
+        println(floor)
+    }
+}
