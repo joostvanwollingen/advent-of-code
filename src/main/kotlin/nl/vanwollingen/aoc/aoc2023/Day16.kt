@@ -115,7 +115,7 @@ private fun readGrid(lines: List<String>): List<Tile> {
 private fun readGridArray(lines: List<String>): List<List<Tile>> {
     var tiles: MutableList<MutableList<Tile>> = mutableListOf()
     lines.mapIndexed { index, l ->
-        var line: MutableList<Tile> = mutableListOf()
+        val line: MutableList<Tile> = mutableListOf()
         line += getTilesFromLine(index, l)
         tiles += line
     }
@@ -144,7 +144,6 @@ fun List<Tile>.print(visited: List<Point> = listOf()) {
 }
 
 data class Tile(val s: String, val l: Point) {
-    var id: Int = 0
     fun toColorString(visited: Boolean): String = when {
         visited -> "\u001b[44m" + this.s + "\u001b[0m"
         s in "/|-\\" -> "\u001b[32m" + this.s + "\u001b[0m"
