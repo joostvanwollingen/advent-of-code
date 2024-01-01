@@ -56,8 +56,8 @@ class Day21(year: Int, day: Int) : Puzzle(year, day) {
         return winner == player
     }
 
-    data class Character(val name: String, var hitpoints: Int, val damage: Int, val armor: Int, val goldSpent: Int = 0)
-    data class Item(val name: String, val cost: Int, val damage: Int, val armor: Int)
+    private data class Character(val name: String, var hitpoints: Int, val damage: Int, val armor: Int, val goldSpent: Int = 0)
+    private data class Item(val name: String, val cost: Int, val damage: Int, val armor: Int)
 
     private val weapons: List<Item> = listOf(
             Item("Dagger", 8, 4, 0),
