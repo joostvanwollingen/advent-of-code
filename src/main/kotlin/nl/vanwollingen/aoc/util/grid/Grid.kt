@@ -44,6 +44,10 @@ fun Point.getManhattanNeighbours(): List<Point> = listOf(
         Point(this.y, x + 1),
 )
 
+fun Point.getManhattanDistance(other: Point): Int {
+    return abs(this.x - other.x) + abs(this.y - other.y)
+}
+
 private fun Point.distanceTo(end: Point): Long = abs(this.x - end.x).toLong() + abs(this.y - end.y).toLong()
 
 fun String.columns(): List<String> {

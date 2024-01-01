@@ -16,8 +16,8 @@ abstract class Puzzle(year: Int, day: Int, output: Boolean = false) {
 
     companion object {
         var showOutput = false
-        fun log(message: Any) {
-            println(message.toString())
+        fun log(message: Any, linebreak: Boolean = true) {
+            print("${message}${if (linebreak) "\n" else ""}")
         }
 
         fun debug(message: Any) {
