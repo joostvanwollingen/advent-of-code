@@ -3,12 +3,12 @@ package nl.vanwollingen.aoc.aoc2016
 import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
-    val d3 = Day3(2016, 3)
+    val d3 = Day03(2016, 3)
     d3.solvePart1()
     d3.solvePart2()
 }
 
-class Day3(year: Int, day: Int, output: Boolean = false) : Puzzle(year, day, output) {
+class Day03(year: Int, day: Int, output: Boolean = false) : Puzzle(year, day, output) {
     override fun solvePart1() {
         var valid = 0
         input.lines().forEach { line ->
