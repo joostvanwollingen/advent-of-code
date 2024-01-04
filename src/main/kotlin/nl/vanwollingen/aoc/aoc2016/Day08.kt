@@ -5,6 +5,7 @@ import nl.vanwollingen.aoc.util.Puzzle
 fun main() {
     val d8 = Day08(2016, 8, true)
     d8.solvePart1()
+    d8.solvePart2()
 }
 
 class Day08(year: Int, day: Int, output: Boolean = false) : Puzzle(year, day, output) {
@@ -15,14 +16,25 @@ class Day08(year: Int, day: Int, output: Boolean = false) : Puzzle(year, day, ou
     override fun solvePart1() {
         instructions.forEach {
             processInstruction(it)
-            grid.forEach { r ->
-                debug(r.joinToString(""))
+        }
+        log(grid.sumOf { it.count { r -> r == 1 } })
+    }
+
+    override fun solvePart2() {
+        grid = Array(6) { IntArray(50) }
+
+        instructions.forEach {
+            processInstruction(it)
+        }
+
+        grid.forEach { r ->
+            r.forEach {
+                if (it == 0) print(0) else print("\u001B[44m1\u001B[0m")
             }
             println("")
         }
-        grid.forEach { debug(it.joinToString("")) }
-        log(grid.sumOf { it.count { r -> r == 1 } })
     }
+
 
     private fun processInstruction(instruction: Instruction) {
         when (instruction.command) {
@@ -51,8 +63,8 @@ class Day08(year: Int, day: Int, output: Boolean = false) : Puzzle(year, day, ou
             }
 
             Instruction.CommandType.ROTATE_COLUMN -> {
-                var column = instruction.a
-                var newColumn = IntArray(grid.size)
+                val column = instruction.a
+                val newColumn = IntArray(grid.size)
                 for (i in grid.indices) {
                     if (grid[i][column] == 1) {
                         grid[i][column] = 0
@@ -65,10 +77,6 @@ class Day08(year: Int, day: Int, output: Boolean = false) : Puzzle(year, day, ou
                 }
             }
         }
-    }
-
-    override fun solvePart2() {
-        TODO("Not yet implemented")
     }
 
     data class Instruction(val command: CommandType, val a: Int, val b: Int) {
