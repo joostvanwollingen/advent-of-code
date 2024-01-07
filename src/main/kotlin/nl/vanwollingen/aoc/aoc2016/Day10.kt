@@ -5,12 +5,12 @@ import kotlin.math.max
 import kotlin.math.min
 
 fun main() {
-    val d10 = Day10(2016, 10)
+    val d10 = Day10()
     d10.solvePart1()
     d10.solvePart2()
 }
 
-class Day10(year: Int, day: Int, output: Boolean = false) : Puzzle(year, day, output) {
+class Day10(output: Boolean = false) : Puzzle(output) {
     private val outcomes = processChips(parseInput())
     override fun solvePart1() {
         log(outcomes.first)

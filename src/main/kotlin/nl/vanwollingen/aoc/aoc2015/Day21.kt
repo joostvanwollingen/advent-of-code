@@ -3,12 +3,12 @@ package nl.vanwollingen.aoc.aoc2015
 import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
-    val d21 = Day21(2015, 21)
+    val d21 = Day21()
     d21.solvePart1()
     d21.solvePart2()
 }
 
-class Day21(year: Int, day: Int) : Puzzle(year, day) {
+class Day21() : Puzzle() {
     override fun solvePart1() {
         val fights = generateCharactersAndEquipment().map { character -> character to fight(character, boss()) }
         println(fights.filter { fight -> fight.second }.minBy { fight -> fight.first.goldSpent })

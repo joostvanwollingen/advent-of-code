@@ -5,12 +5,12 @@ import java.math.BigInteger
 import java.security.MessageDigest
 
 fun main() {
-    val d4 = Day04(2015, 4)
+    val d4 = Day04()
     d4.solvePart1()
     d4.solvePart2()
 }
 
-class Day04(year: Int, day: Int) : Puzzle(year, day) {
+class Day04() : Puzzle() {
 
     override fun solvePart1() {
         findLeadingZeroes("00000")

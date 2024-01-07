@@ -3,12 +3,12 @@ package nl.vanwollingen.aoc.aoc2015
 import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
-    val d2 = Day02(2015, 2)
+    val d2 = Day02()
     d2.solvePart1()
     d2.solvePart2()
 }
 
-class Day02(year: Int, day: Int) : Puzzle(year, day) {
+class Day02() : Puzzle() {
 
     private val gifts = parseInput()
     override fun parseInput(): List<Gift> = input.lines().map { line ->

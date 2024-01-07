@@ -4,12 +4,12 @@ import nl.vanwollingen.aoc.util.Puzzle
 import nl.vanwollingen.aoc.util.hashing.md5
 
 fun main() {
-    val d14 = Day14(2016, 14)
+    val d14 = Day14()
     d14.solvePart1()
     d14.solvePart2()
 }
 
-class Day14(year: Int, day: Int, output: Boolean = false) : Puzzle(year, day, output) {
+class Day14(output: Boolean = false) : Puzzle(output) {
     override fun solvePart1() {
         findOneTimePad() { i -> md5(i) }
     }

@@ -3,12 +3,12 @@ package nl.vanwollingen.aoc.aoc2016
 import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
-    val d7 = Day07(2016, 7)
+    val d7 = Day07()
     d7.solvePart1()
     d7.solvePart2()
 }
 
-class Day07(year: Int, day: Int, output: Boolean = false) : Puzzle(year, day, output) {
+class Day07(output: Boolean = false) : Puzzle(output) {
 
     override fun solvePart1() {
         log(input.lines().count { supportsTLS(it) })

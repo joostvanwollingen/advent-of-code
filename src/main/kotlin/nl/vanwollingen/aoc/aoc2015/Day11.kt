@@ -3,12 +3,12 @@ package nl.vanwollingen.aoc.aoc2015
 import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
-    val d11 = Day11(2015, 11)
+    val d11 = Day11()
     d11.solvePart1()
     d11.solvePart2()
 }
 
-class Day11(year: Int, day: Int) : Puzzle(year, day) {
+class Day11() : Puzzle() {
     override fun solvePart1() {
         val p = Password(input)
         p.next()

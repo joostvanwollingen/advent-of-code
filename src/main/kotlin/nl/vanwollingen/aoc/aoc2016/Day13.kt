@@ -4,12 +4,12 @@ import nl.vanwollingen.aoc.util.Puzzle
 import java.util.*
 
 fun main() {
-    val d13 = Day13(2016, 13)
+    val d13 = Day13()
     d13.solvePart1()
     d13.solvePart2()
 }
 
-class Day13(year: Int, day: Int, output: Boolean = false) : Puzzle(year, day, output) {
+class Day13(output: Boolean = false) : Puzzle(output) {
     private lateinit var distancesForPartTwo: Array<IntArray>
 
     override fun solvePart1() {

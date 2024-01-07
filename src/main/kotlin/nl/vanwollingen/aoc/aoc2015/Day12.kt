@@ -3,12 +3,12 @@ package nl.vanwollingen.aoc.aoc2015
 import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
-    val d12 = Day12(2015, 12)
+    val d12 = Day12()
     d12.solvePart1()
     d12.solvePart2() //TODO: gives the wrong solution
 }
 
-class Day12(year: Int, day: Int) : Puzzle(year, day) {
+class Day12() : Puzzle() {
     override fun solvePart1() {
         println(Regex("-?\\d+").findAll(input).toList().sumOf { it.value.toInt() })
     }

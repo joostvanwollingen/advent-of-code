@@ -3,12 +3,12 @@ package nl.vanwollingen.aoc.aoc2016
 import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
-    val d9 = Day09(2016, 9)
+    val d9 = Day09()
     d9.solvePart1()
     d9.solvePart2()
 }
 
-class Day09(year: Int, day: Int, output: Boolean = false) : Puzzle(year, day, output) {
+class Day09(output: Boolean = false) : Puzzle(output) {
 
     override fun solvePart1() {
         val output = decompress(input)

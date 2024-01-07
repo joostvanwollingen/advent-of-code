@@ -3,12 +3,12 @@ package nl.vanwollingen.aoc.aoc2016
 import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
-    val d8 = Day08(2016, 8, true)
+    val d8 = Day08(true)
     d8.solvePart1()
     d8.solvePart2()
 }
 
-class Day08(year: Int, day: Int, output: Boolean = false) : Puzzle(year, day, output) {
+class Day08(output: Boolean = false) : Puzzle(output) {
     var grid = Array(6) { IntArray(50) }
     private val instructions = parseInput()
     override fun parseInput(): List<Instruction> = input.lines().map { Instruction.fromString(it) }

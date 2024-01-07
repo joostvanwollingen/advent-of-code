@@ -5,12 +5,12 @@ import nl.vanwollingen.aoc.util.combinatorics.combinations
 import kotlin.streams.asStream
 
 fun main() {
-    val d24 = Day24(2015, 24)
+    val d24 = Day24()
     d24.test()
 //    d24.solvePart1()
 }
 
-class Day24(year: Int, day: Int) : Puzzle(year, day) {
+class Day24() : Puzzle() {
 
     val packages = parseInput()
     val equalThirdWeight = packages.sum() / 3

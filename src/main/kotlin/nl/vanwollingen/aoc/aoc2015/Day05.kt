@@ -3,12 +3,12 @@ package nl.vanwollingen.aoc.aoc2015
 import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
-    val d5 = Day05(2015, 5)
+    val d5 = Day05()
     d5.solvePart1()
     d5.solvePart2()
 }
 
-class Day05(year: Int, day: Int) : Puzzle(year, day) {
+class Day05() : Puzzle() {
 
     private fun naughtyOrNice(text: String): Boolean {
         val vowels = Regex("[aeiou]")

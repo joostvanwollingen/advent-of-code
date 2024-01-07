@@ -3,11 +3,11 @@ package nl.vanwollingen.aoc.aoc2015
 import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
-    val d25 = Day25(2015, 25)
+    val d25 = Day25()
     d25.solvePart1()
 }
 
-class Day25(year: Int, day: Int, output: Boolean = false) : Puzzle(year, day, output) {
+class Day25(output: Boolean = false) : Puzzle(output) {
     override fun solvePart1() {
         val targetRow = 2981
         val targetColumn = 3075

@@ -6,12 +6,12 @@ import nl.vanwollingen.aoc.util.grid.getManhattanDistance
 import kotlin.system.exitProcess
 
 fun main() {
-    val d1 = Day01(2016, 1, true)
+    val d1 = Day01(true)
     d1.solvePart1()
     d1.solvePart2()
 }
 
-class Day01(year: Int, day: Int, output: Boolean = false) : Puzzle(year, day, output) {
+class Day01(output: Boolean = false) : Puzzle(output) {
 
     private val directions = parseInput()
 

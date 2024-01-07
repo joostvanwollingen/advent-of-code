@@ -1,8 +1,13 @@
 package nl.vanwollingen.aoc.util
 
-abstract class Puzzle(year: Int, day: Int, output: Boolean = false) {
+abstract class Puzzle(output: Boolean = false) {
 
-    val input by lazy { PuzzleInputUtil.load("$year/Day${day.toString().padStart(2, '0')}.input") }
+    val input by lazy {
+        val year = this::class.java.packageName.split(".").last().substring(3)
+        val day = this::class.simpleName!!.substring(3)
+        PuzzleInputUtil.load("$year/Day${day.toString().padStart(2, '0')}.input")
+    }
+
     open fun parseInput(): Any {
         TODO("Not yet implemented")
     }

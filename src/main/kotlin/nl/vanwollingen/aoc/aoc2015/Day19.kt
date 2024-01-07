@@ -3,13 +3,13 @@ package nl.vanwollingen.aoc.aoc2015
 import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
-    val d19 = Day19(2015, 19)
+    val d19 = Day19()
     d19.solvePart1()
 //    d19.solvePart2()
 }
 
 
-class Day19(year: Int, day: Int) : Puzzle(year, day) {
+class Day19() : Puzzle() {
 
     private val moleculeReplacements = parseInput()
     override fun parseInput(): Molecule {

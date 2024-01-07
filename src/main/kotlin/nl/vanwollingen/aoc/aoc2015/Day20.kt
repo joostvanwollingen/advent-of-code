@@ -4,12 +4,12 @@ import nl.vanwollingen.aoc.util.Puzzle
 import kotlin.system.exitProcess
 
 fun main() {
-    val d20 = Day20(2015, 20)
+    val d20 = Day20()
     d20.solvePart1()
     d20.solvePart2()
 }
 
-class Day20(year: Int, day: Int) : Puzzle(year, day) {
+class Day20() : Puzzle() {
 
     private val targetPresentsAmount = parseInput()
     override fun parseInput() = input.toInt()

@@ -3,12 +3,12 @@ package nl.vanwollingen.aoc.aoc2015
 import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
-    val d9 = Day09(2015, 9)
+    val d9 = Day09()
     d9.solvePart1()
 //    d9.solvePart2()
 }
 
-class Day09(year: Int, day: Int) : Puzzle(year, day) {
+class Day09() : Puzzle() {
     val locations: MutableSet<String> = input.lines().map { line -> line.split(" to ")[0] }.distinct().plus("Arbre").toMutableSet()
     val dist = Array(locations.size) { DoubleArray(locations.size) }
     val next = Array(locations.size) { IntArray(locations.size) }

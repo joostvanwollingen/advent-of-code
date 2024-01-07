@@ -5,12 +5,12 @@ import nl.vanwollingen.aoc.util.grid.Point
 import kotlin.math.max
 
 fun main() {
-    val d6 = Day06(2015, 6)
+    val d6 = Day06()
     d6.solvePart1()
     d6.solvePart2()
 }
 
-class Day06(year: Int, day: Int) : Puzzle(year, day) {
+class Day06() : Puzzle() {
 
     private val instructions = parseInput()
 

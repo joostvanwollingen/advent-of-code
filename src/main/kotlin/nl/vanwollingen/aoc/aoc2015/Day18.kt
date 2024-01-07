@@ -6,12 +6,12 @@ import nl.vanwollingen.aoc.util.grid.getSurroundingPoints
 import kotlin.streams.asStream
 
 fun main() {
-    val d18 = Day18(2015, 18)
+    val d18 = Day18()
     d18.solvePart1()
     d18.solvePart2()
 }
 
-class Day18(year: Int, day: Int) : Puzzle(year, day) {
+class Day18() : Puzzle() {
     var grid = parseInput()
     override fun parseInput(): MutableList<Light> = readGridArray(input.lines())
 

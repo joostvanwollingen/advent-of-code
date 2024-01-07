@@ -3,11 +3,11 @@ package nl.vanwollingen.aoc.aoc2015
 import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
-    val d10 = Day10(2015, 10)
+    val d10 = Day10()
     d10.solvePart1()
 }
 
-class Day10(year: Int, day: Int) : Puzzle(year, day) {
+class Day10() : Puzzle() {
     override fun solvePart1() {
         var curr = input
         for(i in 1..50) {

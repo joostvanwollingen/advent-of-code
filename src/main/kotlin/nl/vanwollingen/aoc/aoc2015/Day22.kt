@@ -6,11 +6,11 @@ import nl.vanwollingen.aoc.aoc2015.Day22.Spell.SpellType
 import kotlin.system.exitProcess
 
 fun main() {
-    val d22 = Day22(2015, 22)
+    val d22 = Day22()
     d22.solvePart1()
 }
 
-class Day22(year: Int, day: Int) : Puzzle(year, day) {
+class Day22() : Puzzle() {
 
     override fun solvePart1() {
         val magicMissileFirst = mutableListOf(Spell.of(SpellType.MAGIC_MISSILE))

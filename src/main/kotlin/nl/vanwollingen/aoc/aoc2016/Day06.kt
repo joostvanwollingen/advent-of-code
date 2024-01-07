@@ -3,12 +3,12 @@ package nl.vanwollingen.aoc.aoc2016
 import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
-    val d6 = Day06(2016, 6)
+    val d6 = Day06()
     d6.solvePart1()
     d6.solvePart2()
 }
 
-class Day06(year: Int, day: Int, output: Boolean = false) : Puzzle(year, day, output) {
+class Day06(output: Boolean = false) : Puzzle(output) {
     override fun solvePart1() {
         log(getCountPerPosition(input).map { it.value.maxBy { c -> c.value } }.map { it.key }.joinToString(""))
     }

@@ -4,12 +4,12 @@ import nl.vanwollingen.aoc.util.Puzzle
 import nl.vanwollingen.aoc.util.grid.Point
 
 fun main() {
-    val d3 = Day03(2015, 3)
+    val d3 = Day03()
     d3.solvePart1()
     d3.solvePart2()
 }
 
-class Day03(year: Int, day: Int) : Puzzle(year, day) {
+class Day03() : Puzzle() {
 
     private val north = '^'
     private val south = 'v'

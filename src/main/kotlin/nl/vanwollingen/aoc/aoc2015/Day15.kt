@@ -4,12 +4,12 @@ import nl.vanwollingen.aoc.util.Puzzle
 import kotlin.math.max
 
 fun main() {
-    val d15 = Day15(2015, 15)
+    val d15 = Day15()
     d15.solvePart1()
     d15.solvePart2()
 }
 
-class Day15(year: Int, day: Int) : Puzzle(year, day) {
+class Day15() : Puzzle() {
 
     private val ingredients = parseInput()
     private val sugar = ingredients.first { it.name == "Sugar" }

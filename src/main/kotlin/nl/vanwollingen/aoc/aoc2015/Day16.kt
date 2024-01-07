@@ -3,12 +3,12 @@ package nl.vanwollingen.aoc.aoc2015
 import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
-    val d16 = Day16(2015, 16)
+    val d16 = Day16()
     d16.solvePart1()
     d16.solvePart2()
 }
 
-class Day16(year: Int, day: Int) : Puzzle(year, day) {
+class Day16() : Puzzle() {
 
     private val aunties = parseInput()
     private val children = 3

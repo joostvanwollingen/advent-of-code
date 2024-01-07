@@ -6,12 +6,12 @@ import kotlin.math.max
 import kotlin.math.min
 
 fun main() {
-    val d2 = Day02(2016, 2)
+    val d2 = Day02()
     d2.solvePart1()
     d2.solvePart2()
 }
 
-class Day02(year: Int, day: Int, output: Boolean = false) : Puzzle(year, day, output) {
+class Day02(output: Boolean = false) : Puzzle(output) {
 
     private val keypad = listOf(
             1 to Point(-1, -1),

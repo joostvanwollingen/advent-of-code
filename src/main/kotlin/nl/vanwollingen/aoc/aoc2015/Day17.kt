@@ -4,12 +4,12 @@ import nl.vanwollingen.aoc.util.Puzzle
 import nl.vanwollingen.aoc.util.combinatorics.combinations
 
 fun main() {
-    val d17 = Day17(2015, 17)
+    val d17 = Day17()
     d17.solvePart1()
     d17.solvePart2()
 }
 
-class Day17(year: Int, day: Int) : Puzzle(year, day) {
+class Day17() : Puzzle() {
     val buckets = input.lines().map { it.toInt() }
     override fun solvePart1() {
         var combinationsThatHold150 = 0

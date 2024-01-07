@@ -3,12 +3,12 @@ package nl.vanwollingen.aoc.aoc2016
 import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
-    val d12 = Day12(2016, 12)
+    val d12 = Day12()
     d12.solvePart1()
     d12.solvePart2()
 }
 
-class Day12(year: Int, day: Int, output: Boolean = false) : Puzzle(year, day, output) {
+class Day12(output: Boolean = false) : Puzzle(output) {
 
     var a = Register("a", 0)
     var b = Register("b", 0)

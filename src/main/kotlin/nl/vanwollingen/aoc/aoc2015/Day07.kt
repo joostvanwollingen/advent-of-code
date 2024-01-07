@@ -3,12 +3,12 @@ package nl.vanwollingen.aoc.aoc2015
 import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
-    val d7 = Day07(2015, 7)
+    val d7 = Day07()
     d7.solvePart1()
     d7.solvePart2()
 }
 
-class Day07(year: Int, day: Int) : Puzzle(year, day) {
+class Day07() : Puzzle() {
     override fun solvePart1() {
         val signals: MutableMap<String, Int> = mutableMapOf()
         input.lines().sortedBy { it.takeLast(2) }.drop(1).forEach { c -> //sorted by target alphabetically, removing the first instruction of lx -> a

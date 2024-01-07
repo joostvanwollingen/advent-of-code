@@ -4,12 +4,12 @@ import nl.vanwollingen.aoc.util.Puzzle
 import nl.vanwollingen.aoc.util.hashing.findLeadingZeroes
 
 fun main() {
-    val d5 = Day05(2016, 5, true)
+    val d5 = Day05(true)
     d5.solvePart1()
     d5.solvePart2()
 }
 
-class Day05(year: Int, day: Int, output: Boolean = true) : Puzzle(year, day, output) {
+class Day05(output: Boolean = true) : Puzzle(output) {
     override fun solvePart1() {
         var current = 1
         val numbersToFind = 8

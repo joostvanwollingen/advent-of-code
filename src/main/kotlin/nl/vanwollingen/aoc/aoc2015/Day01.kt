@@ -4,12 +4,12 @@ import nl.vanwollingen.aoc.util.Puzzle
 import kotlin.system.exitProcess
 
 fun main() {
-    val d1 = Day01(2015, 1)
+    val d1 = Day01()
     d1.solvePart1()
     d1.solvePart2()
 }
 
-class Day01(year: Int, day: Int) : Puzzle(year, day) {
+class Day01() : Puzzle() {
     val up = '('
 
     override fun solvePart1() {
