@@ -5,14 +5,14 @@ import java.util.*
 
 fun main() {
     val d13 = Day13()
-    d13.solvePart1()
-    d13.solvePart2()
+    d13.part1()
+    d13.part2()
 }
 
 class Day13(output: Boolean = false) : Puzzle(output) {
     private lateinit var distancesForPartTwo: Array<IntArray>
 
-    override fun solvePart1() {
+    override fun part1() {
         val grid = populateGrid(50, 50)
         val visited = Array(grid.size) { IntArray(grid[0].size) }
         val distances = tentativeDistanceGrid(50, 50)
@@ -41,7 +41,7 @@ class Day13(output: Boolean = false) : Puzzle(output) {
         this.distancesForPartTwo = distances
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         var withinDistance50 = 0
         for (y in distancesForPartTwo.indices) {
             for (x in 0..<distancesForPartTwo[0].size) {

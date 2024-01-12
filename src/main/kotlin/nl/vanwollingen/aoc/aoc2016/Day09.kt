@@ -4,18 +4,18 @@ import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
     val d9 = Day09()
-    d9.solvePart1()
-    d9.solvePart2()
+    d9.part1()
+    d9.part2()
 }
 
 class Day09(output: Boolean = false) : Puzzle(output) {
 
-    override fun solvePart1() {
+    override fun part1() {
         val output = decompress(input)
         log(output)
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         val output = decompress(input, true)
         log(output)
     }

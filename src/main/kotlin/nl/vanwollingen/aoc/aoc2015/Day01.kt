@@ -5,14 +5,14 @@ import kotlin.system.exitProcess
 
 fun main() {
     val d1 = Day01()
-    d1.solvePart1()
-    d1.solvePart2()
+    d1.part1()
+    d1.part2()
 }
 
 class Day01() : Puzzle() {
     val up = '('
 
-    override fun solvePart1() {
+    override fun part1() {
         var floor = 0
         input.forEach {
             if (it == up) floor++ else floor--
@@ -20,7 +20,7 @@ class Day01() : Puzzle() {
         println(floor)
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         var floor = 0
         input.forEachIndexed { i, it ->
             if (it == up) floor++ else floor--

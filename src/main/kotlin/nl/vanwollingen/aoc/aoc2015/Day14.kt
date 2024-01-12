@@ -4,19 +4,19 @@ import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
     val d14 = Day14()
-    d14.solvePart1()
-    d14.solvePart2()
+    d14.part1()
+    d14.part2()
 }
 
 class Day14() : Puzzle() {
 
     private val reindeers = parseInput()
 
-    override fun solvePart1() {
+    override fun part1() {
         println(reindeers.map { reindeer -> reindeer.name to reindeer.distance(2503) }.maxBy { it.second })
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         val scores: MutableMap<String, Int> = mutableMapOf()
         reindeers.forEach { scores[it.name] = 0 }
 

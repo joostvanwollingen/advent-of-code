@@ -52,12 +52,12 @@ class Day24() : Puzzle() {
     }
 
 
-    override fun solvePart1() {
+    override fun part1() {
         println(packages)
         println(equalThirdWeight)
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         TODO("Not yet implemented")
     }
 }

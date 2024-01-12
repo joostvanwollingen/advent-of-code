@@ -7,12 +7,12 @@ import kotlin.system.exitProcess
 
 fun main() {
     val d22 = Day22()
-    d22.solvePart1()
+    d22.part1()
 }
 
 class Day22() : Puzzle() {
 
-    override fun solvePart1() {
+    override fun part1() {
         val magicMissileFirst = mutableListOf(Spell.of(SpellType.MAGIC_MISSILE))
         val shieldFirst = mutableListOf(Spell.of(SpellType.SHIELD))
         val poisonFirt = mutableListOf(Spell.of(SpellType.POISON))
@@ -53,7 +53,7 @@ class Day22() : Puzzle() {
         return newLists
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         TODO("Not yet implemented")
     }
 

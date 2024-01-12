@@ -4,8 +4,8 @@ import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
     val d16 = Day16()
-    d16.solvePart1()
-    d16.solvePart2()
+    d16.part1()
+    d16.part2()
 }
 
 class Day16() : Puzzle() {
@@ -22,13 +22,13 @@ class Day16() : Puzzle() {
     private val cars = 2
     private val perfumes = 1
 
-    override fun solvePart1() {
+    override fun part1() {
         println(aunties.first { auntie ->
             (auntie.children == -1 || auntie.children == children) && (auntie.cats == -1 || auntie.cats == cats) && (auntie.samoyeds == -1 || auntie.samoyeds == samoyeds) && (auntie.pomeranians == -1 || auntie.pomeranians == pomeranians) && (auntie.akitas == -1 || auntie.akitas == akitas) && (auntie.vizslas == -1 || auntie.vizslas == vizslas) && (auntie.goldfish == -1 || auntie.goldfish == goldfish) && (auntie.trees == -1 || auntie.trees == trees) && (auntie.cars == -1 || auntie.cars == cars) && (auntie.perfumes == -1 || auntie.perfumes == perfumes)
         })
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         println(aunties.first { auntie ->
             (auntie.children == -1 || auntie.children == children) && (auntie.cats == -1 || auntie.cats > cats) && (auntie.samoyeds == -1 || auntie.samoyeds == samoyeds) && (auntie.pomeranians == -1 || auntie.pomeranians < pomeranians) && (auntie.akitas == -1 || auntie.akitas == akitas) && (auntie.vizslas == -1 || auntie.vizslas == vizslas) && (auntie.goldfish == -1 || auntie.goldfish < goldfish) && (auntie.trees == -1 || auntie.trees > trees) && (auntie.cars == -1 || auntie.cars == cars) && (auntie.perfumes == -1 || auntie.perfumes == perfumes)
         })

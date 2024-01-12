@@ -5,8 +5,8 @@ import kotlin.math.max
 
 fun main() {
     val d15 = Day15()
-    d15.solvePart1()
-    d15.solvePart2()
+    d15.part1()
+    d15.part2()
 }
 
 class Day15() : Puzzle() {
@@ -16,7 +16,7 @@ class Day15() : Puzzle() {
     private val candy = ingredients.first { it.name == "Candy" }
     private val chocolate = ingredients.first { it.name == "Chocolate" }
     private val sprinkles = ingredients.first { it.name == "Sprinkles" }
-    override fun solvePart1() {
+    override fun part1() {
         var highest = 0L
         for (i in 100 downTo 0) {
             for (j in 100 downTo 0) {
@@ -33,7 +33,7 @@ class Day15() : Puzzle() {
         println(highest)
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         var highest = 0L
         for (i in 100 downTo 0) {
             for (j in 100 downTo 0) {

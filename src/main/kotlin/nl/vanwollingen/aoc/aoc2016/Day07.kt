@@ -4,17 +4,17 @@ import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
     val d7 = Day07()
-    d7.solvePart1()
-    d7.solvePart2()
+    d7.part1()
+    d7.part2()
 }
 
 class Day07(output: Boolean = false) : Puzzle(output) {
 
-    override fun solvePart1() {
+    override fun part1() {
         log(input.lines().count { supportsTLS(it) })
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         log(input.lines().count { supportsSSL(it) })
     }
 

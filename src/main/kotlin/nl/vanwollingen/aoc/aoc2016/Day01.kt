@@ -7,8 +7,8 @@ import kotlin.system.exitProcess
 
 fun main() {
     val d1 = Day01(true)
-    d1.solvePart1()
-    d1.solvePart2()
+    d1.part1()
+    d1.part2()
 }
 
 class Day01(output: Boolean = false) : Puzzle(output) {
@@ -17,7 +17,7 @@ class Day01(output: Boolean = false) : Puzzle(output) {
 
     override fun parseInput(): List<Direction> = input.split(", ").map { Direction(it[0], it.substring(1..<it.length).toInt()) }
 
-    override fun solvePart1() {
+    override fun part1() {
         var heading = Heading.NORTH
         val current = Point(0, 0)
 
@@ -34,7 +34,7 @@ class Day01(output: Boolean = false) : Puzzle(output) {
         log(Point(0, 0).getManhattanDistance(current))
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         var heading = Heading.NORTH
         val current = Point(0, 0)
         var history: MutableList<Point> = mutableListOf()

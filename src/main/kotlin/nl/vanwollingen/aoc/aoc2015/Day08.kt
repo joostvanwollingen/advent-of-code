@@ -4,12 +4,12 @@ import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
     val d8 = Day08()
-    d8.solvePart1()
-    d8.solvePart2()
+    d8.part1()
+    d8.part2()
 }
 
 class Day08() : Puzzle() {
-    override fun solvePart1() {
+    override fun part1() {
         var code = 0
         var mem = 0
 
@@ -21,7 +21,7 @@ class Day08() : Puzzle() {
         println(code - mem)
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         var code = 0
         var enc = 0
 

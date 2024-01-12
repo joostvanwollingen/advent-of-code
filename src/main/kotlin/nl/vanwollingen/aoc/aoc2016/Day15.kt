@@ -4,8 +4,8 @@ import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
     val d15 = Day15()
-    d15.solvePart1()
-    d15.solvePart2()
+    d15.part1()
+    d15.part2()
 }
 
 class Day15(output: Boolean = false) : Puzzle(output) {
@@ -19,11 +19,11 @@ class Day15(output: Boolean = false) : Puzzle(output) {
         }
     }
 
-    override fun solvePart1() {
+    override fun part1() {
         log(synchronizeDiscs(discs))
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         val extraDisc = parseInput().plus(Disc(7, 11, 0))
         log(synchronizeDiscs(extraDisc))
     }

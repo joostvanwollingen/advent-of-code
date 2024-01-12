@@ -4,8 +4,8 @@ import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
     val d5 = Day05()
-    d5.solvePart1()
-    d5.solvePart2()
+    d5.part1()
+    d5.part2()
 }
 
 class Day05() : Puzzle() {
@@ -24,7 +24,7 @@ class Day05() : Puzzle() {
         return split.findAll(text).toList().isNotEmpty() && repeating.findAll(text).toList().isNotEmpty()
     }
 
-    override fun solvePart1() {
+    override fun part1() {
         var count = 0
         input.lines().forEach { line ->
             if (naughtyOrNice(line)) count++
@@ -32,7 +32,7 @@ class Day05() : Puzzle() {
         println(count)
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         var count = 0
         input.lines().forEach { line ->
             if (naughtierOrNicer(line)) count++

@@ -1,5 +1,8 @@
 package nl.vanwollingen.aoc.util
 
+import java.time.Instant
+import java.time.temporal.ChronoUnit
+
 abstract class Puzzle(output: Boolean = false) {
 
     val input by lazy {
@@ -12,8 +15,23 @@ abstract class Puzzle(output: Boolean = false) {
         TODO("Not yet implemented")
     }
 
-    abstract fun solvePart1()
-    abstract fun solvePart2()
+    abstract fun part1()
+    abstract fun part2()
+
+    fun solvePart1() {
+        runTimed { part1() }
+    }
+
+    fun solvePart2() {
+        runTimed { part2() }
+    }
+
+    private fun runTimed(job: () -> Unit) {
+        val start = Instant.now()
+        job()
+        val end = Instant.now()
+        log("Completed in ${start.until(end, ChronoUnit.MILLIS)} ms")
+    }
 
     init {
         showOutput = output

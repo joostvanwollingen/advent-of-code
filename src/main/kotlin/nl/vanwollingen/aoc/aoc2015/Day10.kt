@@ -4,11 +4,11 @@ import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
     val d10 = Day10()
-    d10.solvePart1()
+    d10.part1()
 }
 
 class Day10() : Puzzle() {
-    override fun solvePart1() {
+    override fun part1() {
         var curr = input
         for(i in 1..50) {
             curr = lookAndSay(curr)
@@ -16,7 +16,7 @@ class Day10() : Puzzle() {
         println(curr.length)
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         TODO("Not yet implemented")
     }
 

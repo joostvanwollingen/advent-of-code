@@ -4,20 +4,20 @@ import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
     val d23 = Day23()
-    d23.solvePart1()
-    d23.solvePart2()
+    d23.part1()
+    d23.part2()
 }
 
 class Day23() : Puzzle() {
 
-    override fun solvePart1() {
+    override fun part1() {
         val a = Register("a", 0)
         val b = Register("b", 0)
         executeInstructions(a, b, input.lines())
         println(b)
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         val a = Register("a", 1)
         val b = Register("b", 0)
         executeInstructions(a, b, input.lines())

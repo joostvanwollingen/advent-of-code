@@ -5,16 +5,16 @@ import nl.vanwollingen.aoc.util.hashing.md5
 
 fun main() {
     val d14 = Day14()
-    d14.solvePart1()
-    d14.solvePart2()
+    d14.part1()
+    d14.part2()
 }
 
 class Day14(output: Boolean = false) : Puzzle(output) {
-    override fun solvePart1() {
+    override fun part1() {
         findOneTimePad() { i -> md5(i) }
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         findOneTimePad() { i -> md5(i, 2016) }
     }
 

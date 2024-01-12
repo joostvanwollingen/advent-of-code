@@ -4,12 +4,12 @@ import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
     val d3 = Day03()
-    d3.solvePart1()
-    d3.solvePart2()
+    d3.part1()
+    d3.part2()
 }
 
 class Day03(output: Boolean = false) : Puzzle(output) {
-    override fun solvePart1() {
+    override fun part1() {
         var valid = 0
         input.lines().forEach { line ->
             val (first, second, third) = Regex("(\\d+)").findAll(line).map { it.groupValues.first().toInt() }.toList()
@@ -18,7 +18,7 @@ class Day03(output: Boolean = false) : Puzzle(output) {
         log(valid)
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         var valid = 0
         var firstColumn = mutableListOf<Int>()
         var secondColumn = mutableListOf<Int>()

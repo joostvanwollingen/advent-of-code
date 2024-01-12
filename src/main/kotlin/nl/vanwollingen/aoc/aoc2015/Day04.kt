@@ -6,17 +6,17 @@ import java.security.MessageDigest
 
 fun main() {
     val d4 = Day04()
-    d4.solvePart1()
-    d4.solvePart2()
+    d4.part1()
+    d4.part2()
 }
 
 class Day04() : Puzzle() {
 
-    override fun solvePart1() {
+    override fun part1() {
         findLeadingZeroes("00000")
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         findLeadingZeroes("000000")
     }
 

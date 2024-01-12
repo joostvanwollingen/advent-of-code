@@ -4,7 +4,7 @@ import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
     val d19 = Day19()
-    d19.solvePart1()
+    d19.part1()
 //    d19.solvePart2()
 }
 
@@ -18,7 +18,7 @@ class Day19() : Puzzle() {
         return Molecule(calibration, replacements)
     }
 
-    override fun solvePart1() {
+    override fun part1() {
         val results = mutableSetOf<String>()
         moleculeReplacements.replacements.forEach { rep ->
             val regex = Regex(rep.first)
@@ -31,7 +31,7 @@ class Day19() : Puzzle() {
         println(results.size)
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         val molecules = listOf("e")
 
         val testMolecule = Molecule("HOH", listOf(

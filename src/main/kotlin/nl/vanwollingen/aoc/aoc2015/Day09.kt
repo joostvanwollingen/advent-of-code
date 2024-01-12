@@ -4,7 +4,7 @@ import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
     val d9 = Day09()
-    d9.solvePart1()
+    d9.part1()
 //    d9.solvePart2()
 }
 
@@ -12,7 +12,7 @@ class Day09() : Puzzle() {
     val locations: MutableSet<String> = input.lines().map { line -> line.split(" to ")[0] }.distinct().plus("Arbre").toMutableSet()
     val dist = Array(locations.size) { DoubleArray(locations.size) }
     val next = Array(locations.size) { IntArray(locations.size) }
-    override fun solvePart1() {
+    override fun part1() {
 
         for (i in 0 until next.size) {
             for (j in 0 until next.size) {
@@ -82,7 +82,7 @@ class Day09() : Puzzle() {
         }
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         TODO("Not yet implemented")
     }
 

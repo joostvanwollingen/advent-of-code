@@ -7,8 +7,8 @@ import kotlin.math.min
 
 fun main() {
     val d2 = Day02()
-    d2.solvePart1()
-    d2.solvePart2()
+    d2.part1()
+    d2.part2()
 }
 
 class Day02(output: Boolean = false) : Puzzle(output) {
@@ -25,7 +25,7 @@ class Day02(output: Boolean = false) : Puzzle(output) {
             7 to Point(1, -1),
     )
 
-    override fun solvePart1() {
+    override fun part1() {
         val current = Point(0, 0)
         input.lines().forEach { l ->
             l.forEach { c ->
@@ -61,7 +61,7 @@ class Day02(output: Boolean = false) : Puzzle(output) {
             5 to Point(0, -2),
     )
 
-    override fun solvePart2() {
+    override fun part2() {
         val current = Point(0, -2)
         input.lines().forEach { l ->
             l.forEach { c ->

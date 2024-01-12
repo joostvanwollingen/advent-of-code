@@ -4,12 +4,12 @@ import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
     val d7 = Day07()
-    d7.solvePart1()
-    d7.solvePart2()
+    d7.part1()
+    d7.part2()
 }
 
 class Day07() : Puzzle() {
-    override fun solvePart1() {
+    override fun part1() {
         val signals: MutableMap<String, Int> = mutableMapOf()
         input.lines().sortedBy { it.takeLast(2) }.drop(1).forEach { c -> //sorted by target alphabetically, removing the first instruction of lx -> a
             processSignal(c, signals)
@@ -18,7 +18,7 @@ class Day07() : Puzzle() {
         println(signals["a"])
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         val signals: MutableMap<String, Int> = mutableMapOf()
         val input: MutableList<String> = input.lines().sortedBy { it.takeLast(2) }.drop(1).toMutableList()
         input.add("lx -> a")

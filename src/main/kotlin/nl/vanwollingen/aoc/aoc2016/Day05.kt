@@ -5,12 +5,12 @@ import nl.vanwollingen.aoc.util.hashing.findLeadingZeroes
 
 fun main() {
     val d5 = Day05(true)
-    d5.solvePart1()
-    d5.solvePart2()
+    d5.part1()
+    d5.part2()
 }
 
 class Day05(output: Boolean = true) : Puzzle(output) {
-    override fun solvePart1() {
+    override fun part1() {
         var current = 1
         val numbersToFind = 8
         var start = 0L
@@ -26,7 +26,7 @@ class Day05(output: Boolean = true) : Puzzle(output) {
         log(password)
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         var current = 1
         var start = 0L
         val password: MutableMap<Int, Char> = mutableMapOf()

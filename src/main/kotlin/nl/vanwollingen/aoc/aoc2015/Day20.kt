@@ -5,8 +5,8 @@ import kotlin.system.exitProcess
 
 fun main() {
     val d20 = Day20()
-    d20.solvePart1()
-    d20.solvePart2()
+    d20.part1()
+    d20.part2()
 }
 
 class Day20() : Puzzle() {
@@ -14,7 +14,7 @@ class Day20() : Puzzle() {
     private val targetPresentsAmount = parseInput()
     override fun parseInput() = input.toInt()
 
-    override fun solvePart1() {
+    override fun part1() {
         for (house in 1..1000000) {
             var elves = listOf<Int>()
             for (elf in house downTo 1) {
@@ -29,7 +29,7 @@ class Day20() : Puzzle() {
         }
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         for (house in 1..1000000) {
             val elves = mutableListOf<Int>()
             for (elf in house downTo 1) {

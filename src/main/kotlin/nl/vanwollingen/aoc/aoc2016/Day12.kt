@@ -4,8 +4,8 @@ import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
     val d12 = Day12()
-    d12.solvePart1()
-    d12.solvePart2()
+    d12.part1()
+    d12.part2()
 }
 
 class Day12(output: Boolean = false) : Puzzle(output) {
@@ -48,7 +48,7 @@ class Day12(output: Boolean = false) : Puzzle(output) {
         return i + 1
     }
 
-    override fun solvePart1() {
+    override fun part1() {
         val lines = input.lines()
         var i = 0
 
@@ -59,7 +59,7 @@ class Day12(output: Boolean = false) : Puzzle(output) {
         log(a)
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         val lines = input.lines()
         var i = 0
 

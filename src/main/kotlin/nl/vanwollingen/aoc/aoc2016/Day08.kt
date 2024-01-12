@@ -4,8 +4,8 @@ import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
     val d8 = Day08(true)
-    d8.solvePart1()
-    d8.solvePart2()
+    d8.part1()
+    d8.part2()
 }
 
 class Day08(output: Boolean = false) : Puzzle(output) {
@@ -13,14 +13,14 @@ class Day08(output: Boolean = false) : Puzzle(output) {
     private val instructions = parseInput()
     override fun parseInput(): List<Instruction> = input.lines().map { Instruction.fromString(it) }
 
-    override fun solvePart1() {
+    override fun part1() {
         instructions.forEach {
             processInstruction(it)
         }
         log(grid.sumOf { it.count { r -> r == 1 } })
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         grid = Array(6) { IntArray(50) }
 
         instructions.forEach {

@@ -7,15 +7,15 @@ import kotlin.streams.asStream
 
 fun main() {
     val d18 = Day18()
-    d18.solvePart1()
-    d18.solvePart2()
+    d18.part1()
+    d18.part2()
 }
 
 class Day18() : Puzzle() {
     var grid = parseInput()
     override fun parseInput(): MutableList<Light> = readGridArray(input.lines())
 
-    override fun solvePart1() {
+    override fun part1() {
         for (i in 1..100) {
             println(i)
             grid = animateLights(grid)
@@ -24,7 +24,7 @@ class Day18() : Puzzle() {
         println(grid.count { it.state == Light.LightState.ON })
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         for (i in 1..100) {
             println(i)
             grid = animateLights(grid, true)

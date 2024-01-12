@@ -4,18 +4,18 @@ import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
     val d11 = Day11()
-    d11.solvePart1()
-    d11.solvePart2()
+    d11.part1()
+    d11.part2()
 }
 
 class Day11() : Puzzle() {
-    override fun solvePart1() {
+    override fun part1() {
         val p = Password(input)
         p.next()
         println(p.password)
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         val p = Password(input)
         p.next().next()
         println(p.password)

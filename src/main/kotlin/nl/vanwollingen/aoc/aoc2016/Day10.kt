@@ -6,17 +6,17 @@ import kotlin.math.min
 
 fun main() {
     val d10 = Day10()
-    d10.solvePart1()
-    d10.solvePart2()
+    d10.part1()
+    d10.part2()
 }
 
 class Day10(output: Boolean = false) : Puzzle(output) {
     private val outcomes = processChips(parseInput())
-    override fun solvePart1() {
+    override fun part1() {
         log(outcomes.first)
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         log(outcomes.second)
     }
 

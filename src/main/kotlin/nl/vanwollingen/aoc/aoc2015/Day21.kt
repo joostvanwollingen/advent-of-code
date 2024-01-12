@@ -4,17 +4,17 @@ import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
     val d21 = Day21()
-    d21.solvePart1()
-    d21.solvePart2()
+    d21.part1()
+    d21.part2()
 }
 
 class Day21() : Puzzle() {
-    override fun solvePart1() {
+    override fun part1() {
         val fights = generateCharactersAndEquipment().map { character -> character to fight(character, boss()) }
         println(fights.filter { fight -> fight.second }.minBy { fight -> fight.first.goldSpent })
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         val fights = generateCharactersAndEquipment().map { character -> character to fight(character, boss()) }
         println(fights.filter { fight -> !fight.second }.maxBy { fight -> fight.first.goldSpent })
     }

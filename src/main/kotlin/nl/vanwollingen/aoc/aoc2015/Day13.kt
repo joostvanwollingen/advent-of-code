@@ -4,8 +4,8 @@ import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
     val d13 = Day13()
-    d13.solvePart1()
-    d13.solvePart2()
+    d13.part1()
+    d13.part2()
 }
 
 class Day13() : Puzzle() {
@@ -25,7 +25,7 @@ class Day13() : Puzzle() {
     }
 
 
-    override fun solvePart1() {
+    override fun part1() {
         val options: MutableMap<List<String>, Int> = mutableMapOf()
         for (i in seatings.keys) {
             for (k in seatings.keys) {
@@ -50,7 +50,7 @@ class Day13() : Puzzle() {
         println("${options.maxBy { it.value }}")
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         val adjustedSeatings: MutableMap<String, Map<String, Int>> = mutableMapOf()
 
         seatings.forEach { s ->

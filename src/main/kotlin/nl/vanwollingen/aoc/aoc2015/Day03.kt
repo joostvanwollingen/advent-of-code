@@ -5,8 +5,8 @@ import nl.vanwollingen.aoc.util.grid.Point
 
 fun main() {
     val d3 = Day03()
-    d3.solvePart1()
-    d3.solvePart2()
+    d3.part1()
+    d3.part2()
 }
 
 class Day03() : Puzzle() {
@@ -16,7 +16,7 @@ class Day03() : Puzzle() {
     private val east = '>'
     private val west = '<'
 
-    override fun solvePart1() {
+    override fun part1() {
         var current = Point(0, 0)
         val presentLocations: MutableMap<Point, Int> = mutableMapOf()
 
@@ -42,7 +42,7 @@ class Day03() : Puzzle() {
         return current1
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         var currentSanta = Point(0, 0)
         var currentRoboSanta = Point(0, 0)
         val presentLocations: MutableMap<Point, Int> = mutableMapOf()

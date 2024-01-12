@@ -6,8 +6,8 @@ import kotlin.math.max
 
 fun main() {
     val d6 = Day06()
-    d6.solvePart1()
-    d6.solvePart2()
+    d6.part1()
+    d6.part2()
 }
 
 class Day06() : Puzzle() {
@@ -25,7 +25,7 @@ class Day06() : Puzzle() {
         }
     }
 
-    override fun solvePart1() {
+    override fun part1() {
         val matrix: MutableSet<Point> = mutableSetOf()
         instructions.forEach { instructionSet ->
             for (x in instructionSet.start.x..instructionSet.end.x) {
@@ -53,7 +53,7 @@ class Day06() : Puzzle() {
         println(matrix.size)
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         val matrix: MutableMap<Point, Int> = mutableMapOf()
         instructions.forEach { instructionSet ->
             for (x in instructionSet.start.x..instructionSet.end.x) {

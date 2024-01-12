@@ -4,8 +4,8 @@ import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
     val d2 = Day02()
-    d2.solvePart1()
-    d2.solvePart2()
+    d2.part1()
+    d2.part2()
 }
 
 class Day02() : Puzzle() {
@@ -15,11 +15,11 @@ class Day02() : Puzzle() {
         Gift.fromString(line)
     }
 
-    override fun solvePart1() {
+    override fun part1() {
         println(gifts.sumOf { it.surface + it.slack })
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         println(gifts.sumOf { it.ribbon })
     }
 

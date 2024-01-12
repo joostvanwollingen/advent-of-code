@@ -4,11 +4,11 @@ import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
     val d25 = Day25()
-    d25.solvePart1()
+    d25.part1()
 }
 
 class Day25(output: Boolean = false) : Puzzle(output) {
-    override fun solvePart1() {
+    override fun part1() {
         val targetRow = 2981
         val targetColumn = 3075
         val firstAnswer = 20151125L
@@ -24,7 +24,7 @@ class Day25(output: Boolean = false) : Puzzle(output) {
         log("Answer: $answer")
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         TODO("Not yet implemented")
     }
 

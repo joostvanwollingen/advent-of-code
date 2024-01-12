@@ -5,13 +5,13 @@ import nl.vanwollingen.aoc.util.combinatorics.combinations
 
 fun main() {
     val d17 = Day17()
-    d17.solvePart1()
-    d17.solvePart2()
+    d17.part1()
+    d17.part2()
 }
 
 class Day17() : Puzzle() {
     val buckets = input.lines().map { it.toInt() }
-    override fun solvePart1() {
+    override fun part1() {
         var combinationsThatHold150 = 0
         for (i in 1..20) {
             for (seq in buckets.combinations(i)) {
@@ -21,7 +21,7 @@ class Day17() : Puzzle() {
         println(combinationsThatHold150)
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         val combinationsThatHold150: MutableMap<Int, Int> = mutableMapOf()
         for (i in 1..20) {
             for (seq in buckets.combinations(i)) {

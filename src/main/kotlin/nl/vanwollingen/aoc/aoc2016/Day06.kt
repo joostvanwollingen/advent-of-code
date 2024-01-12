@@ -4,16 +4,16 @@ import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
     val d6 = Day06()
-    d6.solvePart1()
-    d6.solvePart2()
+    d6.part1()
+    d6.part2()
 }
 
 class Day06(output: Boolean = false) : Puzzle(output) {
-    override fun solvePart1() {
+    override fun part1() {
         log(getCountPerPosition(input).map { it.value.maxBy { c -> c.value } }.map { it.key }.joinToString(""))
     }
 
-    override fun solvePart2() {
+    override fun part2() {
         log(getCountPerPosition(input).map { it.value.minBy { c -> c.value } }.map { it.key }.joinToString(""))
     }
 

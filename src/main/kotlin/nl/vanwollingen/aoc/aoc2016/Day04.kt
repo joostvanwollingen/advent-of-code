@@ -4,8 +4,8 @@ import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
     val d4 = Day04()
-    d4.solvePart1()
-    d4.solvePart2()
+    d4.part1()
+    d4.part2()
 }
 
 class Day04(output: Boolean = false) : Puzzle(output) {
@@ -13,7 +13,7 @@ class Day04(output: Boolean = false) : Puzzle(output) {
     private val rooms = parseInput()
     override fun parseInput(): List<Room> = input.lines().map { Room.fromString(it) }
 
-    override fun solvePart1() {
+    override fun part1() {
         val result = getValidRooms()
         log(result)
     }
@@ -61,7 +61,7 @@ class Day04(output: Boolean = false) : Puzzle(output) {
     }
 
 
-    override fun solvePart2() {
+    override fun part2() {
         log(rooms.first { it.decrypt().contains("north") }.sectorId)
     }
 
