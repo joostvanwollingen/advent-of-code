@@ -5,8 +5,8 @@ import kotlin.system.exitProcess
 
 fun main() {
     val d20 = Day20()
-    d20.part1()
-    d20.part2()
+    d20.solvePart1()
+    d20.solvePart2()
 }
 
 class Day20() : Puzzle() {

@@ -1,14 +1,14 @@
 package nl.vanwollingen.aoc.aoc2016
 
 import nl.vanwollingen.aoc.util.Puzzle
+import nl.vanwollingen.aoc.util.exceptions.TargetStateReachedException
 import nl.vanwollingen.aoc.util.grid.Point
 import nl.vanwollingen.aoc.util.grid.getManhattanDistance
-import kotlin.system.exitProcess
 
 fun main() {
     val d1 = Day01(true)
-    d1.part1()
-    d1.part2()
+    d1.solvePart1()
+    d1.solvePart2()
 }
 
 class Day01(output: Boolean = false) : Puzzle(output) {
@@ -30,7 +30,6 @@ class Day01(output: Boolean = false) : Puzzle(output) {
                 Heading.WEST -> current.x -= dir.count
             }
         }
-        log(current)
         log(Point(0, 0).getManhattanDistance(current))
     }
 
@@ -51,15 +50,12 @@ class Day01(output: Boolean = false) : Puzzle(output) {
                 }
                 steps++
                 if (history.contains(current)) {
-                    log(current)
                     log(Point(0, 0).getManhattanDistance(current))
-                    exitProcess(1)
+                    throw TargetStateReachedException("${Point(0, 0).getManhattanDistance(current)}")
                 }
                 history += current.copy()
             }
         }
-        log(current)
-        log(Point(0, 0).getManhattanDistance(current))
     }
 
     private fun getNewHeading(heading: Heading, dir: Direction): Heading = when (heading) {

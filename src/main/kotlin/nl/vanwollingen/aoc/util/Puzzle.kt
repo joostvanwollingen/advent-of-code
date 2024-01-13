@@ -1,5 +1,6 @@
 package nl.vanwollingen.aoc.util
 
+import nl.vanwollingen.aoc.util.exceptions.TargetStateReachedException
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 
@@ -28,9 +29,14 @@ abstract class Puzzle(output: Boolean = false) {
 
     private fun runTimed(job: () -> Unit) {
         val start = Instant.now()
-        job()
-        val end = Instant.now()
-        log("Completed in ${start.until(end, ChronoUnit.MILLIS)} ms")
+        try {
+            job()
+        } catch (e: TargetStateReachedException) {
+            log("Target state was reached")
+        } finally {
+            val end = Instant.now()
+            log("Completed in ${start.until(end, ChronoUnit.MILLIS)} ms")
+        }
     }
 
     init {

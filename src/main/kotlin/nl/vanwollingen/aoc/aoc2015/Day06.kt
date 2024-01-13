@@ -6,8 +6,8 @@ import kotlin.math.max
 
 fun main() {
     val d6 = Day06()
-    d6.part1()
-    d6.part2()
+    d6.solvePart1()
+    d6.solvePart2()
 }
 
 class Day06() : Puzzle() {

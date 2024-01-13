@@ -4,7 +4,7 @@ import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
     val d19 = Day19()
-    d19.part1()
+    d19.solvePart1()
 //    d19.solvePart2()
 }
 

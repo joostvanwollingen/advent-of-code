@@ -7,8 +7,8 @@ import kotlin.math.min
 
 fun main() {
     val d2 = Day02()
-    d2.part1()
-    d2.part2()
+    d2.solvePart1()
+    d2.solvePart2()
 }
 
 class Day02(output: Boolean = false) : Puzzle(output) {

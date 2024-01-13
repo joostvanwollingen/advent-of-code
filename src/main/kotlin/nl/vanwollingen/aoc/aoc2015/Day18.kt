@@ -7,8 +7,8 @@ import kotlin.streams.asStream
 
 fun main() {
     val d18 = Day18()
-    d18.part1()
-    d18.part2()
+    d18.solvePart1()
+    d18.solvePart2()
 }
 
 class Day18() : Puzzle() {

@@ -7,13 +7,17 @@ class AdjacencyList<T> {
     val adjacencyMap = mutableMapOf<Vertex<T>, ArrayList<Edge<T>>>()
 
     fun getVertex(data: T): Vertex<T>? {
-        return adjacencyMap.filter { it.key.data == data }.keys.first()
+        return adjacencyMap.filter { it.key.data == data }.keys.firstOrNull()
     }
 
     fun createVertex(data: T): Vertex<T> {
         val vertex = Vertex(adjacencyMap.count(), data)
         adjacencyMap[vertex] = arrayListOf()
         return vertex
+    }
+
+    fun safeCreateVertex(data: T): Vertex<T> {
+        return getVertex(data) ?: createVertex(data)
     }
 
     fun addDirectedEdge(source: Vertex<T>, destination: Vertex<T>, weight: Double? = 0.0) {

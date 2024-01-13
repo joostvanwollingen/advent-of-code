@@ -5,8 +5,8 @@ import nl.vanwollingen.aoc.util.hashing.findLeadingZeroes
 
 fun main() {
     val d5 = Day05(true)
-    d5.part1()
-    d5.part2()
+    d5.solvePart1()
+    d5.solvePart2()
 }
 
 class Day05(output: Boolean = true) : Puzzle(output) {

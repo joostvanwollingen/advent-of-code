@@ -6,8 +6,8 @@ import java.security.MessageDigest
 
 fun main() {
     val d4 = Day04()
-    d4.part1()
-    d4.part2()
+    d4.solvePart1()
+    d4.solvePart2()
 }
 
 class Day04() : Puzzle() {

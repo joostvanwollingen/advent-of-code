@@ -5,8 +5,8 @@ import nl.vanwollingen.aoc.util.combinatorics.combinations
 
 fun main() {
     val d17 = Day17()
-    d17.part1()
-    d17.part2()
+    d17.solvePart1()
+    d17.solvePart2()
 }
 
 class Day17() : Puzzle() {

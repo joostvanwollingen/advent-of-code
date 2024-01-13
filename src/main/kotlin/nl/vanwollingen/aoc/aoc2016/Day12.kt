@@ -4,8 +4,8 @@ import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() {
     val d12 = Day12()
-    d12.part1()
-    d12.part2()
+    d12.solvePart1()
+    d12.solvePart2()
 }
 
 class Day12(output: Boolean = false) : Puzzle(output) {
