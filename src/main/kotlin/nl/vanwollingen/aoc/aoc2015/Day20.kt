@@ -1,7 +1,7 @@
 package nl.vanwollingen.aoc.aoc2015
 
 import nl.vanwollingen.aoc.util.Puzzle
-import kotlin.system.exitProcess
+import nl.vanwollingen.aoc.util.exceptions.TargetStateReachedException
 
 fun main() {
     val d20 = Day20()
@@ -22,10 +22,10 @@ class Day20() : Puzzle() {
             }
             val gifts = elves.sumOf { elf -> elf * 10 }
             if (gifts >= targetPresentsAmount) {
-                println("House $house received more than $targetPresentsAmount gifts ($gifts)")
-                exitProcess(1)
+                log("House $house received more than $targetPresentsAmount gifts ($gifts)")
+                throw TargetStateReachedException()
             }
-            if (house % 100000 == 0) println("House $house received $gifts gifts")
+            if (house % 100000 == 0) log("House $house received $gifts gifts")
         }
     }
 
@@ -37,10 +37,10 @@ class Day20() : Puzzle() {
             }
             val gifts = elves.sumOf { elf -> elf * 11 }
             if (gifts >= targetPresentsAmount) {
-                println("House $house received more than $targetPresentsAmount gifts ($gifts)")
-                exitProcess(1)
+                log("House $house received more than $targetPresentsAmount gifts ($gifts)")
+                throw TargetStateReachedException()
             }
-            if (house % 100000 == 0) println("House $house received $gifts gifts")
+            if (house % 100000 == 0) log("House $house received $gifts gifts")
         }
     }
 }

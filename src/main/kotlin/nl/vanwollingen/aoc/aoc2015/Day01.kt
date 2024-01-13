@@ -1,7 +1,7 @@
 package nl.vanwollingen.aoc.aoc2015
 
 import nl.vanwollingen.aoc.util.Puzzle
-import kotlin.system.exitProcess
+import nl.vanwollingen.aoc.util.exceptions.TargetStateReachedException
 
 fun main() {
     val d1 = Day01()
@@ -17,7 +17,7 @@ class Day01() : Puzzle() {
         input.forEach {
             if (it == up) floor++ else floor--
         }
-        println(floor)
+        log(floor)
     }
 
     override fun part2() {
@@ -25,10 +25,10 @@ class Day01() : Puzzle() {
         input.forEachIndexed { i, it ->
             if (it == up) floor++ else floor--
             if (floor < 0) {
-                println(i + 1)
-                exitProcess(1)
+                log(i + 1)
+                throw TargetStateReachedException()
             }
         }
-        println(floor)
+        log(floor)
     }
 }
