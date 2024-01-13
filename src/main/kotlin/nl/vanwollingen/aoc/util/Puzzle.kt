@@ -32,7 +32,7 @@ abstract class Puzzle(output: Boolean = false) {
         try {
             job()
         } catch (e: TargetStateReachedException) {
-            log("Target state was reached")
+            debug("Target state was reached")
         } finally {
             val end = Instant.now()
             log("Completed in ${start.until(end, ChronoUnit.MILLIS)} ms")
