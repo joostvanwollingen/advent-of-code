@@ -49,8 +49,8 @@ abstract class Puzzle(output: Boolean = false) {
             print("${message}${if (linebreak) "\n" else ""}")
         }
 
-        fun debug(message: Any) {
-            if (showOutput) println(message.toString())
+        fun debug(message: Any, linebreak: Boolean = true) {
+            if (showOutput) print("${message}${if (linebreak) "\n" else ""}")
         }
     }
 }
