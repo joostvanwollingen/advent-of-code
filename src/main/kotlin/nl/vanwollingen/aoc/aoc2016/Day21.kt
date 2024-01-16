@@ -1,68 +1,37 @@
 package nl.vanwollingen.aoc.aoc2016
 
 import nl.vanwollingen.aoc.util.Puzzle
-import java.util.Deque
-import java.util.LinkedList
-import kotlin.math.max
-import kotlin.math.min
+import java.util.*
 
 fun main() {
     val d21 = Day21()
-    d21.test()
     d21.solvePart1()
-//    d21.solvePart2()
+    d21.solvePart2()
 }
 
 class Day21(output: Boolean = false) : Puzzle(output) {
 
-    fun test() {
-        var curr = "abcde".toCharArray()
-
-        curr = swapPosition(curr, 4, 0)
-        println(curr.joinToString(""))
-
-        curr = swapLetter(curr, 'd', 'b')
-        println(curr.joinToString(""))
-
-        curr = reversePositions(curr, 0, 4)
-        println(curr.joinToString(""))
-
-        curr = rotate(curr, -1, 1)
-        println(curr.joinToString(""))
-
-        curr = movePosition(curr, 1, 4)
-        println(curr.joinToString(""))
-
-        curr = movePosition(curr, 3, 0)
-        println(curr.joinToString(""))
-
-        curr = rotate(curr, 'b')
-        println(curr.joinToString(""))
-
-        curr = rotate(curr, 'd')
-        println(curr.joinToString(""))
-    }
-
     override fun part1() {
-
         var scrambleInput = "abcdefgh".toCharArray()
+
         for (i in 0..<input.lines().size) {
-            log(input.lines()[i])
+            debug(input.lines()[i])
             scrambleInput = doOperation(input.lines()[i], scrambleInput)
-            log(scrambleInput.joinToString(""))
-            if (scrambleInput.size != 8) throw Exception("size $i")
+            debug(scrambleInput.joinToString(""))
         }
+
         log(scrambleInput.joinToString(""))
     }
 
     override fun part2() {
         var unscrambleInput = "fbgdceah".toCharArray()
+
         for (i in 0..<input.lines().size) {
-            log(input.lines().reversed()[i])
+            debug(input.lines().reversed()[i])
             unscrambleInput = doOperation(input.lines().reversed()[i], unscrambleInput, true)
-            log(unscrambleInput.joinToString(""))
-            if (unscrambleInput.size != 8) throw Exception("size $i")
+            debug(unscrambleInput.joinToString(""))
         }
+
         log(unscrambleInput.joinToString(""))
     }
 
@@ -89,10 +58,10 @@ class Day21(output: Boolean = false) : Puzzle(output) {
         if (operation.contains("rotate")) {
             if (operation.contains("based")) {
                 val matches = rotateLetter.findAll(operation).toList().first().groupValues
-                return rotate(input, matches[1].single())
+                return reverseRotate(input, matches[1].single())
             }
             val matches = rotate.findAll(operation).toList().first().groupValues
-            return rotate(input, if (matches[2] == "right") 1 else -1, matches[3].toInt())
+            return rotate(input, if (matches[2] == "right") -1 else 1, matches[3].toInt())
         }
 
         if (operation.contains("swap")) {
@@ -111,9 +80,25 @@ class Day21(output: Boolean = false) : Puzzle(output) {
 
         if (operation.contains("move")) {
             val matches = move.findAll(operation).toList().first().groupValues
-            return movePosition(input, matches[2].toInt(), matches[3].toInt())
+            return movePosition(input, matches[3].toInt(), matches[2].toInt())
         }
         throw Exception("Failed to map operation")
+    }
+
+    private fun reverseRotate(input: CharArray, single: Char): CharArray {
+        val rotations = when (input.indexOf(single)) {
+            1 -> 1
+            3 -> 2
+            5 -> 3
+            7 -> 4
+            2 -> 6
+            4 -> 7
+            6 -> 8
+            0 -> 9
+            else -> throw Exception("")
+        }
+
+        return rotate(input, -1, rotations)
     }
 
     private fun determineOperationRegular(
@@ -155,7 +140,7 @@ class Day21(output: Boolean = false) : Puzzle(output) {
         throw Exception("Failed to map operation")
     }
 
-    fun swapPosition(input: CharArray, x: Int, y: Int): CharArray {
+    private fun swapPosition(input: CharArray, x: Int, y: Int): CharArray {
         val xChar = input[x]
         val yChar = input[y]
 
@@ -165,7 +150,7 @@ class Day21(output: Boolean = false) : Puzzle(output) {
         return input
     }
 
-    fun swapLetter(input: CharArray, letterA: Char, letterB: Char): CharArray {
+    private fun swapLetter(input: CharArray, letterA: Char, letterB: Char): CharArray {
         val aCharIndex = input.indexOf(letterA)
         val bCharIndex = input.indexOf(letterB)
 
@@ -178,14 +163,14 @@ class Day21(output: Boolean = false) : Puzzle(output) {
         return input
     }
 
-    fun reversePositions(input: CharArray, start: Int, end: Int): CharArray {
+    private fun reversePositions(input: CharArray, start: Int, end: Int): CharArray {
         var endIndex = end
         if (end >= input.size) endIndex = input.size - 1
         val reverse = input.slice(start..endIndex).reversed()
         return (input.slice(0..<start) + reverse + input.slice(end + 1..<input.size)).toCharArray()
     }
 
-    fun rotate(input: CharArray, direction: Int, steps: Int): CharArray {
+    private fun rotate(input: CharArray, direction: Int, steps: Int): CharArray {
         val q: Deque<Char> = LinkedList()
         q.addAll(input.toList())
         for (i in 1..steps) {
@@ -198,7 +183,7 @@ class Day21(output: Boolean = false) : Puzzle(output) {
         return q.toCharArray()
     }
 
-    fun movePosition(input: CharArray, from: Int, to: Int): CharArray {
+    private fun movePosition(input: CharArray, from: Int, to: Int): CharArray {
         val charToMove = input[from]
         var returnValue = (input.slice(0..<from) + input.slice(from + 1..<input.size)).toMutableList()
 
@@ -213,7 +198,7 @@ class Day21(output: Boolean = false) : Puzzle(output) {
         return returnValue.toCharArray()
     }
 
-    fun rotate(input: CharArray, letter: Char): CharArray {
+    private fun rotate(input: CharArray, letter: Char): CharArray {
         var rotations = 1
         val indexOf = input.indexOf(letter)
         rotations += input.indexOf(letter)
