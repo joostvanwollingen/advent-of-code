@@ -40,17 +40,24 @@ abstract class Puzzle(output: Boolean = false) {
     }
 
     init {
-        showOutput = output
+        debug = output
     }
 
     companion object {
-        var showOutput = false
+        var debug = false
         fun log(message: Any, linebreak: Boolean = true) {
             print("${message}${if (linebreak) "\n" else ""}")
         }
 
         fun debug(message: Any, linebreak: Boolean = true) {
-            if (showOutput) print("${message}${if (linebreak) "\n" else ""}")
+            if (debug) print("${message}${if (linebreak) "\n" else ""}")
+        }
+
+        fun debug(message: String? = null, func: () -> Unit) {
+            if (debug) {
+                message?.let { println(it) }
+                func()
+            }
         }
     }
 }
