@@ -52,18 +52,6 @@ class Day09(output: Boolean = false) : Puzzle(output) {
     }
 
     override fun part2() {
-
-        val test = listOf(
-            "<>",
-            "<random characters>",
-            "<<<<>",
-            "<{!>}>",
-            "<!!>",
-            "<!!!>>",
-            """<{o"i!a,<{i<a>""",
-        )
-
-
         var countInGarbage = 0
         var ignoreNext = false
         var openGarbage = false
