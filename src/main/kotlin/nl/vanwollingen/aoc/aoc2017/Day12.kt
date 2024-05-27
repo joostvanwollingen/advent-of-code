@@ -55,7 +55,7 @@ class Day12(output: Boolean = false) : Puzzle(output) {
         companion object {
             fun fromString(l: String): Pipe {
                 val s = l.split(" <-> ")
-                return Pipe(s.first().toInt(), s.last().split(",").map { it.strip().toInt() }.toMutableSet())
+                return Pipe(s.first().toInt(), s.last().split(",").map { it.trim().toInt() }.toMutableSet())
             }
         }
     }
