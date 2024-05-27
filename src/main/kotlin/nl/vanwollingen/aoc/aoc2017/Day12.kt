@@ -30,7 +30,8 @@ class Day12(output: Boolean = false) : Puzzle(output) {
         }
 
     override fun part1() {
-        val visited: MutableSet<Int> = mutableSetOf(startPipe)
+        parseInput()
+        val visited: MutableSet<Int> = mutableSetOf(0)
         val q: Queue<Int> = LinkedList()
         q.add(startPipe)
 
