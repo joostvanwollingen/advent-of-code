@@ -5,6 +5,7 @@ import nl.vanwollingen.aoc.util.Puzzle
 fun main() {
     val d13 = Day13()
     d13.solvePart1()
+    d13.solvePart2()
 }
 
 class Day13(output: Boolean = false) : Puzzle(output) {
@@ -33,11 +34,20 @@ class Day13(output: Boolean = false) : Puzzle(output) {
     }
 
     override fun part2() {
-        TODO("Not yet implemented")
+        //https://www.reddit.com/r/adventofcode/comments/7jgyrt/2017_day_13_solutions/
+        var delay = 0
+        while (layers.values.any { it.isScannerAtTopOfLayer(delay) })
+            delay++
+        log(delay)
     }
 
     data class Layer(val depth: Int, val range: Int, var scanner: Int = 1) {
         private var scannerDirection = DOWN
+
+        fun isScannerAtTopOfLayer(delay: Int): Boolean {
+            return (depth + delay) % (2 * (range - 1)) == 0
+        }
+
         fun moveScanner() {
             if (scanner == range) {
                 scannerDirection = UP
