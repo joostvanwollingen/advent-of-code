@@ -1,10 +1,12 @@
 package nl.vanwollingen.aoc.aco2018
 
 import nl.vanwollingen.aoc.util.Puzzle
+import nl.vanwollingen.aoc.util.exceptions.TargetStateReachedException
 
 fun main() {
     val p = Day01()
     p.solvePart1()
+    p.solvePart2()
 }
 
 class Day01 : Puzzle() {
@@ -22,6 +24,18 @@ class Day01 : Puzzle() {
     }
 
     override fun part2() {
-        TODO("Not yet implemented")
+        val visited: MutableMap<Long, Int> = mutableMapOf(0L to 1)
+        var currentFrequency = 0L
+
+        while (true) {
+            frequencyChanges.forEach { fc ->
+                currentFrequency += fc.change
+                visited[currentFrequency] = visited.getOrDefault(currentFrequency, 0) + 1
+                if (visited.getOrDefault(currentFrequency, 0) > 1) {
+                    log(currentFrequency)
+                    throw TargetStateReachedException("$currentFrequency")
+                }
+            }
+        }
     }
 }
