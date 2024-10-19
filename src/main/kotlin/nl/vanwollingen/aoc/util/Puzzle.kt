@@ -4,12 +4,20 @@ import nl.vanwollingen.aoc.util.exceptions.TargetStateReachedException
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 
-abstract class Puzzle(output: Boolean = false) {
+abstract class Puzzle(output: Boolean = false, exampleInput: Boolean = false) {
 
     val input by lazy {
         val year = this::class.java.packageName.split(".").last().substring(3)
         val day = this::class.simpleName!!.substring(3)
-        PuzzleInputUtil.load("$year/Day${day.toString().padStart(2, '0')}.input")
+        PuzzleInputUtil.load(
+            "$year/Day${day.toString().padStart(2, '0')}${
+                if (exampleInput) {
+                    ".example"
+                } else {
+                    ""
+                }
+            }.input"
+        )
     }
 
     open fun parseInput(): Any {
