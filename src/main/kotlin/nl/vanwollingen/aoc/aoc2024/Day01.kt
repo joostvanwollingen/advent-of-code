@@ -7,8 +7,7 @@ fun main() {
     Day1.part2()
 }
 
-
-object Day1 : Puzzle(exampleInput = false) {
+object Day1 : Puzzle() {
 
     override fun parseInput(): Pair<MutableList<Int>, MutableList<Int>> {
         val left: MutableList<Int> = mutableListOf()
