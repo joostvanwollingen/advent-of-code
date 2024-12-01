@@ -43,7 +43,7 @@ abstract class Puzzle(output: Boolean = false, exampleInput: Boolean = false) {
             debug("Target state was reached")
         } finally {
             val end = Instant.now()
-            log("Completed in ${start.until(end, ChronoUnit.MILLIS)} ms")
+            log("Completed in ${start.until(end, ChronoUnit.MICROS)} μs")
         }
     }
 
