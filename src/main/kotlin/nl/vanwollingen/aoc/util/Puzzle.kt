@@ -27,24 +27,22 @@ abstract class Puzzle(output: Boolean = false, exampleInput: Boolean = false) {
     abstract fun part1()
     abstract fun part2()
 
-    fun solvePart1() {
-        runTimed { part1() }
-    }
+    fun solvePart1() = runTimed { part1() }
 
-    fun solvePart2() {
-        runTimed { part2() }
-    }
+    fun solvePart2() = runTimed { part2() }
 
-    private fun runTimed(job: () -> Unit) {
+    private fun runTimed(job: () -> Unit): Long {
+        var end: Instant = Instant.MAX
         val start = Instant.now()
         try {
             job()
+            end = Instant.now()
         } catch (e: TargetStateReachedException) {
             debug("Target state was reached")
         } finally {
-            val end = Instant.now()
             log("Completed in ${start.until(end, ChronoUnit.MICROS)} μs")
         }
+        return start.until(end, ChronoUnit.MICROS)
     }
 
     init {

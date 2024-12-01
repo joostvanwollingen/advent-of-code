@@ -29,23 +29,23 @@ object Day01 : Puzzle() {
 
     override fun part1() {
         val (left, right) = parsedInput
-        val result = left.zip(right) { a, b -> abs(a-b) }.sum()
+        val result = left.zip(right) { a, b -> abs(a - b) }.sum()
         println(result)
     }
 
     override fun part2() {
         val (left, right) = parsedInput
         val rightCountByNumber:Map<Int,Int>  = countByNumber(right)
-        var score = 0
+        var score = 0L
         for(number in left) {
             score += rightCountByNumber.getOrDefault(number, 0).times(number)
         }
         println(score)
     }
 
-    private fun countByNumber(list: List<Int>) : Map<Int, Int> {
+    private fun countByNumber(list: List<Int>): Map<Int, Int> {
         val countByNumber = mutableMapOf<Int, Int>()
-        for(item in list){
+        for (item in list) {
             countByNumber[item] = countByNumber.getOrDefault(item, 0) + 1
         }
         return countByNumber
