@@ -1,22 +1,26 @@
 package nl.vanwollingen.aoc.util
 
+import nl.vanwollingen.aoc.aoc2024.Day02
+import kotlin.time.TimedValue
+
 fun main() {
-    Speedometer(nl.vanwollingen.aoc.aoc2024.Day01, 100).measurePart1()
+    Speedometer( 100) { Day02.solvePart1() }.measure()
+    Speedometer( 100) { Day02.solvePart2() }.measure()
 }
 
-class Speedometer(val puzzle: Puzzle, val number: Int) {
-    fun measurePart1() {
-        val runs: MutableMap<Int, Long> = mutableMapOf()
+class Speedometer<T>(val number: Int, val  block: ()->TimedValue<T>) {
+    fun measure() {
+        val runs: MutableList<TimedValue<*>> = mutableListOf()
 
         for (i in 1..number) {
-            runs[i] = puzzle.solvePart1()
+            runs.add(block())
         }
 
-        runs.forEach{
-            println("${it.key}: ${it.value} μs")
+        runs.forEachIndexed{ i,v->
+            println("${i+1}: ${v.duration.inWholeMicroseconds} μs")
         }
-        println("min: ${runs.values.min()}")
-        println("max: ${runs.values.max()}")
-        println("avg: ${runs.values.average()}")
+        println("min: ${runs.minBy { it.duration }.duration.inWholeMicroseconds}")
+        println("max: ${runs.maxBy { it.duration }.duration.inWholeMicroseconds}")
+        println("avg: ${runs.sumOf { it.duration.inWholeMicroseconds }.div(runs.size)}")
     }
 }

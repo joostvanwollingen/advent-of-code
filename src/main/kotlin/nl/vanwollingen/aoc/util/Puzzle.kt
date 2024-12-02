@@ -1,8 +1,7 @@
 package nl.vanwollingen.aoc.util
 
-import nl.vanwollingen.aoc.util.exceptions.TargetStateReachedException
-import java.time.Instant
-import java.time.temporal.ChronoUnit
+import kotlin.time.TimedValue
+import kotlin.time.measureTimedValue
 
 abstract class Puzzle(output: Boolean = false, exampleInput: Boolean = false) {
 
@@ -28,22 +27,9 @@ abstract class Puzzle(output: Boolean = false, exampleInput: Boolean = false) {
     abstract fun part2()
 
     fun solvePart1() = runTimed { part1() }
-
     fun solvePart2() = runTimed { part2() }
 
-    private fun runTimed(job: () -> Unit): Long {
-        var end: Instant = Instant.MAX
-        val start = Instant.now()
-        try {
-            job()
-            end = Instant.now()
-        } catch (e: TargetStateReachedException) {
-            debug("Target state was reached")
-        } finally {
-            log("Completed in ${start.until(end, ChronoUnit.MICROS)} μs")
-        }
-        return start.until(end, ChronoUnit.MICROS)
-    }
+    private fun <T> runTimed(job: () -> T): TimedValue<T> = measureTimedValue { job() }
 
     init {
         debug = output

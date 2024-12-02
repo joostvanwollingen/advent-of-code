@@ -1,3 +1,3 @@
 package nl.vanwollingen.aoc.util.exceptions
 
-class TargetStateReachedException(message: String? = null, cause: Throwable? = null) : Exception(message, cause)
+class TargetStateReachedException(message: String? = "Target state reached", cause: Throwable? = null) : Exception(message, cause)
