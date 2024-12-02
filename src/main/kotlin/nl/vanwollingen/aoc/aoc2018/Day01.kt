@@ -1,4 +1,4 @@
-package nl.vanwollingen.aoc.aco2018
+package nl.vanwollingen.aoc.aoc2018
 
 import nl.vanwollingen.aoc.util.Puzzle
 import nl.vanwollingen.aoc.util.exceptions.TargetStateReachedException
