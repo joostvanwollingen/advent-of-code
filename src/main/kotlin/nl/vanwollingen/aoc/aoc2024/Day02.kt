@@ -10,70 +10,61 @@ fun main() {
 
 object Day02 : Puzzle(exampleInput = false) {
 
-    val reports = parseInput()
+    private val reports = parseInput()
 
     override fun parseInput() = input.lines().map { line ->
         line.split(" ").map(String::toInt)
     }
 
     override fun part1() {
-        val safe: MutableMap<List<Int>, Boolean> = mutableMapOf()
-
-        reports.forEach { report ->
-            safe[report] = reportIsSafe(report)
-        }
-        log(safe.count { it.value })
+        log(reports.count(::reportIsSafe))
     }
 
     override fun part2() {
-        val safe: MutableMap<List<Int>, Boolean> = mutableMapOf()
-
-        reports.forEach { report ->
+        log(reports.count { report ->
             val mutations = reportMutations(report)
-            val isSafe = reportIsSafe(report) || mutations.any { reportIsSafe(it) }
-            safe[report] = isSafe
-        }
-        log(safe.count { it.value })
+            reportIsSafe(report) || mutations.any { reportIsSafe(it) }
+        })
     }
 
-        private fun reportIsSafe(level: List<Int>): Boolean {
-            var direction: String? = null
+    private fun reportIsSafe(level: List<Int>): Boolean {
+        var direction: String? = null
 
-            val safeLevels = level.windowed(2, 1) { (left, right) ->
+        val safeLevels = level.windowed(2, 1) { (left, right) ->
 
-                val newDirection = if (left < right) {
-                    "UP"
-                } else if (left == right) {
-                    "EQUAL"
-                } else {
-                    "DOWN"
-                }
-
-                if (direction == null) {
-                    direction = newDirection
-                }
-
-                if (newDirection == "EQUAL" || newDirection != direction) {
-                    return@windowed false
-                }
-
-                direction = newDirection
-
-                val diff = left - right
-
-                return@windowed abs(diff) in 1..3
+            val newDirection = if (left < right) {
+                "UP"
+            } else if (left == right) {
+                "EQUAL"
+            } else {
+                "DOWN"
             }
 
-            return !safeLevels.contains(false)
-        }
-    }
+            if (direction == null) {
+                direction = newDirection
+            }
 
-    fun reportMutations(report: List<Int>): List<List<Int>> {
-        val skipList = report.indices
-        val newLists = skipList.map {
-            val mutableReport = report.toMutableList()
-            mutableReport.removeAt(it)
-            mutableReport
+            if (newDirection == "EQUAL" || newDirection != direction) {
+                return@windowed false
+            }
+
+            direction = newDirection
+
+            val diff = left - right
+
+            return@windowed abs(diff) in 1..3
         }
-        return newLists
+
+        return !safeLevels.contains(false)
+    }
+}
+
+fun reportMutations(report: List<Int>): List<List<Int>> {
+    val skipList = report.indices
+    val newLists = skipList.map {
+        val mutableReport = report.toMutableList()
+        mutableReport.removeAt(it)
+        mutableReport
+    }
+    return newLists
 }
