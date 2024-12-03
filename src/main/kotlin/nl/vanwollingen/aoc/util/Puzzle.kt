@@ -23,13 +23,17 @@ abstract class Puzzle(output: Boolean = false, exampleInput: Boolean = false) {
         TODO("Not yet implemented")
     }
 
-    abstract fun part1()
-    abstract fun part2()
+    abstract fun part1(): Any
+    abstract fun part2(): Any
 
     fun solve() {
-        solvePart1()
-        solvePart2()
+        val (r1, t1) = solvePart1()
+        log("Part 1: $r1 (${t1.inWholeMicroseconds} μs)")
+
+        val (r2, t2) = solvePart2()
+        log("Part 2: $r2 (${t2.inWholeMicroseconds} μs)")
     }
+
     fun solvePart1() = runTimed { part1() }
     fun solvePart2() = runTimed { part2() }
 

@@ -8,21 +8,21 @@ fun main() = Day03.solve()
 
 object Day03 : Puzzle(exampleInput = false) {
 
-    private val multiplications = parseInput()
     private const val DO = "do()"
     private const val DONT = "don't()"
 
     override fun parseInput() = input.lines().map { line ->
-        val regex = Regex("(mul\\((\\d{1,3}),(\\d{1,3})\\))+")
-        val results = regex.findAll(line).toList().map { it.groupValues }.mapNotNull { it[2].toInt() to it[3].toInt() }
+        val regex = Regex("(mul\\((\\d{1,3}),(\\d{1,3})\\))")
+        val results = regex.findAll(line).toList().map { it.groupValues }.map { it[2].toInt() to it[3].toInt() }
         results
+    }.flatten()
+
+    override fun part1(): Any {
+        val multiplications = parseInput()
+        return multiplications.sumOf { it.first * it.second }
     }
 
-    override fun part1() {
-        log(multiplications.flatten().sumOf { it.first * it.second })
-    }
-
-    override fun part2() {
+    override fun part2(): Any {
         val instructions = input.lines().map { line ->
             val regex = Regex("(mul\\(\\d+,\\d+\\)|do\\(\\)|don't\\(\\))")
             val results =
@@ -55,6 +55,7 @@ object Day03 : Puzzle(exampleInput = false) {
                 skip = 0
             }
         }
-        log(sum)
+        return sum
     }
+
 }
