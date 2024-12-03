@@ -18,7 +18,6 @@ object Day03 : Puzzle(exampleInput = false) {
         results
     }
 
-
     override fun part1() {
         log(multiplications.flatten().sumOf { it.first * it.second })
     }
