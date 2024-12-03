@@ -26,6 +26,10 @@ abstract class Puzzle(output: Boolean = false, exampleInput: Boolean = false) {
     abstract fun part1()
     abstract fun part2()
 
+    fun solve() {
+        solvePart1()
+        solvePart2()
+    }
     fun solvePart1() = runTimed { part1() }
     fun solvePart2() = runTimed { part2() }
 
