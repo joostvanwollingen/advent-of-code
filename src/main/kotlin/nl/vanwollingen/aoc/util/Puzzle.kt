@@ -3,7 +3,7 @@ package nl.vanwollingen.aoc.util
 import kotlin.time.TimedValue
 import kotlin.time.measureTimedValue
 
-abstract class Puzzle(output: Boolean = false, exampleInput: Boolean = false) {
+abstract class Puzzle(val printDebug: Boolean = false, val exampleInput: Boolean = false) {
 
     val input by lazy {
         val year = this::class.java.packageName.split(".").last().substring(3)
@@ -27,6 +27,7 @@ abstract class Puzzle(output: Boolean = false, exampleInput: Boolean = false) {
     abstract fun part2(): Any
 
     fun solve() {
+        setDebug(printDebug)
         val (r1, t1) = solvePart1()
         log("Part 1: $r1 (${t1.inWholeMicroseconds} μs)")
 
@@ -39,22 +40,23 @@ abstract class Puzzle(output: Boolean = false, exampleInput: Boolean = false) {
 
     private fun <T> runTimed(job: () -> T): TimedValue<T> = measureTimedValue { job() }
 
-    init {
-        debug = output
-    }
-
     companion object {
-        var debug = false
+        private var printDebug = false
+
+        fun setDebug(printDebug: Boolean) {
+            this.printDebug = printDebug
+        }
+
         fun log(message: Any, linebreak: Boolean = true) {
             print("${message}${if (linebreak) "\n" else ""}")
         }
 
         fun debug(message: Any, linebreak: Boolean = true) {
-            if (debug) print("${message}${if (linebreak) "\n" else ""}")
+            if (printDebug) print("${message}${if (linebreak) "\n" else ""}")
         }
 
         fun debug(message: String? = null, func: () -> Unit) {
-            if (debug) {
+            if (printDebug) {
                 message?.let { println(it) }
                 func()
             }

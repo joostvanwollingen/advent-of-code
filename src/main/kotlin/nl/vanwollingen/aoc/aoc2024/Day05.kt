@@ -4,7 +4,7 @@ import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() = Day05.solve()
 
-object Day05 : Puzzle(exampleInput = false, output = true) {
+object Day05 : Puzzle(exampleInput = false, printDebug = false) {
 
     val data: Pair<Map<Int, List<Int>>, List<List<Int>>> = parseInput()
 
