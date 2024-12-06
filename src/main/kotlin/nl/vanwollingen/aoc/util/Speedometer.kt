@@ -1,11 +1,12 @@
 package nl.vanwollingen.aoc.util
 
 import nl.vanwollingen.aoc.aoc2024.Day02
+import nl.vanwollingen.aoc.aoc2024.Day06
 import kotlin.time.TimedValue
 
 fun main() {
-    Speedometer(100) { Day02.solvePart1() }.measure()
-    Speedometer(100) { Day02.solvePart2() }.measure()
+//    Speedometer(100) { Day02.solvePart1() }.measure()
+    Speedometer(100) { Day06.solvePart2() }.measure()
 }
 
 class Speedometer<T>(val number: Int, val block: () -> TimedValue<T>) {

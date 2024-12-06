@@ -45,7 +45,7 @@ object Day06 : Puzzle(exampleInput = false, printDebug = false) {
         return visited.size
     }
 
-    override fun part2(): Int {
+    override fun part2(): Long {
         val emptyCells = mutableListOf<Pair<Int, Int>>()
 
         // Collect all empty cells
@@ -55,23 +55,16 @@ object Day06 : Puzzle(exampleInput = false, printDebug = false) {
             }
         }
 
-        var hasLoop = 0
-
-        for (cell in emptyCells) {
-            debug(cell)
+        return emptyCells
+            .parallelStream()
+            .filter { cell->
+//            debug(cell)
             val (row, col) = cell
             if (grid[row]?.get(col) == '.') {
-                // Place an obstacle
-                grid[row]!![col] = '#'
-
-                if(hasLoop(grid)) hasLoop++
-
-                // Backtrack: remove the obstacle
-                grid[row]!![col] = '.'
+                if(hasLoop(grid, row, col)) return@filter true
             }
-        }
-
-        return hasLoop
+            return@filter false
+        }.count()
     }
 
     private fun Point.turn90Degrees(): Point {
@@ -82,7 +75,7 @@ object Day06 : Puzzle(exampleInput = false, printDebug = false) {
         else throw Error("wtf")
     }
 
-    private fun hasLoop(grid: Map<Int, Map<Int, Char>>): Boolean {
+    private fun hasLoop(grid: Map<Int, Map<Int, Char>>, row: Int, col:Int): Boolean {
         var guardY = if (exampleInput) 6 else 69 //TODO find
         var guardX = if (exampleInput) 4 else 91
 
@@ -92,7 +85,7 @@ object Day06 : Puzzle(exampleInput = false, printDebug = false) {
 
         while (guardY in gridRange && guardX in gridRange) {
 
-            val nextSquareIsOccupied = grid[guardY + direction.y]?.get(guardX + direction.x) == '#'
+            val nextSquareIsOccupied = grid[guardY + direction.y]?.get(guardX + direction.x) == '#' || row == guardY + direction.y && col == guardX + direction.x
 
             if (nextSquareIsOccupied) {
                 direction = direction.turn90Degrees()
