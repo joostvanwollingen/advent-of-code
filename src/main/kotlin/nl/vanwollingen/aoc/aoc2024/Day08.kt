@@ -8,6 +8,8 @@ fun main() = Day08.solve()
 object Day08 : Puzzle(exampleInput = false, printDebug = false) {
 
     private val grid = parseInput()
+    private val gridMaxY = grid.keys.max()
+    private val gridMaxX = grid.values.maxOf { it.keys.max() }
 
     private val antennaByFrequency = grid.flatMap { (row, columns) ->
         columns.mapNotNull { (col, value) -> if (value != '.') value to Pair(row, col) else null }
@@ -16,10 +18,7 @@ object Day08 : Puzzle(exampleInput = false, printDebug = false) {
         valueTransform = { it.second } //Location
     )
 
-    private val freqToPairMap = antennaByFrequency.map { it.key to it.value.combinations(2).toList() }.toMap()
-
-    private val gridMaxY = grid.keys.max()
-    private val gridMaxX = grid.values.maxOf { it.keys.max() }
+    private val frequencyPairs = antennaByFrequency.map { it.key to it.value.combinations(2).toList() }.toMap()
 
     override fun parseInput(): MutableMap<Int, MutableMap<Int, Char>> {
         val grid: MutableMap<Int, MutableMap<Int, Char>> = mutableMapOf()
@@ -38,14 +37,11 @@ object Day08 : Puzzle(exampleInput = false, printDebug = false) {
     override fun part1(): Int {
         val validAntiNodes = mutableSetOf<Pair<Int, Int>>()
 
-        freqToPairMap.entries.forEach { freq ->
-            debug(freq.key)
-            freq.value.forEach { pair ->
-                val (a, b) = pair
-                val vector = getVector(a, b)
-                val antiNodeA = getAntiNode(b, getVector(a, b))
-                val antiNodeB = getAntiNode(a, getVector(a, b), true)
-                debug("$a to $b: v${vector} anti: $antiNodeA $antiNodeB")
+        frequencyPairs.entries.forEach { freq ->
+            freq.value.forEach { (antennaA, antennaB) ->
+                val vector = getVector(antennaA, antennaB)
+                val antiNodeA = getAntiNode(antennaB, vector)
+                val antiNodeB = getAntiNode(antennaA, vector, true)
                 if (withinGrid(antiNodeA, gridMaxY, gridMaxX)) validAntiNodes.add(antiNodeA)
                 if (withinGrid(antiNodeB, gridMaxY, gridMaxX)) validAntiNodes.add(antiNodeB)
             }
@@ -56,16 +52,12 @@ object Day08 : Puzzle(exampleInput = false, printDebug = false) {
 
     override fun part2(): Int {
         val validAntiNodes = mutableSetOf<Pair<Int, Int>>()
-        val gridMaxY = grid.keys.max()
-        val gridMaxX = grid.values.maxOf { it.keys.max() }
 
-        freqToPairMap.entries.forEach { freq ->
-            debug(freq.key)
-            freq.value.forEach { pair ->
-                val (a, b) = pair
-                val vector = getVector(a, b)
-                validAntiNodes.addAll(getAntiNodesUpToBoundary(a, vector, false, gridMaxY, gridMaxX))
-                validAntiNodes.addAll(getAntiNodesUpToBoundary(b, vector, true, gridMaxY, gridMaxX))
+        frequencyPairs.entries.forEach { freq ->
+            freq.value.forEach { (antennaA, antennaB) ->
+                val vector = getVector(antennaA, antennaB)
+                validAntiNodes.addAll(getAntiNodesUpToBoundary(antennaA, vector, false, gridMaxY, gridMaxX))
+                validAntiNodes.addAll(getAntiNodesUpToBoundary(antennaB, vector, true, gridMaxY, gridMaxX))
             }
         }
 
