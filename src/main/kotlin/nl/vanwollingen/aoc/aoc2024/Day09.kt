@@ -51,7 +51,7 @@ object Day09 : Puzzle(exampleInput = false, printDebug = true) {
     }
 
 
-    override fun part2(): Any {
+    override fun part2(): Long {
         val files = parseInput()
 
         val blockMap: MutableMap<Int, Int> = generateBlockMap(files)
@@ -80,7 +80,6 @@ object Day09 : Puzzle(exampleInput = false, printDebug = true) {
             }
             fileMap[file.id]?.forEach { blockMap[it] = -1 }
             freeSpace = findSequentialIndices(blockMap, -1)
-
         }
         return getCheckSum(blockMap)
     }
