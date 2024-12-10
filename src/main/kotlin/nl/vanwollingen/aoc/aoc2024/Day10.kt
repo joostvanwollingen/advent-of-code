@@ -45,9 +45,9 @@ object Day10 : Puzzle(exampleInput = false, printDebug = true) {
     ): MutableSet<Pair<Int, Int>> {
         visited.add(y to x)
         if (mapData[y]!![x] == target) hitTarget++
-        val neighbours = getNeighbours(y, x).filter { (nY, nX) -> mapData[nY]?.get(nX) == currentStep + direction }
+        val neighbours = getNeighbours(y, x, currentStep + direction)
         if (neighbours.isNotEmpty()) {
-            visited.addAll(neighbours.flatMap { (nY, nX) ->
+            neighbours.forEach { (nY, nX) ->
                 findTargetFrom(
                     nY,
                     nX,
@@ -56,16 +56,16 @@ object Day10 : Puzzle(exampleInput = false, printDebug = true) {
                     direction,
                     target
                 )
-            })
+            }
         }
         return visited
     }
 
-    private fun getNeighbours(y: Int, x: Int): List<Pair<Int, Int>> {
-        val north = mapData[y - 1]?.get(x)?.let { y - 1 to x }
-        val south = mapData[y + 1]?.get(x)?.let { y + 1 to x }
-        val east = mapData[y]?.get(x + 1)?.let { y to x + 1 }
-        val west = mapData[y]?.get(x - 1)?.let { y to x - 1 }
+    private fun getNeighbours(y: Int, x: Int, target: Int): List<Pair<Int, Int>> {
+        val north = mapData[y - 1]?.get(x)?.let { if (it == target) y - 1 to x else null }
+        val south = mapData[y + 1]?.get(x)?.let { if (it == target) y + 1 to x else null }
+        val east = mapData[y]?.get(x + 1)?.let { if (it == target) y to x + 1 else null }
+        val west = mapData[y]?.get(x - 1)?.let { if (it == target) y to x - 1 else null }
         return listOfNotNull(north, south, east, west)
     }
 }
