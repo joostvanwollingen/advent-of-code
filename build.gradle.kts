@@ -14,4 +14,6 @@ repositories {
 }
 
 dependencies {
+    implementation("org.jetbrains.kotlinx:kandy-lets-plot:0.7.0")
+
 }
