@@ -3,10 +3,7 @@ package nl.vanwollingen.aoc.aoc2024
 import nl.vanwollingen.aoc.util.Puzzle
 import kotlin.math.abs
 
-fun main() {
-    Day01.solvePart1()
-    Day01.solvePart2()
-}
+fun main() = Day01.solve()
 
 object Day01 : Puzzle() {
 
