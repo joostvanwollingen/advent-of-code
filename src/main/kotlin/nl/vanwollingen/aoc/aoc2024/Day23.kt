@@ -57,10 +57,8 @@ object Day23 : Puzzle(exampleInput = false) {
         connections.keys.forEach { computer ->
             val network = mutableSetOf<String>()
             network.add(computer)
-            val connectedComputers = LinkedList<String>().apply { addAll(connections[computer]!!) }
-            while (connectedComputers.isNotEmpty()) {
-                val otherComputer = connectedComputers.poll()
-                if (isConnectedToAll(network + otherComputer)) network.add(otherComputer)
+            connections[computer]!!.forEach {
+                if (isConnectedToAll(network + it)) network.add(it)
             }
             networks.add(network)
         }
