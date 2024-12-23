@@ -1,7 +1,6 @@
 package nl.vanwollingen.aoc.aoc2024
 
 import nl.vanwollingen.aoc.util.Puzzle
-import java.util.LinkedList
 
 fun main() = Day23.solve()
 
@@ -55,18 +54,14 @@ object Day23 : Puzzle(exampleInput = false) {
         val networks = mutableSetOf<Set<String>>()
 
         connections.keys.forEach { computer ->
-            val network = mutableSetOf<String>()
-            network.add(computer)
+            val network = mutableSetOf<String>().apply { add(computer) }
             connections[computer]!!.forEach {
                 if (isConnectedToAll(network + it)) network.add(it)
             }
             networks.add(network)
         }
 
-        return networks
-            .maxBy { it.size }
-            .sorted()
-            .joinToString(",")
+        return networks.maxBy { it.size }.sorted().joinToString(",")
     }
 
     private fun isConnectedToAll(set: Set<String>): Boolean {
