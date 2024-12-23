@@ -54,7 +54,7 @@ object Day23 : Puzzle(exampleInput = false) {
         val networks = mutableSetOf<Set<String>>()
 
         connections.keys.forEach { computer ->
-            val network = mutableSetOf<String>().apply { add(computer) }
+            val network = mutableSetOf(computer)
             connections[computer]!!.forEach {
                 if (isConnectedToAll(network + it)) network.add(it)
             }
