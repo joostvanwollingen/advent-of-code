@@ -3,10 +3,7 @@ package nl.vanwollingen.aoc.aoc2024
 import nl.vanwollingen.aoc.util.Puzzle
 import kotlin.math.abs
 
-fun main() {
-    Day02.solvePart1()
-    Day02.solvePart2()
-}
+fun main() = Day02.solve()
 
 object Day02 : Puzzle(exampleInput = false) {
 
@@ -16,15 +13,11 @@ object Day02 : Puzzle(exampleInput = false) {
         line.split(" ").map(String::toInt)
     }
 
-    override fun part1() {
-        log(reports.count(::reportIsSafe))
-    }
+    override fun part1() = reports.count(::reportIsSafe)
 
-    override fun part2() {
-        log(reports.count { report ->
-            val mutations = reportMutations(report)
-            reportIsSafe(report) || mutations.any { reportIsSafe(it) }
-        })
+    override fun part2() = reports.count { report ->
+        val mutations = reportMutations(report)
+        reportIsSafe(report) || mutations.any { reportIsSafe(it) }
     }
 
     private fun reportIsSafe(level: List<Int>): Boolean {
@@ -57,14 +50,14 @@ object Day02 : Puzzle(exampleInput = false) {
 
         return !safeLevels.contains(false)
     }
-}
 
-fun reportMutations(report: List<Int>): List<List<Int>> {
-    val skipList = report.indices
-    val newLists = skipList.map {
-        val mutableReport = report.toMutableList()
-        mutableReport.removeAt(it)
-        mutableReport
+    private fun reportMutations(report: List<Int>): List<List<Int>> {
+        val skipList = report.indices
+        val newLists = skipList.map {
+            val mutableReport = report.toMutableList()
+            mutableReport.removeAt(it)
+            mutableReport
+        }
+        return newLists
     }
-    return newLists
 }

@@ -26,15 +26,11 @@ object Day01 : Puzzle() {
         return left to right
     }
 
-    override fun part1() {
-        val result = left.zip(right) { a, b -> abs(a - b) }.sum()
-        log(result)
-    }
+    override fun part1() = left.zip(right) { a, b -> abs(a - b) }.sum()
 
-    override fun part2() {
+    override fun part2(): Int {
         val rightCountByNumber: Map<Int, Int> = countByNumber(right)
-        val score = left.sumOf { number -> rightCountByNumber.getOrDefault(number, 0).times(number) }
-        log(score)
+        return left.sumOf { number -> rightCountByNumber.getOrDefault(number, 0).times(number) }
     }
 
     private fun countByNumber(list: List<Int>): Map<Int, Int> {
