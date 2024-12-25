@@ -1,7 +1,6 @@
 package nl.vanwollingen.aoc.aoc2024
 
 import nl.vanwollingen.aoc.util.Puzzle
-import nl.vanwollingen.aoc.util.grid.getManhattanDistance
 import java.util.*
 import kotlin.math.abs
 
@@ -36,12 +35,11 @@ object Day20 : Puzzle(exampleInput = false) {
         val end = grid.filter { it.value == 'E' }.keys.first()
         val dist = getDistances(grid, end)
         val path = dist.filter { it.value != Int.MAX_VALUE }
-        val maxDist = path.maxOf { it.value }
         val distSaved = mutableMapOf<Pair<Pair<Int, Int>, Pair<Int, Int>>, Int>()
 
         path.keys.forEach { location ->
             val initialDistance = dist[location]!!
-            val neighbors = radius(location,20).filter { path[it] != null }
+            val neighbors = radius(location,20, path).filter { path[it] != null }
             neighbors.forEach { n ->
                 val nDist = dist.getOrDefault(n, null) ?: throw Error("neigbhor not in path")
                 distSaved[location to n] = initialDistance - nDist - getManhattanDistance(location, n)
@@ -55,7 +53,7 @@ object Day20 : Puzzle(exampleInput = false) {
     private fun getManhattanDistance(one: Pair<Int, Int>, other:Pair<Int, Int>) = abs(one.second - other.second) + abs(one.first - other.first)
     private fun getSaved2(maxDist: Int, s: Int, e: Int) = maxDist - (maxDist - (s - e))
 
-    private fun radius(current: Pair<Int, Int>, radius:Int = 20): List<Pair<Int, Int>> {
+    private fun radius(current: Pair<Int, Int>, radius: Int = 20, path: Map<Pair<Int, Int>, Int>): List<Pair<Int, Int>> {
         val (y, x) = current
         val result = mutableListOf<Pair<Int, Int>>()
         for (dy in -radius..radius){

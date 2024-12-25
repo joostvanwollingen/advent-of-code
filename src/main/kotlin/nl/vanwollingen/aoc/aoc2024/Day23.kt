@@ -8,7 +8,7 @@ object Day23 : Puzzle(exampleInput = false) {
 
     private val connections = parseInput()
 
-    override fun parseInput(): MutableMap<String, MutableSet<String>> {
+    override fun parseInput(): Map<String, Set<String>> {
         val connectionMap = mutableMapOf<String, MutableSet<String>>()
 
         extractPairs().forEach { (from, to) ->
