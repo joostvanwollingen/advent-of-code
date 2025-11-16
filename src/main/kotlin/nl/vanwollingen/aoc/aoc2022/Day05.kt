@@ -4,9 +4,7 @@ import nl.vanwollingen.aoc.util.Puzzle
 
 fun main() = Day05.solve()
 
-object Day05 : Puzzle(exampleInput = false) {
-
-    private val cratesAndMoves = parseInput()
+object Day05 : Puzzle(exampleInput = false, printDebug = false) {
 
     override fun parseInput(): Pair<MutableMap<Int, MutableList<Char>>, List<Move>> {
         val (crateLines, moveLines) = input.split("\n\n")
@@ -28,7 +26,7 @@ object Day05 : Puzzle(exampleInput = false) {
 
 
     override fun part1(): String {
-        val (cratez, moves) = cratesAndMoves
+        val (cratez, moves) = parseInput()
         val crates = cratez.toSortedMap()
 
         for (move in moves) {
@@ -44,10 +42,26 @@ object Day05 : Puzzle(exampleInput = false) {
         }
 
         return crates.map { it.value.first() }.joinToString("")
+        return "f"
     }
 
     override fun part2(): Any {
-        TODO("Not yet implemented")
+        val (cratez, moves) = parseInput()
+        val crates = cratez.toSortedMap()
+
+        for (move in moves) {
+            debug(crates)
+
+            val cratesToMove =
+                crates[move.source]?.take(move.amount) ?: throw Error("invalid crate stack index")
+            crates[move.target]?.addAll(0, cratesToMove)
+            crates[move.source] = crates[move.source]?.subList(move.amount, crates[move.source]?.size!!)
+
+            debug(crates)
+            debug("")
+        }
+
+        return crates.map { it.value.first() }.joinToString("")
     }
 
     data class Move(val source: Int, val target: Int, val amount: Int) {
