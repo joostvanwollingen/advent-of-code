@@ -1,77 +1,80 @@
 package nl.vanwollingen.aoc.aoc2022
 
 import nl.vanwollingen.aoc.util.Puzzle
+import java.util.*
 
 fun main() = Day05.solve()
 
 object Day05 : Puzzle(exampleInput = false, printDebug = false) {
 
-    override fun parseInput(): Pair<MutableMap<Int, MutableList<Char>>, List<Move>> {
+    override fun parseInput(): Pair<SortedMap<Int, MutableList<Char>>, List<Move>> {
         val (crateLines, moveLines) = input.split("\n\n")
-        val numberOfColumns = (crateLines.lines().max().length + 1) / 4
-        val columnIndexes = generateSequence(2) { it + 4 }.take(numberOfColumns).toList()
-        val crates = mutableMapOf<Int, MutableList<Char>>()
 
-        crateLines.lines().dropLast(1).forEach { line ->
-            for (i in 0..<numberOfColumns) {
-                val index = columnIndexes[i]
-                if (line.getOrNull(index) != null && line[index] != ' ') {
-                    crates[i] = (crates.getOrDefault(i, mutableListOf()) + line[index - 1]).toMutableList()
+        val numberOfColumns = (crateLines.lines().maxOf { it.length } + 1) / 4
+        val columnIndexes = generateSequence(2) { it + 4 }.take(numberOfColumns).toList()
+
+        val crates = sortedMapOf<Int, MutableList<Char>>()
+        repeat(numberOfColumns) { crates[it] = mutableListOf() }
+
+        crateLines
+            .lines()
+            .dropLast(1)
+            .forEach { line ->
+                for (i in 0 until numberOfColumns) {
+                    val index = columnIndexes[i]
+                    val crate = line.getOrNull(index-1) ?: continue
+                    if (crate != ' ') crates[i]!!.add(crate)
                 }
             }
-        }
 
-        return crates to moveLines.lines().map { Move.fromString(it) }
+        crates.values.forEach { it.reverse() }
+
+        val moves = moveLines.lineSequence().map { Move.fromString(it) }.toList()
+        return crates to moves
     }
-
 
     override fun part1(): String {
-        val (cratez, moves) = parseInput()
-        val crates = cratez.toSortedMap()
-
-        for (move in moves) {
-            debug(crates)
-
-            val cratesToMove =
-                crates[move.source]?.take(move.amount)?.reversed() ?: throw Error("invalid crate stack index")
-            crates[move.target]?.addAll(0, cratesToMove)
-            crates[move.source] = crates[move.source]?.subList(move.amount, crates[move.source]?.size!!)
-
-            debug(crates)
-            debug("")
-        }
-
-        return crates.map { it.value.first() }.joinToString("")
-        return "f"
+        val (crates, moves) = parseInput()
+        return doMoves(crates, moves, reverse = true)
     }
 
-    override fun part2(): Any {
-        val (cratez, moves) = parseInput()
-        val crates = cratez.toSortedMap()
+    override fun part2(): String {
+        val (crates, moves) = parseInput()
+        return doMoves(crates, moves, reverse = false)
+    }
 
+    private fun doMoves(
+        crates: SortedMap<Int, MutableList<Char>>,
+        moves: List<Move>,
+        reverse: Boolean
+    ): String {
         for (move in moves) {
-            debug(crates)
+            val source = crates[move.source]!!
+            val target = crates[move.target]!!
 
-            val cratesToMove =
-                crates[move.source]?.take(move.amount) ?: throw Error("invalid crate stack index")
-            crates[move.target]?.addAll(0, cratesToMove)
-            crates[move.source] = crates[move.source]?.subList(move.amount, crates[move.source]?.size!!)
+            val taken = source.takeLast(move.amount)
+            val cratesToMove = if (reverse) taken.reversed() else taken
 
-            debug(crates)
-            debug("")
+            target.addAll(cratesToMove)
+            repeat(move.amount) { source.removeLast() }
         }
 
-        return crates.map { it.value.first() }.joinToString("")
+        return crates.values.joinToString("") { it.last().toString() }
     }
 
     data class Move(val source: Int, val target: Int, val amount: Int) {
-
         companion object {
-            val regex = "move (\\d+) from (\\d+) to (\\d+)".toRegex()
+            private val regex = Regex("""move (\d+) from (\d+) to (\d+)""")
 
             fun fromString(input: String): Move {
-                val matches = regex.findAll(input).first().groupValues
-                return Move(matches[2].toInt() - 1, matches[3].toInt() - 1, matches[1].toInt())
+                val (amount, src, dst) = regex.find(input)!!
+                    .destructured
+
+                return Move(
+                    source = src.toInt() - 1,
+                    target = dst.toInt() - 1,
+                    amount = amount.toInt()
+                )
             }
         }
     }
