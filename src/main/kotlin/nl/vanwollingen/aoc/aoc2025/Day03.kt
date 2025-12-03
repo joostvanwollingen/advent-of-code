@@ -13,22 +13,17 @@ object Day03 : Puzzle(true, false) {
         combinations.maxOf { "${it[0]}${it[1]}".toLong() }
     }
 
-    override fun part2() =
-        joltageBanks.sumOf { bank ->
-            val positions = mutableListOf<Int>()
-            var leftOffset = 0
-            while (couldFit(bank.size, leftOffset, positions.size)) {
-                val nextHighest = findHighestFromRight(bank, leftOffset, bank.size - (12 - positions.size))
-                positions += nextHighest
-                leftOffset = nextHighest + 1
-                if (positions.size == 12) break
-            }
-            val concat: StringBuilder = StringBuilder()
-            positions.forEach {
-                concat.append(bank[it])
-            }
-            concat.toString().toLong()
+    override fun part2() = joltageBanks.sumOf { bank ->
+        val positions = StringBuilder()
+        var leftOffset = 0
+        while (couldFit(bank.size, leftOffset, positions.length)) {
+            val nextHighest = findHighestFromRight(bank, leftOffset, bank.size - (12 - positions.length))
+            positions.append(bank[nextHighest])
+            leftOffset = nextHighest + 1
+            if (positions.length == 12) break
         }
+        positions.toString().toLong()
+    }
 
 
     private fun couldFit(length: Int, leftOffset: Int, positionSize: Int): Boolean {
@@ -43,6 +38,7 @@ object Day03 : Puzzle(true, false) {
             if (highest < bank[i]) {
                 highest = bank[i]
                 highestPosition = i
+                if(bank[i]==9L) return highestPosition
             }
         }
         return highestPosition
