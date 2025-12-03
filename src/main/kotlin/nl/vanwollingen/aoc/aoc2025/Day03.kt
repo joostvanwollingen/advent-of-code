@@ -17,7 +17,7 @@ object Day03 : Puzzle(true, false) {
         val positions = StringBuilder()
         var leftOffset = 0
         while (couldFit(bank.size, leftOffset, positions.length)) {
-            val nextHighest = findHighestFromRight(bank, leftOffset, bank.size - (12 - positions.length))
+            val nextHighest = findHighestBetweenOffset(bank, leftOffset, bank.size - (12 - positions.length))
             positions.append(bank[nextHighest])
             leftOffset = nextHighest + 1
             if (positions.length == 12) break
@@ -31,7 +31,7 @@ object Day03 : Puzzle(true, false) {
         return length - leftOffset >= positionsLeft
     }
 
-    private fun findHighestFromRight(bank: List<Long>, leftOffset: Int, rightOffset: Int): Int {
+    private fun findHighestBetweenOffset(bank: List<Long>, leftOffset: Int, rightOffset: Int): Int {
         var highest = 0L
         var highestPosition = 0
         for (i in leftOffset..rightOffset) {
