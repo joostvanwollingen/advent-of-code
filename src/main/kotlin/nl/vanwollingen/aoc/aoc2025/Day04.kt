@@ -17,8 +17,8 @@ object Day04 : Puzzle(true, false) {
         for (y in grid.indices) {
             for (x in grid[y].indices) {
                 if (grid[y][x] == '@') {
-                    val adjecentRolls = countAdjacentPaperRolls(grid, y, x)
-                    positionsReachable += if (adjecentRolls < 4) 1 else 0
+                    val adjacentRolls = countAdjacentPaperRolls(grid, y, x)
+                    positionsReachable += if (adjacentRolls < 4) 1 else 0
                 }
             }
         }
@@ -27,11 +27,10 @@ object Day04 : Puzzle(true, false) {
 
     override fun part2(): Any {
         var currentGrid = grid
-        var positionsReachable = -1
         var rollsRemoved = 0
 
-        while (positionsReachable != 0) {
-            positionsReachable = 0
+        while (true) {
+            var positionsReachable = 0
             val removedRolls = mutableListOf<Pair<Int, Int>>()
             for (y in currentGrid.indices) {
                 for (x in currentGrid[y].indices) {
@@ -45,6 +44,7 @@ object Day04 : Puzzle(true, false) {
                     }
                 }
             }
+            if (positionsReachable == 0) break
             currentGrid = updateGrid(currentGrid, removedRolls)
         }
         return rollsRemoved
